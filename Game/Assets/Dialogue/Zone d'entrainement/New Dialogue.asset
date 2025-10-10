@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47699a060f5aff244917aa8a39725217, type: 3}
+  m_Name: New Dialogue
+  m_EditorClassIdentifier: 
+  startDialogueId: 0
+  dialogueLines:
+  - id: 0
+    speakerName: Jarn
+    dialogueText: "H\xE9 ! Toi l\xE0 ! Pas question d\u2019aller te faire d\xE9vorer
+      dans le donjon sans avoir ma\xEEtris\xE9 les bases.  T\u2019as quatre armes
+      \xE0 ta disposition ici : \xE9p\xE9e, arc, dague, et longue \xE9p\xE9e. Chaque
+      arme a ses forces\u2026 et ses faiblesses. \xC0 toi de trouver ce qui te convient."
+    isPlayerSpeaking: 0
+    nextDialogueId: 1
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 11400000, guid: a1b32e5aca3df3549b9aed92cc7fb76f, type: 2}
+    updatesQuestStep: 0
+    questStepId: 5
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 1
+    speakerName: Jarn
+    dialogueText: "H\xE9 ! Toi l\xE0 ! Pas question d\u2019aller te faire d\xE9vorer
+      dans le donjon sans avoir ma\xEEtris\xE9 les bases.  T\u2019as quatre armes
+      \xE0 ta disposition ici : \xE9p\xE9e, arc, dague, et longue \xE9p\xE9e. Chaque
+      arme a ses forces\u2026 et ses faiblesses. \xC0 toi de trouver ce qui te convient."
+    isPlayerSpeaking: 0
+    nextDialogueId: 2
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 2
+    speakerName: Jarn
+    dialogueText: 'Les commandes ? Simple :   [A] pour attaquer  [B] pour parer 
+      [X] pour faire un dash rapide'
+    isPlayerSpeaking: 0
+    nextDialogueId: 3
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 3
+    speakerName: Jarn
+    dialogueText: "[Y] pour afficher tes statistiques en combat  Maintiens le joystick
+      gauche pour courir  Appuie sur [RT] pour verrouiller un ennemi en combat rapproch\xE9 
+      Ma\xEEtrise ces mouvements\u2026 ou meurs en les apprenant"
+    isPlayerSpeaking: 0
+    nextDialogueId: 4
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 4
+    speakerName: Jarn
+    dialogueText: "Tu vois les quatre pi\xE9destaux au fond ? Chacun te permet de
+      t\u2019\xE9quiper d\u2019une arme diff\xE9rente. Approche-toi et interagis
+      pour choisir.  Et ces mannequins d'entra\xEEnement ? Ils sont l\xE0 pour encaisser
+      tes coups. Teste tes combos, ta parade, ta vitesse, ton dash\u2026 Tu peux
+      m\xEAme t\u2019exercer au lock d\u2019ennemi sur eux."
+    isPlayerSpeaking: 0
+    nextDialogueId: 5
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 5
+    speakerName: Jarn
+    dialogueText: "Tu veux devenir un vrai guerrier ? Alors frappe, pare, bouge.
+      Ici, tu ne peux pas mourir. Mais dehors, tu n\u2019auras pas cette chance."
+    isPlayerSpeaking: 0
+    nextDialogueId: -1
+    choices:
+    - choiceText: Je vais m'entrainer un peu.
+      nextDialogueId: -1
+      opensShop: 0
+      shopType: 
+    - choiceText: Rappelle-moi les commandes.
+      nextDialogueId: 0
+      opensShop: 0
+      shopType: 
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 

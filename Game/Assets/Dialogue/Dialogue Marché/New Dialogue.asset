@@ -1,0 +1,173 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47699a060f5aff244917aa8a39725217, type: 3}
+  m_Name: New Dialogue
+  m_EditorClassIdentifier: 
+  startDialogueId: 0
+  dialogueLines:
+  - id: 0
+    speakerName: Pedro
+    dialogueText: "Ah, un nouveau visage ! Tu dois \xEAtre le combattant dont tout
+      le monde parle. Bienvenue au march\xE9 de Valemont !"
+    isPlayerSpeaking: 0
+    nextDialogueId: 1
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 1
+    speakerName: Bob
+    dialogueText: "Tu peux me montrer ce qu\u2019on peut trouver ici ?"
+    isPlayerSpeaking: 1
+    nextDialogueId: 2
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 2
+    speakerName: Pedro
+    dialogueText: "Bien s\xFBr, suis-moi. Ce march\xE9, c\u2019est le c\u0153ur du
+      village. Tu trouveras tout ce qu\u2019il te faut pour am\xE9liorer ton arsenal."
+    isPlayerSpeaking: 0
+    nextDialogueId: 3
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 3
+    speakerName: Pedro
+    dialogueText: "L\xE0-bas \xE0 gauche, c\u2019est le stand de l\u2019\xC9p\xE9e.
+      Le forgeron Bryn t\u2019y attend. Il peut am\xE9liorer les d\xE9g\xE2ts, la
+      vitesse d\u2019attaque\u2026 tout ce qu\u2019il faut pour d\xE9couper plus
+      vite que ton ombre."
+    isPlayerSpeaking: 0
+    nextDialogueId: 4
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 4
+    speakerName: Pedro
+    dialogueText: "Juste en face, il y a l\u2019\xE9choppe de l\u2019Arc. Si tu pr\xE9f\xE8res
+      garder tes ennemis \xE0 distance, parle \xE0 Maela. Elle peut augmenter la
+      port\xE9e, la cadence de tir, et la pr\xE9cision de tes fl\xE8ches."
+    isPlayerSpeaking: 0
+    nextDialogueId: 5
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 5
+    speakerName: Pedro
+    dialogueText: "Un peu plus loin sur la droite, c\u2019est la boutique de la Dague.
+      Discr\xE9tion, vitesse, coups critiques\u2026 Si tu frappes vite et fort, c\u2019est
+      l\xE0 qu\u2019il faut aller."
+    isPlayerSpeaking: 0
+    nextDialogueId: 6
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 6
+    speakerName: Pedro
+    dialogueText: "\xC0 c\xF4t\xE9, tu verras le comptoir de la Longue \xC9p\xE9e.
+      Plus lente, mais avec une allonge et une puissance impressionnantes. Le vieux
+      Toren peut t\u2019y aider \xE0 la rendre encore plus redoutable."
+    isPlayerSpeaking: 0
+    nextDialogueId: 7
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 7
+    speakerName: Pedro
+    dialogueText: "Et enfin, ici au centre, c\u2019est le Pavillon des H\xE9ros.
+      Tu peux y am\xE9liorer tes propres statistiques : endurance, sant\xE9, vitesse,
+      force\u2026 Tout ce qui fait de toi un vrai champion."
+    isPlayerSpeaking: 0
+    nextDialogueId: -1
+    choices:
+    - choiceText: Merci pour la visite !
+      nextDialogueId: -1
+      opensShop: 0
+      shopType: 
+    - choiceText: "Est ce tu peux me r\xE9expliquer?"
+      nextDialogueId: 0
+      opensShop: 0
+      shopType: 
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 

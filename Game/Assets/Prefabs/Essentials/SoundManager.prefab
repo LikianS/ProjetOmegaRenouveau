@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1320735634924453375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9169967956694707452}
+  - component: {fileID: 1726908532240400877}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9169967956694707452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320735634924453375}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5023155, y: -19.199188, z: 15.4180355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1726908532240400877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320735634924453375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3c5c9ea848edf4db30fa043944ce4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambientSource: {fileID: 0}
+  musicSource: {fileID: 0}
+  effectsSource: {fileID: 0}
+  voiceSource: {fileID: 0}
+  playerWalk: {fileID: 8300000, guid: 4760a793908cdb949a4068d313a618b4, type: 3}
+  playerRun: {fileID: 8300000, guid: 4760a793908cdb949a4068d313a618b4, type: 3}
+  playerAttack: {fileID: 8300000, guid: cc1d978c2c06e0c45a6bee747c07b32a, type: 3}
+  playerParry: {fileID: 0}
+  playerDash: {fileID: 0}
+  playerHurt: {fileID: 0}
+  playerDeath: {fileID: 0}
+  playerDialogueLetter: {fileID: 0}
+  enemyWalk: {fileID: 0}
+  enemyRun: {fileID: 0}
+  enemyAttackMelee: {fileID: 0}
+  enemyAttackRanged: {fileID: 0}
+  enemyHurt: {fileID: 0}
+  enemyDeath: {fileID: 0}
+  villageAmbience: {fileID: 8300000, guid: d369fc880074cae45a04770138d34158, type: 3}
+  worldAmbience: {fileID: 8300000, guid: dfa501f6057ba134b96d8460f92be159, type: 3}
+  dungeonAmbience: {fileID: 8300000, guid: 21ed78db9bb532b428dd9a1d868db292, type: 3}
+  uiMove: {fileID: 8300000, guid: 643ee5391bf495347a3de7c2d218a2e8, type: 3}
+  uiClick: {fileID: 0}
+  uiOpen: {fileID: 0}
+  uiClose: {fileID: 0}
+  shopBuy: {fileID: 8300000, guid: f550b406fda1a3146b13aef949deb48a, type: 3}
+  shopRefuse: {fileID: 8300000, guid: c06073cb48dd38b46a4983bed1437865, type: 3}
+  itemPickup: {fileID: 8300000, guid: c31296c198bb5274d834b47071ff09d4, type: 3}
+  dialogueSound: {fileID: 0}

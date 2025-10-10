@@ -1,0 +1,275 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9087760670694304456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4448837970529230145}
+  - component: {fileID: 4578738311023584943}
+  - component: {fileID: 4789507062446416470}
+  m_Layer: 0
+  m_Name: DialogueSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4448837970529230145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9087760670694304456}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 949.404, y: 1039.343, z: -343.339}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4578738311023584943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9087760670694304456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8266ca7f755f48348bdc32aa2b2248df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 0}
+  speakerNameText: {fileID: 0}
+  dialogueText: {fileID: 0}
+  choicesPanel: {fileID: 0}
+  choicesContainer: {fileID: 0}
+  choicePrefab: {fileID: 3022662010885643545, guid: d0ed9643d4e662f4abf91e5c1089553c,
+    type: 3}
+  playerTransform: {fileID: 0}
+  typingSpeed: 0.03
+  minDistance: 2
+  interactButtonText: A
+  selectionArrow: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &4789507062446416470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9087760670694304456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8ccf1c377bbdb41bf24c3f334b9856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopPanel: {fileID: 0}
+  itemsContainer: {fileID: 0}
+  shopItemPrefab: {fileID: 522878792968343193, guid: 3f031221caa9c874986089dfe34ea706,
+    type: 3}
+  shopTitleText: {fileID: 0}
+  playerMoneyText: {fileID: 0}
+  statsText: {fileID: 0}
+  previewText: {fileID: 0}
+  selectionArrow: {fileID: 0}
+  feedbackText: {fileID: 0}
+  statsPanel: {fileID: 0}
+  shopConfigurations:
+  - shopType: Shop des Stastitiques
+    shopTitle: Shop des Stastitiques
+    targetType: 0
+    targetWeaponName: 
+    items:
+    - itemName: "Augmenter la sant\xE9"
+      description: 'Augmente de 10 '
+      price: 100
+      itemType: 0
+      value: 10
+      icon: {fileID: 0}
+      targetStatName: health
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+    - itemName: Augmenter l'endurance
+      description: Augmente de 5
+      price: 150
+      itemType: 0
+      value: 5
+      icon: {fileID: 0}
+      targetStatName: stamina
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+    - itemName: Augmenter la vitesse
+      description: Augmente de 0.5
+      price: 200
+      itemType: 0
+      value: 5
+      icon: {fileID: 0}
+      targetStatName: movementspeed
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+  - shopType: Bow
+    shopTitle: Bow
+    targetType: 1
+    targetWeaponName: Arc
+    items:
+    - itemName: "Augmenter les d\xE9gats"
+      description: "Augmente les d\xE9gats de l'arc de 5"
+      price: 120
+      itemType: 1
+      value: 5
+      icon: {fileID: 0}
+      targetStatName: damage
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 2
+      currentPurchases: 0
+    - itemName: Augmenter la vitesse d'attaque
+      description: Augmente la vitesse d'attaque de l'arc de 0.1
+      price: 150
+      itemType: 1
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: attackspeed
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+    - itemName: Augmenter le taux de critique
+      description: Augmente de 5%
+      price: 200
+      itemType: 0
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: criticalhitrate
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+  - shopType: Sword
+    shopTitle: Sword
+    targetType: 1
+    targetWeaponName: "\xC9p\xE9e"
+    items:
+    - itemName: "Augmenter les d\xE9gats"
+      description: "Augmente les d\xE9gats de l'arc de 5"
+      price: 120
+      itemType: 1
+      value: 5
+      icon: {fileID: 0}
+      targetStatName: damage
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 2
+      currentPurchases: 0
+    - itemName: Augmenter la vitesse d'attaque
+      description: Augmente la vitesse d'attaque de l'arc de 0.1
+      price: 150
+      itemType: 1
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: attackspeed
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+    - itemName: Augmenter le taux de critique
+      description: Augmente de 5%
+      price: 200
+      itemType: 0
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: criticalhitrate
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+  - shopType: Longsword
+    shopTitle: Longsword
+    targetType: 1
+    targetWeaponName: Grande hache
+    items:
+    - itemName: "Augmenter les d\xE9gats"
+      description: "Augmente les d\xE9gats de l'arc de 5"
+      price: 120
+      itemType: 1
+      value: 5
+      icon: {fileID: 0}
+      targetStatName: damage
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 2
+      currentPurchases: 0
+    - itemName: Augmenter la vitesse d'attaque
+      description: Augmente la vitesse d'attaque de l'arc de 0.1
+      price: 150
+      itemType: 1
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: attackspeed
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+    - itemName: Augmenter le taux de critique
+      description: Augmente de 5%
+      price: 200
+      itemType: 0
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: criticalhitrate
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+  - shopType: Dagger
+    shopTitle: Dagger
+    targetType: 1
+    targetWeaponName: Dague
+    items:
+    - itemName: "Augmenter les d\xE9gats"
+      description: "Augmente les d\xE9gats de l'arc de 5"
+      price: 120
+      itemType: 1
+      value: 5
+      icon: {fileID: 0}
+      targetStatName: damage
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 2
+      currentPurchases: 0
+    - itemName: Augmenter la vitesse d'attaque
+      description: Augmente la vitesse d'attaque de l'arc de 0.1
+      price: 150
+      itemType: 1
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: attackspeed
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+    - itemName: Augmenter le taux de critique
+      description: Augmente de 5%
+      price: 200
+      itemType: 0
+      value: 1
+      icon: {fileID: 0}
+      targetStatName: criticalhitrate
+      priceIncreaseFactor: 1.1
+      statIncreaseValue: 1
+      purchaseLimit: 0
+      currentPurchases: 0
+  errorSound: {fileID: 8300000, guid: 6aa192b4da32bc04abb41aca58b76131, type: 3}

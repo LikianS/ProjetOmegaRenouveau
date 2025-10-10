@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47699a060f5aff244917aa8a39725217, type: 3}
+  m_Name: New Dialogue
+  m_EditorClassIdentifier: 
+  startDialogueId: 0
+  dialogueLines:
+  - id: 0
+    speakerName: Varek
+    dialogueText: "Tu sens \xE7a ? Ce frisson dans l\u2019air\u2026 Ce n\u2019est
+      pas le vent. C\u2019est le donjon qui t\u2019appelle. Et crois-moi\u2026 il
+      ne murmure pas, il hurle."
+    isPlayerSpeaking: 0
+    nextDialogueId: 1
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 11400000, guid: a1b32e5aca3df3549b9aed92cc7fb76f, type: 2}
+    updatesQuestStep: 0
+    questStepId: 6
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 1
+    speakerName: Varek
+    dialogueText: "\xC9coute bien, je ne le r\xE9p\xE9terai pas. Le donjon, ce n\u2019est
+      pas un terrain d'entra\xEEnement. L\xE0-bas, chaque erreur peut te co\xFBter
+      la vie.  Il existe deux types de salles dans les profondeurs : Les salles d\u2019\xE9nigmes,
+      o\xF9 ton esprit sera mis \xE0 l\u2019\xE9preuve. Et les salles de monstres,
+      o\xF9 seuls les plus rapides et les plus pr\xE9cis survivent."
+    isPlayerSpeaking: 0
+    nextDialogueId: 2
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 2
+    speakerName: Varek
+    dialogueText: "Les ennemis ? Deux grandes cat\xE9gories :   Les combattants au
+      corps \xE0 corps, brutaux, agressifs, ils te foncent dessus sans r\xE9fl\xE9chir.
+      Ils te laisseront pas une seconde de r\xE9pit. \u2620 Et les hybrides\u2026
+      plus malins. Ils attaquent \xE0 distance, te contournent, parfois m\xEAme se
+      soignent ou pi\xE8gent le terrain. Garde toujours un \u0153il sur eux\u2026
+      et le doigt sur ta parade."
+    isPlayerSpeaking: 0
+    nextDialogueId: 3
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 2
+    speakerName: Varek
+    dialogueText: "Les ennemis ? Deux grandes cat\xE9gories :   Les combattants au
+      corps \xE0 corps, brutaux, agressifs, ils te foncent dessus sans r\xE9fl\xE9chir.
+      Ils te laisseront pas une seconde de r\xE9pit. \u2620 Et les hybrides\u2026
+      plus malins. Ils attaquent \xE0 distance, te contournent, parfois m\xEAme se
+      soignent ou pi\xE8gent le terrain. Garde toujours un \u0153il sur eux\u2026
+      et le doigt sur ta parade."
+    isPlayerSpeaking: 0
+    nextDialogueId: 3
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 3
+    speakerName: Varek
+    dialogueText: "Tu ne sais jamais sur quoi tu vas tomber en ouvrant une porte\u2026
+      Mais une chose est s\xFBre : chaque \xE9tage est plus dangereux que le pr\xE9c\xE9dent."
+    isPlayerSpeaking: 0
+    nextDialogueId: 4
+    choices:
+    - choiceText: "J\u2019entre dans le donjon."
+      nextDialogueId: -1
+      opensShop: 0
+      shopType: 
+    - choiceText: Rappelle-moi les types de salles.
+      nextDialogueId: 1
+      opensShop: 0
+      shopType: 
+    - choiceText: Parle-moi encore des ennemis.
+      nextDialogueId: 2
+      opensShop: 0
+      shopType: 
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 

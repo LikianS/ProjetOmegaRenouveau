@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47699a060f5aff244917aa8a39725217, type: 3}
+  m_Name: New Dialogue
+  m_EditorClassIdentifier: 
+  startDialogueId: 0
+  dialogueLines:
+  - id: 0
+    speakerName: 'Lysa '
+    dialogueText: "H\xE9 toi ! Tu viens d\u2019arriver, non ? T\u2019as encore cette
+      odeur de route sur les bottes.  "
+    isPlayerSpeaking: 0
+    nextDialogueId: 1
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 1
+    speakerName: 'Lysa '
+    dialogueText: "Avant de plonger t\xEAte la premi\xE8re dans un donjon ou de t\u2019amuser
+      \xE0 d\xE9couper des mannequins, tu devrais rencontrer les gens d\u2019ici.
+      Ce village, c\u2019est plus qu\u2019un point de passage. C\u2019est un abri,
+      une forge, une famille pour ceux qui osent affronter l\u2019obscurit\xE9."
+    isPlayerSpeaking: 0
+    nextDialogueId: 2
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 1
+    quest: {fileID: 11400000, guid: a1b32e5aca3df3549b9aed92cc7fb76f, type: 2}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 

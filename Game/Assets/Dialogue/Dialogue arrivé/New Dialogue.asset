@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47699a060f5aff244917aa8a39725217, type: 3}
+  m_Name: New Dialogue
+  m_EditorClassIdentifier: 
+  startDialogueId: 0
+  dialogueLines:
+  - id: 0
+    speakerName: Kael
+    dialogueText: "Tiens donc... un nouveau guerrier. T\u2019as l\u2019air d\xE9termin\xE9.
+      Bienvenue au Refuge, le dernier bastion avant les terres maudites.  Tout ici
+      est pens\xE9 pour te pr\xE9parer \xE0 ce qui t\u2019attend l\xE0-bas."
+    isPlayerSpeaking: 0
+    nextDialogueId: 1
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 1
+    speakerName: Bob
+    dialogueText: "O\xF9 est-ce que je commence ?"
+    isPlayerSpeaking: 1
+    nextDialogueId: 2
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 2
+    speakerName: Kael
+    dialogueText: "Tu vois cette grande all\xE9e l\xE0-bas ? C\u2019est la Zone d\u2019Entra\xEEnement.
+      Tu peux y tester tes armes, t\u2019exercer contre des mannequins, ou m\xEAme
+      affronter des illusions de monstres. C\u2019est le meilleur moyen de ma\xEEtriser
+      ton style de combat sans risquer ta peau."
+    isPlayerSpeaking: 1
+    nextDialogueId: 3
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 3
+    speakerName: Kael
+    dialogueText: "\xC0 gauche, tu trouveras le March\xE9. L\xE0-bas, des artisans
+      et ma\xEEtres d\u2019armes t\u2019aideront \xE0 am\xE9liorer tes \xE9quipements
+      et tes comp\xE9tences. \xC9p\xE9es, arcs, dagues, longues lames\u2026 et m\xEAme
+      tes propres capacit\xE9s. Chaque stand est sp\xE9cialis\xE9, alors choisis
+      bien o\xF9 investir tes ressources."
+    isPlayerSpeaking: 1
+    nextDialogueId: 4
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 4
+    speakerName: Kael
+    dialogueText: "Et si tu penses \xEAtre pr\xEAt, dirige-toi vers la grande porte
+      en pierre noire au fond\u2026 C\u2019est l\u2019entr\xE9e du Donjon."
+    isPlayerSpeaking: 1
+    nextDialogueId: 5
+    choices: []
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
+  - id: 5
+    speakerName: Kael
+    dialogueText: "Un endroit maudit, plein de cr\xE9atures et de pi\xE8ges. Mais
+      aussi de tr\xE9sors, r\xE9compenses rares, et secrets anciens.  Chaque \xE9tage
+      que tu franchiras t\u2019am\xE8nera un peu plus pr\xE8s de la v\xE9rit\xE9\u2026
+      ou de ta fin."
+    isPlayerSpeaking: 1
+    nextDialogueId: -1
+    choices:
+    - choiceText: "Je vais m\u2019entra\xEEner un peu d\u2019abord."
+      nextDialogueId: -1
+      opensShop: 0
+      shopType: 
+    - choiceText: "Je vais faire un tour au march\xE9."
+      nextDialogueId: -1
+      opensShop: 0
+      shopType: 
+    - choiceText: "J\u2019entre dans le donjon."
+      nextDialogueId: -1
+      opensShop: 0
+      shopType: 
+    - choiceText: Je reviendrai plus tard.
+      nextDialogueId: -1
+      opensShop: 0
+      shopType: 
+    opensShop: 0
+    shopType: 
+    opensQuest: 0
+    quest: {fileID: 0}
+    updatesQuestStep: 0
+    questStepId: -1
+    requiredQuests: []
+    fallbackDialogueId: -1
+    isActive: 1
+    disableDialogueId: -1
+    disableDialogueGroups: 
