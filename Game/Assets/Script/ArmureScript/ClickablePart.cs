@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ClickablePart : MonoBehaviour
+public class ClickablePart : MonoBehaviour, IInteractable
 {
     public enum PartType { Crest, Weapon }
     public PartType partType;
@@ -13,26 +13,25 @@ public class ClickablePart : MonoBehaviour
         armorSlot = GetComponentInParent<ArmorSlot>();
     }
 
-    void OnMouseDown()
+    public void Interact(InteractionType type)
     {
         if (armorSlot == null) return;
 
-        if (partType == PartType.Crest)
+        if (type == InteractionType.Crest && partType == PartType.Crest)
         {
             armorSlot.NextCrest();
-            Debug.Log("Clic sur Blason : " + armorSlot.GetCurrentCrest());
+            Debug.Log("Blason changé");
         }
-        else if (partType == PartType.Weapon)
+        else if (type == InteractionType.Weapon && partType == PartType.Weapon)
         {
             armorSlot.NextWeapon();
-            Debug.Log("Clic sur Arme : " + armorSlot.GetCurrentWeapon());
+            Debug.Log("Arme changée");
         }
-
-
-        if (puzzleManager != null)
+        else
         {
-            puzzleManager.CheckSolution();
+            return;
         }
-    }
 
+        puzzleManager.CheckSolution();
+    }
 }

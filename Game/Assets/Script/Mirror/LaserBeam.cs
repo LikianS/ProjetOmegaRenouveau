@@ -19,20 +19,20 @@ public class LaserBeam : MonoBehaviour
             Ray ray = new Ray(currentPos, direction);
             if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
             {
-                Debug.Log(">>> Quelque chose a été touché : " + hit.collider.name);
+                //Debug.Log(">>> Quelque chose a été touché : " + hit.collider.name);
 
                 lineRenderer.positionCount++;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
 
                 if (hit.collider.CompareTag("Mirror"))
                 {
-                    Debug.Log(">>> Miroir détecté !");
+                    //Debug.Log(">>> Miroir détecté !");
                     direction = Vector3.Reflect(direction, hit.normal);
                     currentPos = hit.point;
                 }
                 else if (hit.collider.CompareTag("Receiver"))
                 {
-                    Debug.Log(">>> Récepteur touché !");
+                    //Debug.Log(">>> Récepteur touché !");
                     Receiver receiver = hit.collider.GetComponent<Receiver>();
                     if (receiver != null)
                     {
@@ -42,7 +42,7 @@ public class LaserBeam : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(">>> Objet NON miroir et NON receiver détecté : " + hit.collider.tag);
+                    //Debug.Log(">>> Objet NON miroir et NON receiver détecté : " + hit.collider.tag);
                     break;
                 }
             }
