@@ -174,9 +174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f259b7b0ca6ef5c4e98cb1980a6a009d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleType: 1
+  collectibleType: 0
   goldAmount: 100
-  achievementPoints: 0
+  achievementPoints: 100
   weaponNameToEquip: "\xC9p\xE9e"
   targetStatName: 
   statBoostValue: 0

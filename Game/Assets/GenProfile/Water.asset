@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78669ff805a994b4081249c4ba8904d5, type: 3}
+  m_Name: Water
+  m_EditorClassIdentifier: 
+  type: 1
+  dungeonPrefab: {fileID: 5310927940991849314, guid: a5a18c9d313317948989b400f40a87fb,
+    type: 3}
+  liquidSurfacePrefab: {fileID: 9047676739588326830, guid: d69c1e84fbe88eb419a14e015332b2be,
+    type: 3}
+  baseGroundColor: {r: 0.043907363, g: 0.5943396, b: 0.036445368, a: 1}
+  dungeonZoneColor: {r: 0.19606647, g: 0.122152, b: 0.4245283, a: 1}
+  eventZoneColor: {r: 0.13472822, g: 0.5849056, b: 0.019312933, a: 1}
+  heightMultiplier: 5
+  noiseFrequency: 0.1
+  trees:
+  - {fileID: 1851030074180309973, guid: b69c35c4f3d673e4f85004d0581f9105, type: 3}
+  - {fileID: 8015956150646534335, guid: ea1d9040b339d034abaa12dd47062386, type: 3}
+  bushes:
+  - {fileID: 102125696303282377, guid: 19029c1e7c9031d4bb5273374fc0dc4e, type: 3}
+  - {fileID: 5674666472736072295, guid: 5cecfbcb65f1d3c46a6d74cd15ebfb7a, type: 3}
+  twigs:
+  - {fileID: 2961213740008292340, guid: 31b38e2e572cb2840bb6d968ffe63240, type: 3}
+  rocks:
+  - {fileID: 2488292168518885586, guid: 385d14da46984e547b4b5ae3e82fb30d, type: 3}
+  vegetationDensity: 0.05
+  enemies: []
+  puzzles: []
+  collectibles:
+  - {fileID: 5748222353490076782, guid: badbc5032a9a42a4da9fea1eeb332ab4, type: 3}

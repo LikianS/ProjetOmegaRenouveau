@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78669ff805a994b4081249c4ba8904d5, type: 3}
+  m_Name: Earth
+  m_EditorClassIdentifier: 
+  type: 2
+  dungeonPrefab: {fileID: 5310927940991849314, guid: a5a18c9d313317948989b400f40a87fb,
+    type: 3}
+  liquidSurfacePrefab: {fileID: 0}
+  baseGroundColor: {r: 0.7, g: 0.5, b: 0.3, a: 1}
+  dungeonZoneColor: {r: 0.3, g: 0.2, b: 0.1, a: 1}
+  eventZoneColor: {r: 0.38679248, g: 0.21072891, b: 0.034665354, a: 1}
+  heightMultiplier: 5
+  noiseFrequency: 0.1
+  trees: []
+  bushes: []
+  twigs: []
+  rocks: []
+  vegetationDensity: 0.1
+  enemies: []
+  puzzles: []
+  collectibles: []

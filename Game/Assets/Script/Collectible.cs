@@ -3,31 +3,31 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     [Header("Type de Collectible")]
-    [Tooltip("Définissez le type de collectible : Item, Weapon ou StatBoost.")]
+    [Tooltip("Dï¿½finissez le type de collectible : Item, Weapon ou StatBoost.")]
     public CollectibleType collectibleType;
 
-    [Header("Paramètres pour les Items")]
-    [Tooltip("Quantité d'or à ajouter au joueur (si applicable).")]
+    [Header("Paramï¿½tres pour les Items")]
+    [Tooltip("Quantitï¿½ d'or ï¿½ ajouter au joueur (si applicable).")]
     public int goldAmount = 0;
 
-    [Tooltip("Points d'achievement à ajouter au joueur (si applicable).")]
+    [Tooltip("Points d'achievement ï¿½ ajouter au joueur (si applicable).")]
     public int achievementPoints = 0;
 
-    [Header("Paramètres pour les Armes")]
-    [Tooltip("Nom de l'arme existante à équiper.")]
+    [Header("Paramï¿½tres pour les Armes")]
+    [Tooltip("Nom de l'arme existante ï¿½ ï¿½quiper.")]
     public string weaponNameToEquip;
 
-    [Header("Paramètres pour les Boosts de Statistiques")]
-    [Tooltip("Nom de la statistique à booster (par exemple : 'damage', 'speed').")]
+    [Header("Paramï¿½tres pour les Boosts de Statistiques")]
+    [Tooltip("Nom de la statistique ï¿½ booster (par exemple : 'damage', 'speed').")]
     public string targetStatName;
 
-    [Tooltip("Valeur du boost à appliquer.")]
+    [Tooltip("Valeur du boost ï¿½ appliquer.")]
     public float statBoostValue = 0;
 
-    [Tooltip("Cochez cette case pour appliquer le boost au joueur. Sinon, il sera appliqué à une arme.")]
+    [Tooltip("Cochez cette case pour appliquer le boost au joueur. Sinon, il sera appliquï¿½ ï¿½ une arme.")]
     public bool applyToPlayer = true;
 
-    [Tooltip("Arme spécifique à booster (laisser vide pour booster l'arme équipée).")]
+    [Tooltip("Arme spï¿½cifique ï¿½ booster (laisser vide pour booster l'arme ï¿½quipï¿½e).")]
     public WeaponStats targetWeapon;
 
     [Header("Effets Visuels et Sonores")]
@@ -40,11 +40,22 @@ public class Collectible : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            InteractionManager.Instance.ShowInteraction($"Appuyer sur A pour ramasser {itemName}");
-            InteractionManager.Instance.PositionInteractionUI(transform.position + Vector3.up * 1.5f);
-            PlayerController playerController = other.GetComponent<PlayerController>();
+            if (InteractionManager.Instance != null)
+            {
+                InteractionManager.Instance.ShowInteraction($"Appuyer sur A pour ramasser {itemName}");
+                InteractionManager.Instance.PositionInteractionUI(transform.position + Vector3.up * 1.5f);
+            }
 
-            playerController.SetInteractableItem(this);
+            PlayerController playerController = other.GetComponent<PlayerController>();
+            if (playerController == null)
+            {
+                playerController = other.GetComponentInParent<PlayerController>();
+            }
+
+            if (playerController != null)
+            {
+                playerController.SetInteractableItem(this);
+            }
 
         }
     }
@@ -53,8 +64,20 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
-            playerController.SetInteractableItem(null);
-            InteractionManager.Instance.HideInteraction();
+            if (playerController == null)
+            {
+                playerController = other.GetComponentInParent<PlayerController>();
+            }
+
+            if (playerController != null)
+            {
+                playerController.SetInteractableItem(null);
+            }
+
+            if (InteractionManager.Instance != null)
+            {
+                InteractionManager.Instance.HideInteraction();
+            }
         }
     }
     public void Collect(PlayerStats playerStats)
@@ -97,12 +120,12 @@ public class Collectible : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"Aucune arme existante nommée {weaponNameToEquip} trouvée.");
+                Debug.LogWarning($"Aucune arme existante nommï¿½e {weaponNameToEquip} trouvï¿½e.");
             }
         }
         else
         {
-            Debug.LogWarning("Aucun nom d'arme spécifié pour le collectible.");
+            Debug.LogWarning("Aucun nom d'arme spï¿½cifiï¿½ pour le collectible.");
         }
     }
 

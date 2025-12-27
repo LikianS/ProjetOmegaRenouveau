@@ -47,23 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcName: Mickael
-  shopType: BowShop
+  shopType: 
   dialogueGroups:
-  - dialogueData: {fileID: 11400000, guid: 746862c709342c4498f68dda5ff00d1f, type: 2}
-    conditions:
-    - quest: {fileID: 11400000, guid: 8f7b3e0592691a04e8dc5eb86f1084a6, type: 2}
-      conditionType: 2
-      requiredStepId: 0
-    isActive: 1
-    requiredAchievementPoints: 0
-  - dialogueData: {fileID: 11400000, guid: 6380f95b72cb99d479c6ac46be12f759, type: 2}
-    conditions:
-    - quest: {fileID: 11400000, guid: 8f7b3e0592691a04e8dc5eb86f1084a6, type: 2}
-      conditionType: 1
-      requiredStepId: 1
-    isActive: 1
-    requiredAchievementPoints: 0
-  - dialogueData: {fileID: 11400000, guid: 9d6d1535db554814685db5e5bc10a15a, type: 2}
+  - dialogueData: {fileID: 11400000, guid: 4e5f925815be8f3449a13106b4859633, type: 2}
     conditions: []
     isActive: 1
     requiredAchievementPoints: 0
@@ -154,7 +140,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1137485410730330004}
   m_SourcePrefab: {fileID: 100100000, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
 --- !u!4 &173985436463802898 stripped
 Transform:
@@ -162,3 +152,32 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6296875666076012229}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &658034042648948904 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6296875666076012229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1137485410730330004
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658034042648948904}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}

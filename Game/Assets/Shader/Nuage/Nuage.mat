@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Nuage
+  m_Shader: {fileID: 4800000, guid: c517c63722a1e2347a4e1826e58ef54d, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _NoiseTex:
+        m_Texture: {fileID: 11700000, guid: 52fa44206600ea54fa1ae55b010cb489, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Absorption: 3.9
+    - _AlphaThreshold: 0
+    - _CloudCoverage: 0.53
+    - _CloudRadius: 0.388
+    - _CloudScale: 3
+    - _CloudSize: 3
+    - _Coverage: 0.56
+    - _Crispness: 20
+    - _Density: 5
+    - _DetailScale: 6
+    - _DetailStrength: 0.33
+    - _EdgeFade: 0.23
+    - _EdgeMaskStrength: 0.2
+    - _FireIntensity: 5
+    - _FireThreshold: 0
+    - _GroundFade: 0
+    - _Hardness: 1
+    - _JitterIntensity: 2
+    - _LightAbsorption: 0.7
+    - _NoiseAmount: 0.44
+    - _NoiseScale: 17.14
+    - _Opacity: 2.82
+    - _Scale: 3
+    - _Separation: 2.6
+    - _ShadowLevel: 0.4
+    - _ShadowPoint: -0.43
+    - _ShadowSoftness: 0.01
+    - _ShadowThreshold: 0.23
+    - _Softness: 0.24
+    - _StepCount: 64
+    - _StepSize: 0.09
+    m_Colors:
+    - _ColorBase: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorBot: {r: 0.09999997, g: 0.09999997, b: 0.09999997, a: 1}
+    - _ColorHigh: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorLit: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorLow: {r: 0.8, g: 0.8, b: 0.9, a: 1}
+    - _ColorShadow: {r: 0.39999998, g: 0.39999998, b: 0.5, a: 1}
+    - _ColorTop: {r: 1, g: 1, b: 1, a: 1}
+    - _FireColor: {r: 1, g: 0.5, b: 0, a: 1}
+    - _LightDir: {r: 0.5, g: 1, b: 0.2, a: 0}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor: {r: 0.29999998, g: 0.34999996, b: 0.45, a: 1}
+    - _Speed: {r: 0.14, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

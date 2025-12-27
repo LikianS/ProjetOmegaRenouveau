@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyController: {fileID: 7177151315828546112}
+  meleeEnemyController: {fileID: 0}
 --- !u!1 &3796025133883947413
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +127,7 @@ Transform:
   m_GameObject: {fileID: 5663511763623396653}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22, y: 1, z: -9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -183,10 +184,18 @@ MonoBehaviour:
   patrolRadius: 12
   minPatrolWaitTime: 1
   maxPatrolWaitTime: 2
+  damageTextPrefab: {fileID: 0}
   enemyType: 1
   projectilePrefab: {fileID: 687433062207236239, guid: 3cb98148a8e04934c893af745b4cc536,
     type: 3}
   projectileSpawnPoint: {fileID: 7627560387528704256}
+  fleeThreshold: 0.3
+  fleeDistance: 10
+  fleeSpeed: 7
+  meleeAttackSound: {fileID: 0}
+  rangedAttackSound: {fileID: 0}
+  hitSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!136 &7656643844998552094
 CapsuleCollider:
   m_ObjectHideFlags: 0
