@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class ArmorSlot : MonoBehaviour
 {
-    public GameObject crestObject; 
-    public GameObject weaponObject; 
-
-    public Material[] crestMaterials; 
-    public Material[] weaponMaterials; 
-
+    [Header("Blason")]
+    public GameObject crestObject;
+    public Material[] crestMaterials;
     private int crestIndex = 0;
+
+    [Header("Armes")]
+    public GameObject[] weaponPrefabs;   
+    public WeaponType[] weaponTypes;     
     private int weaponIndex = 0;
 
     void Start()
@@ -24,28 +25,29 @@ public class ArmorSlot : MonoBehaviour
 
     public void NextWeapon()
     {
-        weaponIndex = (weaponIndex + 1) % weaponMaterials.Length;
+        weaponIndex = (weaponIndex + 1) % weaponPrefabs.Length;
         UpdateVisuals();
     }
 
     void UpdateVisuals()
     {
-      
-        if (crestObject != null && crestMaterials.Length > 0)
+        
+        if (crestObject != null)
             crestObject.GetComponent<Renderer>().material = crestMaterials[crestIndex];
 
-        if (weaponObject != null && weaponMaterials.Length > 0)
-            weaponObject.GetComponent<Renderer>().material = weaponMaterials[weaponIndex];
+        for (int i = 0; i < weaponPrefabs.Length; i++)
+        {
+            weaponPrefabs[i].SetActive(i == weaponIndex);
+        }
     }
-
 
     public string GetCurrentCrest()
     {
         return crestMaterials[crestIndex].name;
     }
 
-    public string GetCurrentWeapon()
+    public WeaponType GetCurrentWeapon()
     {
-        return weaponMaterials[weaponIndex].name;
+        return weaponTypes[weaponIndex];
     }
 }
