@@ -21,11 +21,19 @@ MonoBehaviour:
   eventZoneColor: {r: 0.5377358, g: 0.34404925, b: 0.23082057, a: 1}
   heightMultiplier: 5
   noiseFrequency: 0.1
-  trees: []
-  bushes: []
-  twigs: []
-  rocks: []
-  vegetationDensity: 0.1
+  trees:
+  - {fileID: 1851030074180309973, guid: b69c35c4f3d673e4f85004d0581f9105, type: 3}
+  - {fileID: 8015956150646534335, guid: ea1d9040b339d034abaa12dd47062386, type: 3}
+  bushes:
+  - {fileID: 102125696303282377, guid: 19029c1e7c9031d4bb5273374fc0dc4e, type: 3}
+  - {fileID: 5674666472736072295, guid: 5cecfbcb65f1d3c46a6d74cd15ebfb7a, type: 3}
+  twigs:
+  - {fileID: 2133774368353516586, guid: ffacc465341324446990e4db47402106, type: 3}
+  rocks:
+  - {fileID: 3426925393909835632, guid: 7533f29e53e570547b0b2c0491c5db29, type: 3}
+  - {fileID: 3224848930228560101, guid: 72f395f68f50c1e43b045a3ea31e74de, type: 3}
+  vegetationDensity: 0.031
   enemies: []
   puzzles: []
-  collectibles: []
+  collectibles:
+  - {fileID: 5748222353490076782, guid: badbc5032a9a42a4da9fea1eeb332ab4, type: 3}

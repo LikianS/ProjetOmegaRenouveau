@@ -11,7 +11,7 @@ public enum EnemyType
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Références")]
+    [Header("Rï¿½fï¿½rences")]
     public Animator animator;
     public NavMeshAgent agent;
 
@@ -407,8 +407,8 @@ public class EnemyController : MonoBehaviour
             transform.position = end;
         }
 
-        // Attendre un temps fixe pour simuler la durée de l'animation de hit
-        float hitAnimationDuration = 0.5f; // Durée de l'animation de hit en secondes
+        // Attendre un temps fixe pour simuler la durï¿½e de l'animation de hit
+        float hitAnimationDuration = 0.5f; // Durï¿½e de l'animation de hit en secondes
         yield return new WaitForSeconds(hitAnimationDuration);
 
         // === RESTAURE LA VITESSE ET LE MOUVEMENT ===
@@ -527,7 +527,8 @@ public class EnemyController : MonoBehaviour
                 agent.speed = defaultSpeed;
                 agent.stoppingDistance = 0f;
                 animator.SetBool(animIDIsMoving, true);
-                SoundManager.Instance.PlayEnemyWalk();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyWalk();
                 GetNewPatrolPoint();
                 break;
 
@@ -540,7 +541,8 @@ public class EnemyController : MonoBehaviour
                 agent.isStopped = false;
                 agent.speed = 5f;
                 agent.stoppingDistance = meleeTransitionRange;
-                SoundManager.Instance.PlayEnemyRun();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyRun();
                 animator.SetBool(animIDIsMoving, true);
                 break;
 
@@ -548,7 +550,8 @@ public class EnemyController : MonoBehaviour
                 agent.isStopped = false;
                 agent.speed = 5f;
                 agent.stoppingDistance = meleeAttackRange;
-                SoundManager.Instance.PlayEnemyAttackMelee();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyAttackMelee();
                 animator.SetBool(animIDIsMoving, true);
                 attackTimer = attackCooldown;
                 break;
@@ -556,7 +559,8 @@ public class EnemyController : MonoBehaviour
             case EnemyState.RangedAttack:
                 agent.isStopped = true;
                 agent.stoppingDistance = rangedAttackRange;
-                SoundManager.Instance.PlayEnemyAttackRanged();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyAttackRanged();
                 animator.SetBool(animIDIsMoving, false);
                 attackTimer = attackCooldown;
                 break;

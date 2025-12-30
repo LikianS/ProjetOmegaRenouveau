@@ -15,7 +15,7 @@ C:/Users/77kik/Documents/ProjetOmegaRenouveau/Game
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-55063
+49539
 -job-worker-count
 7
 -background-job-worker-count
@@ -58,12 +58,12 @@ C:/Users/77kik/Documents/ProjetOmegaRenouveau/Game
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [32312] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 245035307 [EditorId] 245035307 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
-Player connection [32312] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 245035307 [EditorId] 245035307 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [24040] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 3373975940 [EditorId] 3373975940 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [24040] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 3373975940 [EditorId] 3373975940 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 7
 [Physics::Module] Initialized MultithreadedJobDispatcher with 7 workers.
 Library Redirect Path: Library/
-Refreshing native plugins compatible for Editor in 4.10 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 128.43 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2023.2.20f1 (0e25a174756c)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/Resources/UnitySubsystems
@@ -79,45 +79,45 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56640
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56700
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.005992 seconds.
-- Loaded All Assemblies, in  0.509 seconds
+Registered in 0.222904 seconds.
+- Loaded All Assemblies, in  2.345 seconds
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.392 seconds
-Domain Reload Profiling: 898ms
-	BeginReloadAssembly (172ms)
+- Finished resetting the current domain, in  0.371 seconds
+Domain Reload Profiling: 2713ms
+	BeginReloadAssembly (427ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (53ms)
-	RebuildNativeTypeToScriptingClass (16ms)
-	initialDomainReloadingComplete (64ms)
-	LoadAllAssembliesAndSetupDomain (201ms)
-		LoadAssemblies (168ms)
+	RebuildCommonClasses (603ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (274ms)
+	LoadAllAssembliesAndSetupDomain (1025ms)
+		LoadAssemblies (423ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (196ms)
-			TypeCache.Refresh (195ms)
-				TypeCache.ScanAssembly (177ms)
+		AnalyzeDomain (1022ms)
+			TypeCache.Refresh (1020ms)
+				TypeCache.ScanAssembly (697ms)
 			BuildScriptInfoCaches (0ms)
-			ResolveRequiredComponents (1ms)
-	FinalizeReload (392ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (372ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (315ms)
+		SetupLoadedEditorAssemblies (311ms)
 			LogAssemblyErrors (0ms)
 			InitializePlatformSupportModulesInManaged (11ms)
 			SetLoadedEditorAssemblies (5ms)
 			BeforeProcessingInitializeOnLoad (6ms)
-			ProcessInitializeOnLoadAttributes (236ms)
-			ProcessInitializeOnLoadMethodAttributes (56ms)
+			ProcessInitializeOnLoadAttributes (234ms)
+			ProcessInitializeOnLoadMethodAttributes (55ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -128,60 +128,1669 @@ Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  1.465 seconds
-Refreshing native plugins compatible for Editor in 3.33 ms, found 6 plugins.
+- Loaded All Assemblies, in  7.265 seconds
+Refreshing native plugins compatible for Editor in 2.22 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Error saving file Library/StateCache/LayerSettings/9e/9ecc5c3c162a7aba29bafa64c8b94b7c.json. Error: System.IO.IOException: Sharing violation on path C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\StateCache\LayerSettings\9e\9ecc5c3c162a7aba29bafa64c8b94b7c.json
+  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.IO.FileOptions options) [0x00000] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,System.IO.FileOptions)
+  at System.IO.StreamWriter..ctor (System.String path, System.Boolean append, System.Text.Encoding encoding, System.Int32 bufferSize) [0x00055] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at System.IO.StreamWriter..ctor (System.String path, System.Boolean append, System.Text.Encoding encoding) [0x00000] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.StreamWriter..ctor(string,bool,System.Text.Encoding)
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00034] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at UnityEditor.StateCache`1[T].SetState (UnityEngine.Hash128 key, T obj) [0x0004b] in <8f5ff83e453e49179847370b820a0398>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+UnityEditor.StateCache`1<UnityEditor.Tools/LayerSettings>:SetState (UnityEngine.Hash128,UnityEditor.Tools/LayerSettings)
+UnityEditor.Tools:set_lockedLayers (int)
+UnityEditor.Tools:OnEnable ()
+UnityEngine.ScriptableObject:CreateScriptableObjectInstanceFromType (System.Type,bool)
+UnityEngine.ScriptableObject:CreateInstance (System.Type)
+UnityEngine.ScriptableObject:CreateInstance<UnityEditor.Tools> ()
+UnityEditor.Tools:get_get ()
+UnityEditor.Tools:get_visibleLayers ()
+UnityEditor.Animations.Rigging.BoneRendererUtils:.cctor () (at ./Library/PackageCache/com.unity.animation.rigging@1.3.0/Editor/Utils/BoneRendererUtils.cs:121)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: ./Library/PackageCache/com.unity.animation.rigging@1.3.0/Editor/Utils/BoneRendererUtils.cs Line: 121)
+
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.545 seconds
+Domain Reload Profiling: 9788ms
+	BeginReloadAssembly (1489ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (7ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (33ms)
+	RebuildCommonClasses (39ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (45ms)
+	LoadAllAssembliesAndSetupDomain (5655ms)
+		LoadAssemblies (4297ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (1476ms)
+			TypeCache.Refresh (1418ms)
+				TypeCache.ScanAssembly (1345ms)
+			BuildScriptInfoCaches (42ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (2545ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (1651ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (88ms)
+			ProcessInitializeOnLoadAttributes (1510ms)
+			ProcessInitializeOnLoadMethodAttributes (38ms)
+			AfterProcessingInitializeOnLoad (8ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (9ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Refreshing native plugins compatible for Editor in 3.41 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 299 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6462 unused Assets / (8.9 MB). Loaded Objects now: 7248.
+Memory consumption went from 216.5 MB to 207.6 MB.
+Total: 10.161400 ms (FindLiveObjects: 0.945600 ms CreateObjectMapping: 0.372100 ms MarkObjects: 5.193900 ms  DeleteObjects: 3.648400 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 37038.919592 seconds.
+  path: Assets/tree1.fbx
+  artifactKey: Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tree1.fbx using Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e982a8aa1985c06881b94330a88bb758') in 0.6922039 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 45
+
+========================================================================
+Received Import Request.
+  Time since last request: 1211.265904 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Grass/Grass.001.prefab
+  artifactKey: Guid(f76a8107dcbeed1448accf5ac6c02989) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Grass/Grass.001.prefab using Guid(f76a8107dcbeed1448accf5ac6c02989) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '65e5d8560d52e39185af765863d848a0') in 0.202696 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Grass/Grass.003.prefab
+  artifactKey: Guid(9dd8dfb20ffbbee4b97b882fcb4b8d46) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Grass/Grass.003.prefab using Guid(9dd8dfb20ffbbee4b97b882fcb4b8d46) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9f0f1fc9816b9ffcc7d2b4094696fb9f') in 0.0181208 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Grass/Grass.002.prefab
+  artifactKey: Guid(ce0c6845c31613145a5747169dd178f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Grass/Grass.002.prefab using Guid(ce0c6845c31613145a5747169dd178f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7626fc610b7abafb4bbb0a945f2d8264') in 0.0211588 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/Environment/grass_03.prefab
+  artifactKey: Guid(ffacc465341324446990e4db47402106) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/Environment/grass_03.prefab using Guid(ffacc465341324446990e4db47402106) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8bab9fb8b041fcdb5a804432200936f7') in 0.0569274 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.517866 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Cauldron and Campfire/CauldronString.prefab
+  artifactKey: Guid(b60842f671e7f19448d4458b666a8a3d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Cauldron and Campfire/CauldronString.prefab using Guid(b60842f671e7f19448d4458b666a8a3d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '13083486a8e9deb6e038c3e0ba75b7c3') in 0.048761 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.364206 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/fishing_rod.prefab
+  artifactKey: Guid(f141b8e0322c18647b656ad60a086898) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/fishing_rod.prefab using Guid(f141b8e0322c18647b656ad60a086898) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '95672a2e83a2876f2dc585dedccf9566') in 0.0729203 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.072838 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.002.prefab
+  artifactKey: Guid(541624cf92ceca947aad7166528d9cd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.002.prefab using Guid(541624cf92ceca947aad7166528d9cd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6d4f47dd91bb65dbd9baaa8b79326ccd') in 0.0244709 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.003.prefab
+  artifactKey: Guid(3348c8e281ab4bd4a832bef8648373c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.003.prefab using Guid(3348c8e281ab4bd4a832bef8648373c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c404f3b2dda3587aa9f86494b1f2e216') in 0.024589 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.005.fbx
+  artifactKey: Guid(49248d5fa8f2290489bb93e07dfec9e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.005.fbx using Guid(49248d5fa8f2290489bb93e07dfec9e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8843f6a73b0b0d5f1fefe29fb6ff1986') in 0.0268357 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.006.fbx
+  artifactKey: Guid(65367d32d15535d4eb13c671cfb64c22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.006.fbx using Guid(65367d32d15535d4eb13c671cfb64c22) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'dd3d78b84319f55afc2ac814183f081e') in 0.0285038 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.742421 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.002.prefab
+  artifactKey: Guid(2f5c5c3d7486bdb47983d0710ac86697) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.002.prefab using Guid(2f5c5c3d7486bdb47983d0710ac86697) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e5f690b7cfe5e5d5592c4988a1d72f34') in 0.0225517 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001345 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.003.fbx
+  artifactKey: Guid(08f805dfca3cc884190245299b7245dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.003.fbx using Guid(08f805dfca3cc884190245299b7245dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '031b3816a0fb0af9212b64505dafa231') in 0.0283831 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000092 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.009.fbx
+  artifactKey: Guid(b8bb72f0fe2568f4a930b41ca29d6874) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.009.fbx using Guid(b8bb72f0fe2568f4a930b41ca29d6874) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a73d95b850805402d41222681e7c6485') in 0.1241652 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.009197 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.012.fbx
+  artifactKey: Guid(643b10e6cf94bcf46acb19d2c0b220df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.012.fbx using Guid(643b10e6cf94bcf46acb19d2c0b220df) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2fb9e330041b9902f34c87e0c365c956') in 0.0283272 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.013.prefab
+  artifactKey: Guid(72f395f68f50c1e43b045a3ea31e74de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.013.prefab using Guid(72f395f68f50c1e43b045a3ea31e74de) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '72032e235c5a97c6dc172dbd10ee12f1') in 0.020332 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.019.fbx
+  artifactKey: Guid(2ea28c14ab7b34344aed8fec10a7d22f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.019.fbx using Guid(2ea28c14ab7b34344aed8fec10a7d22f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f052b22315dc4859c88686342f6bc4bd') in 0.0265437 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.021.prefab
+  artifactKey: Guid(95160d33cca00cb4c81e3e610dd0e57f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.021.prefab using Guid(95160d33cca00cb4c81e3e610dd0e57f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5c03871ae0459ef80479b3589de7f447') in 0.0208896 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.014922 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rock + Moss/RockMoss.002.prefab
+  artifactKey: Guid(f96f6ca4f5e2a384d9bac04626f8b640) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rock + Moss/RockMoss.002.prefab using Guid(f96f6ca4f5e2a384d9bac04626f8b640) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7e6fe01d84f5c083a66007d76836230e') in 0.0339132 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000762 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/RockMoss.003.fbx
+  artifactKey: Guid(1d788f302a6ceb143b0868a719c53ac1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/RockMoss.003.fbx using Guid(1d788f302a6ceb143b0868a719c53ac1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '225ca6152723285c126992a1ff10d85e') in 0.0282366 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.144812 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Prefabs/Clutter/Quill.prefab
+  artifactKey: Guid(01b18908cb794a34a8fc133e9f4ec355) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Prefabs/Clutter/Quill.prefab using Guid(01b18908cb794a34a8fc133e9f4ec355) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '224040ebe5098cdc1fe1b88e58c85b0a') in 0.0252456 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005528 seconds.
+  path: Assets/Level 1 Monster Pack/Models/Rabbit_Level_1.fbx
+  artifactKey: Guid(05b0336cad2ece64b99ce054ed619f4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Level 1 Monster Pack/Models/Rabbit_Level_1.fbx using Guid(05b0336cad2ece64b99ce054ed619f4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ea186ec628f7ea3a22e367ec892715d9') in 0.1351168 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 82
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/rack_with_weapon.prefab
+  artifactKey: Guid(555dea38b26cb1d4780cf84a97993bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/rack_with_weapon.prefab using Guid(555dea38b26cb1d4780cf84a97993bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3257dcfe8ea1183a8945b6d1261bc92a') in 0.3036002 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 68
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Top Cover 1.prefab
+  artifactKey: Guid(8bcbae886d0ef054eba24cdaa3a20846) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Top Cover 1.prefab using Guid(8bcbae886d0ef054eba24cdaa3a20846) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd3d11ab8cbc613205379974a981026b2') in 0.0243308 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 4.prefab
+  artifactKey: Guid(dd62e4599be3d7e44b78f013d0b08d82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 4.prefab using Guid(dd62e4599be3d7e44b78f013d0b08d82) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd88a7b183141b2b204db54cce4a235dc') in 0.019118 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/round_bread.fbx
+  artifactKey: Guid(dd890c06263fdbe47be82693915f1a70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/round_bread.fbx using Guid(dd890c06263fdbe47be82693915f1a70) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '053dd61bcf09759f612a5541e3f13c1e') in 0.0208815 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/round_cheese.prefab
+  artifactKey: Guid(24a49be23fa523947bf8c260956b7043) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/round_cheese.prefab using Guid(24a49be23fa523947bf8c260956b7043) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '937042c59cb3117bfb324e604a7aa77e') in 0.0878066 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/Props/Mesh/Rune_Collision.fbx
+  artifactKey: Guid(5406bc471c9fb1c45b55e89cc342d33c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/Props/Mesh/Rune_Collision.fbx using Guid(5406bc471c9fb1c45b55e89cc342d33c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6fd1ca2bd677168da250f467873cb847') in 0.0205802 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/Props/Mesh/Rune_Part_0.fbx
+  artifactKey: Guid(c69cca4c44683274f944388cc38afe5d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/Props/Mesh/Rune_Part_0.fbx using Guid(c69cca4c44683274f944388cc38afe5d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '851f2cf588bc085b44bc45e491e5f2b0') in 0.2866232 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 38
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000045 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/Vortex/Mesh/SandPit.fbx
+  artifactKey: Guid(69785f9da1f14944494a85a3b563d879) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/Vortex/Mesh/SandPit.fbx using Guid(69785f9da1f14944494a85a3b563d879) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '87b469de659ea0cc52dbd5d390d34142') in 0.0854809 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 38
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000060 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/Vortex/Mesh/RunePile_Collision.fbx
+  artifactKey: Guid(cbd6727e92db8554a9789e0d3dd1531f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/Vortex/Mesh/RunePile_Collision.fbx using Guid(cbd6727e92db8554a9789e0d3dd1531f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '494392672ae4d3ee6829406dadf22f3f') in 0.0272768 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/RuneStone/Mesh/RuneStone.fbx
+  artifactKey: Guid(7c900668484faa647b64d62a3fcb1b51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/RuneStone/Mesh/RuneStone.fbx using Guid(7c900668484faa647b64d62a3fcb1b51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '19b558aa7ae208c2aba6a62cb20672b0') in 0.259436 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 38
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Prefabs/Rain.prefab
+  artifactKey: Guid(71f2b162c2bb54445914e3b385720210) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Rain.prefab using Guid(71f2b162c2bb54445914e3b385720210) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '21281a1f099f51461ab1a34865ffb3b8') in 0.0388536 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 34
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/sausages_hanging.prefab
+  artifactKey: Guid(2397942164dda9244a32b8d0fbebc32b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/sausages_hanging.prefab using Guid(2397942164dda9244a32b8d0fbebc32b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8010eefbbdc0420942aa30585037abc6') in 0.0497965 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/Rift/Mesh/RiftEffect.fbx
+  artifactKey: Guid(77278df1786c93240b19e2cfdb43f6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/Rift/Mesh/RiftEffect.fbx using Guid(77278df1786c93240b19e2cfdb43f6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f2f7cf033caf321ae0004b8880333878') in 0.0336068 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Skeleton/FBX/Run.fbx
+  artifactKey: Guid(37f5ce64e13839347b144e7193a56587) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Skeleton/FBX/Run.fbx using Guid(37f5ce64e13839347b144e7193a56587) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e1b8b57028ae713ab686f4a5a5104a85') in 0.0047897 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 93
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/sausage_on_surface.fbx
+  artifactKey: Guid(f531e0e193cd45642aa6127adc0b5b2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/sausage_on_surface.fbx using Guid(f531e0e193cd45642aa6127adc0b5b2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '55774b402a20d384d6a6c7ff9fb9be83') in 0.0307956 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 1.prefab
+  artifactKey: Guid(067f6dbb1129d474783582da4ae991bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 1.prefab using Guid(067f6dbb1129d474783582da4ae991bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'bc99346f6c50ddd8ce3316426ef4633e') in 0.0363497 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Spiders/Prefabs/Sand Spider.prefab
+  artifactKey: Guid(3af956640595c6e4cb9436f0f4545ffd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Spiders/Prefabs/Sand Spider.prefab using Guid(3af956640595c6e4cb9436f0f4545ffd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '26d78e80465d5a47eb94e576fa00021e') in 0.1401085 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 216
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.279080 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Books/Book.001.prefab
+  artifactKey: Guid(0e5ffb2c4d92a324fb79cb8cbdae9c74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Books/Book.001.prefab using Guid(0e5ffb2c4d92a324fb79cb8cbdae9c74) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '589f204d5604e10468be1176f2a78c4a') in 0.0280678 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000866 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Books/Book.003.prefab
+  artifactKey: Guid(258d50e3182ee4242b58288085cb26a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Books/Book.003.prefab using Guid(258d50e3182ee4242b58288085cb26a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'cc6cb1d3e076c226c301ecb4214fb6d7') in 0.023622 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Books/Book.004.prefab
+  artifactKey: Guid(eef3474a31abb3848bd8688a52babcd3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Decorative Props/Books/Book.004.prefab using Guid(eef3474a31abb3848bd8688a52babcd3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '79010d50ee6484e0965beeec05021ad6') in 0.0370509 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 11.36 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 44 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 44 unused Assets / (4.8 MB). Loaded Objects now: 7392.
+Memory consumption went from 171.3 MB to 166.5 MB.
+Total: 13.116000 ms (FindLiveObjects: 1.318400 ms CreateObjectMapping: 0.181000 ms MarkObjects: 10.420000 ms  DeleteObjects: 1.194900 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.101 seconds
+Refreshing native plugins compatible for Editor in 2.00 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Error saving file Library/StateCache/LayerSettings/9e/9ecc5c3c162a7aba29bafa64c8b94b7c.json. Error: System.IO.IOException: Sharing violation on path C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\StateCache\LayerSettings\9e\9ecc5c3c162a7aba29bafa64c8b94b7c.json
+  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.IO.FileOptions options) [0x00000] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,System.IO.FileOptions)
+  at System.IO.StreamWriter..ctor (System.String path, System.Boolean append, System.Text.Encoding encoding, System.Int32 bufferSize) [0x00055] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at System.IO.StreamWriter..ctor (System.String path, System.Boolean append, System.Text.Encoding encoding) [0x00000] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.StreamWriter..ctor(string,bool,System.Text.Encoding)
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00034] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at UnityEditor.StateCache`1[T].SetState (UnityEngine.Hash128 key, T obj) [0x0004b] in <8f5ff83e453e49179847370b820a0398>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+UnityEditor.StateCache`1<UnityEditor.Tools/LayerSettings>:SetState (UnityEngine.Hash128,UnityEditor.Tools/LayerSettings)
+UnityEditor.Tools:set_lockedLayers (int)
+UnityEditor.Tools:OnEnable ()
+UnityEngine.ScriptableObject:CreateScriptableObjectInstanceFromType (System.Type,bool)
+UnityEngine.ScriptableObject:CreateInstance (System.Type)
+UnityEngine.ScriptableObject:CreateInstance<UnityEditor.Tools> ()
+UnityEditor.Tools:get_get ()
+UnityEditor.Tools:get_visibleLayers ()
+UnityEditor.Animations.Rigging.BoneRendererUtils:.cctor () (at ./Library/PackageCache/com.unity.animation.rigging@1.3.0/Editor/Utils/BoneRendererUtils.cs:121)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: ./Library/PackageCache/com.unity.animation.rigging@1.3.0/Editor/Utils/BoneRendererUtils.cs Line: 121)
+
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.980 seconds
+Domain Reload Profiling: 2078ms
+	BeginReloadAssembly (252ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (15ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (61ms)
+	RebuildCommonClasses (39ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (41ms)
+	LoadAllAssembliesAndSetupDomain (752ms)
+		LoadAssemblies (632ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (243ms)
+			TypeCache.Refresh (16ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (202ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (980ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (706ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (102ms)
+			ProcessInitializeOnLoadAttributes (548ms)
+			ProcessInitializeOnLoadMethodAttributes (38ms)
+			AfterProcessingInitializeOnLoad (10ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (24ms)
+Refreshing native plugins compatible for Editor in 4.12 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 53 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.9 MB). Loaded Objects now: 7328.
+Memory consumption went from 187.1 MB to 178.2 MB.
+Total: 13.779800 ms (FindLiveObjects: 1.254900 ms CreateObjectMapping: 0.589100 ms MarkObjects: 6.202500 ms  DeleteObjects: 5.731600 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 162.589480 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/Environment/tree_03.prefab
+  artifactKey: Guid(49a43a0f277453b4e9b4438abaae51d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/Environment/tree_03.prefab using Guid(49a43a0f277453b4e9b4438abaae51d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1a31dcb2cdde6bb68543abc4e171b4b8') in 0.3592207 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 139.827589 seconds.
+  path: Assets/tree1.fbx
+  artifactKey: Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tree1.fbx using Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '780b3ce81ac3551778817ba76920e80f') in 0.0640269 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 36
+
+========================================================================
+Received Import Request.
+  Time since last request: 31.692923 seconds.
+  path: Assets/tree2.fbx
+  artifactKey: Guid(49db79176a66b9042be10df350cab20c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tree2.fbx using Guid(49db79176a66b9042be10df350cab20c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '51ced20a3acddcf638aab4f48574cfe2') in 0.6994779 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 36
+
+========================================================================
+Received Import Request.
+  Time since last request: 16.307280 seconds.
+  path: Assets/brush.fbx
+  artifactKey: Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/brush.fbx using Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3263687c32572bbb4078f726addd661d') in 0.073836 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 24.621222 seconds.
+  path: Assets/brush.fbx
+  artifactKey: Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/brush.fbx using Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ae229cbf1baaadd3ab16c9147e67fb9c') in 0.0528793 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 55.982830 seconds.
+  path: Assets/Prefabs/tree2.prefab
+  artifactKey: Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree2.prefab using Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'dae30658d4de6ad259601be701081d0a') in 0.0232632 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 47
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.340 seconds
+Refreshing native plugins compatible for Editor in 2.25 ms, found 6 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 [MODES] ModeService[none].Initialize
 [MODES] ModeService[none].LoadModes
 [MODES] Loading mode Default (0) for mode-current-id-Game
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.614 seconds
-Domain Reload Profiling: 3069ms
-	BeginReloadAssembly (536ms)
+- Finished resetting the current domain, in  0.927 seconds
+Domain Reload Profiling: 2265ms
+	BeginReloadAssembly (220ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (8ms)
+		DisableScriptedObjects (11ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (45ms)
-	RebuildCommonClasses (51ms)
-	RebuildNativeTypeToScriptingClass (17ms)
-	initialDomainReloadingComplete (54ms)
-	LoadAllAssembliesAndSetupDomain (796ms)
-		LoadAssemblies (609ms)
+		CreateAndSetChildDomain (56ms)
+	RebuildCommonClasses (42ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (30ms)
+	LoadAllAssembliesAndSetupDomain (1030ms)
+		LoadAssemblies (926ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (341ms)
-			TypeCache.Refresh (258ms)
-				TypeCache.ScanAssembly (235ms)
-			BuildScriptInfoCaches (59ms)
-			ResolveRequiredComponents (19ms)
-	FinalizeReload (1615ms)
+		AnalyzeDomain (205ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (178ms)
+			ResolveRequiredComponents (16ms)
+	FinalizeReload (927ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1288ms)
+		SetupLoadedEditorAssemblies (654ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (5ms)
-			SetLoadedEditorAssemblies (4ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (85ms)
+			ProcessInitializeOnLoadAttributes (510ms)
+			ProcessInitializeOnLoadMethodAttributes (43ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (29ms)
+Refreshing native plugins compatible for Editor in 2.78 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.6 MB). Loaded Objects now: 7351.
+Memory consumption went from 188.3 MB to 179.8 MB.
+Total: 11.931800 ms (FindLiveObjects: 0.901100 ms CreateObjectMapping: 0.708300 ms MarkObjects: 5.942300 ms  DeleteObjects: 4.378900 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 40.645669 seconds.
+  path: Assets/Prefabs/tree1.prefab
+  artifactKey: Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree1.prefab using Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0ae543d35067f17a750b1c53d65a095e') in 0.3885242 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 47
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.789 seconds
+Refreshing native plugins compatible for Editor in 2.08 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.884 seconds
+Domain Reload Profiling: 1669ms
+	BeginReloadAssembly (224ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (12ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (55ms)
+	RebuildCommonClasses (43ms)
+	RebuildNativeTypeToScriptingClass (18ms)
+	initialDomainReloadingComplete (33ms)
+	LoadAllAssembliesAndSetupDomain (466ms)
+		LoadAssemblies (390ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (179ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (152ms)
+			ResolveRequiredComponents (17ms)
+	FinalizeReload (884ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (650ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
 			BeforeProcessingInitializeOnLoad (103ms)
-			ProcessInitializeOnLoadAttributes (1115ms)
-			ProcessInitializeOnLoadMethodAttributes (49ms)
-			AfterProcessingInitializeOnLoad (13ms)
+			ProcessInitializeOnLoadAttributes (494ms)
+			ProcessInitializeOnLoadMethodAttributes (38ms)
+			AfterProcessingInitializeOnLoad (9ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (12ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
-Refreshing native plugins compatible for Editor in 3.47 ms, found 6 plugins.
+		AwakeInstancesAfterBackupRestoration (24ms)
+Refreshing native plugins compatible for Editor in 2.65 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 298 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 6460 unused Assets / (9.2 MB). Loaded Objects now: 7243.
-Memory consumption went from 215.7 MB to 206.5 MB.
-Total: 23.290900 ms (FindLiveObjects: 1.753600 ms CreateObjectMapping: 1.444300 ms MarkObjects: 12.745900 ms  DeleteObjects: 7.345100 ms)
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.3 MB). Loaded Objects now: 7374.
+Memory consumption went from 190.3 MB to 182.0 MB.
+Total: 10.570600 ms (FindLiveObjects: 0.896200 ms CreateObjectMapping: 0.476800 ms MarkObjects: 5.411600 ms  DeleteObjects: 3.784200 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 132.179146 seconds.
+  path: Assets/Son/01._damage_grunt_male.wav
+  artifactKey: Guid(19c671f6f5ee6984cb0a5961137d11e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Son/01._damage_grunt_male.wav using Guid(19c671f6f5ee6984cb0a5961137d11e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '32698aac9a8b395353ef30565aaea712') in 0.104969 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
 
 ========================================================================
 Received Import Request.
-  Time since last request: 547412.676923 seconds.
-  path: Assets/textures/splash.png
-  artifactKey: Guid(04193a86699bfae4b81543daf8d2d300) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/textures/splash.png using Guid(04193a86699bfae4b81543daf8d2d300) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9fede8d627767583df3d7fb876222d1a') in 0.4936662 seconds
+  Time since last request: 6.823223 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/Environment/grass_03.prefab
+  artifactKey: Guid(ffacc465341324446990e4db47402106) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/Environment/grass_03.prefab using Guid(ffacc465341324446990e4db47402106) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3dcc2324157a2169a9fb61eed1ba853e') in 0.2599632 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 62.475164 seconds.
+  path: Assets/Prefabs/brush (1).prefab
+  artifactKey: Guid(fc37fbcc81b782949bef41882e44e5c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/brush (1).prefab using Guid(fc37fbcc81b782949bef41882e44e5c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1649d2bd5d5d755eb05481f317661783') in 0.0440771 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 37
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.748 seconds
+Refreshing native plugins compatible for Editor in 2.94 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.878 seconds
+Domain Reload Profiling: 1623ms
+	BeginReloadAssembly (215ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (14ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (56ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (29ms)
+	LoadAllAssembliesAndSetupDomain (449ms)
+		LoadAssemblies (377ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (170ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (148ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (879ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (625ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (80ms)
+			ProcessInitializeOnLoadAttributes (495ms)
+			ProcessInitializeOnLoadMethodAttributes (34ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (29ms)
+Refreshing native plugins compatible for Editor in 2.94 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (9.1 MB). Loaded Objects now: 7399.
+Memory consumption went from 192.4 MB to 183.3 MB.
+Total: 15.221900 ms (FindLiveObjects: 1.357600 ms CreateObjectMapping: 0.808700 ms MarkObjects: 6.882800 ms  DeleteObjects: 6.171600 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.761 seconds
+Refreshing native plugins compatible for Editor in 2.45 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.874 seconds
+Domain Reload Profiling: 1632ms
+	BeginReloadAssembly (202ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (46ms)
+	RebuildCommonClasses (42ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (32ms)
+	LoadAllAssembliesAndSetupDomain (466ms)
+		LoadAssemblies (390ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (176ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (154ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (875ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (635ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (85ms)
+			ProcessInitializeOnLoadAttributes (501ms)
+			ProcessInitializeOnLoadMethodAttributes (33ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (26ms)
+Refreshing native plugins compatible for Editor in 2.29 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.4 MB). Loaded Objects now: 7400.
+Memory consumption went from 194.2 MB to 185.8 MB.
+Total: 13.829700 ms (FindLiveObjects: 1.101400 ms CreateObjectMapping: 0.527500 ms MarkObjects: 6.900500 ms  DeleteObjects: 5.298200 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 332.656601 seconds.
+  path: Assets/Prefabs/tree1.prefab
+  artifactKey: Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree1.prefab using Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c9cd2ce71836fe6c20b504ea2a2b3739') in 0.309284 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 48
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.229266 seconds.
+  path: Assets/Prefabs/tree1.prefab
+  artifactKey: Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree1.prefab using Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a6ad0f3594e4e20e0a40e63424ad3330') in 0.0111574 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 48
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.775213 seconds.
+  path: Assets/Prefabs/tree1.prefab
+  artifactKey: Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree1.prefab using Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '558cb7bb2f1a7ac4887321e2b1f58d54') in 0.0102136 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 48
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.724477 seconds.
+  path: Assets/Prefabs/tree2.prefab
+  artifactKey: Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree2.prefab using Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5e9cc69c6099f288df5014ee3ca8219d') in 0.0262538 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 47
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.675785 seconds.
+  path: Assets/Prefabs/tree2.prefab
+  artifactKey: Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree2.prefab using Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e7e704bc0a30881f2f73701d448043d0') in 0.0183631 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 47
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.395649 seconds.
+  path: Assets/Prefabs/tree2.prefab
+  artifactKey: Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree2.prefab using Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fda8fae504d66c89dc16c2cf71ef6bdb') in 0.0197367 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 47
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.267 seconds
+Refreshing native plugins compatible for Editor in 2.66 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.884 seconds
+Domain Reload Profiling: 2148ms
+	BeginReloadAssembly (230ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (14ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (56ms)
+	RebuildCommonClasses (39ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (31ms)
+	LoadAllAssembliesAndSetupDomain (950ms)
+		LoadAssemblies (888ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (175ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (153ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (885ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (644ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (79ms)
+			ProcessInitializeOnLoadAttributes (506ms)
+			ProcessInitializeOnLoadMethodAttributes (42ms)
+			AfterProcessingInitializeOnLoad (8ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (27ms)
+Refreshing native plugins compatible for Editor in 3.71 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.6 MB). Loaded Objects now: 7423.
+Memory consumption went from 196.3 MB to 187.7 MB.
+Total: 12.133600 ms (FindLiveObjects: 1.246800 ms CreateObjectMapping: 0.483600 ms MarkObjects: 6.332200 ms  DeleteObjects: 4.069900 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 67.676407 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/banana.fbx
+  artifactKey: Guid(c9cc7adf2c20bf143a97dd3f0ab2b1d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/banana.fbx using Guid(c9cc7adf2c20bf143a97dd3f0ab2b1d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a7be88aef290924aa5bdb7f8b5d4d67b') in 0.3291695 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Barrel.002.fbx
+  artifactKey: Guid(2617c9bb5cb6ad349b0a7667818735e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Barrel.002.fbx using Guid(2617c9bb5cb6ad349b0a7667818735e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '63f86fca46434a133243655926fd022e') in 0.0391614 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.833 seconds
+Refreshing native plugins compatible for Editor in 2.25 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.993 seconds
+Domain Reload Profiling: 1823ms
+	BeginReloadAssembly (215ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (15ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (53ms)
+	RebuildCommonClasses (44ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (34ms)
+	LoadAllAssembliesAndSetupDomain (519ms)
+		LoadAssemblies (406ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (213ms)
+			TypeCache.Refresh (18ms)
+				TypeCache.ScanAssembly (2ms)
+			BuildScriptInfoCaches (175ms)
+			ResolveRequiredComponents (16ms)
+	FinalizeReload (994ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (733ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (80ms)
+			ProcessInitializeOnLoadAttributes (597ms)
+			ProcessInitializeOnLoadMethodAttributes (39ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (36ms)
+Refreshing native plugins compatible for Editor in 3.21 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (9.1 MB). Loaded Objects now: 7446.
+Memory consumption went from 198.3 MB to 189.2 MB.
+Total: 13.404500 ms (FindLiveObjects: 0.977200 ms CreateObjectMapping: 0.553800 ms MarkObjects: 6.334100 ms  DeleteObjects: 5.537500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 163.512461 seconds.
+  path: Assets/Prefabs/tree1.prefab
+  artifactKey: Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree1.prefab using Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '73dc8dbc5b607135d71c40a6e976577c') in 0.3273523 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 48
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.765 seconds
+Refreshing native plugins compatible for Editor in 2.24 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.945 seconds
+Domain Reload Profiling: 1706ms
+	BeginReloadAssembly (212ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (12ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (56ms)
+	RebuildCommonClasses (37ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (36ms)
+	LoadAllAssembliesAndSetupDomain (461ms)
+		LoadAssemblies (379ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (178ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (153ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (946ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (685ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (84ms)
+			ProcessInitializeOnLoadAttributes (552ms)
+			ProcessInitializeOnLoadMethodAttributes (35ms)
+			AfterProcessingInitializeOnLoad (7ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (32ms)
+Refreshing native plugins compatible for Editor in 2.08 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.5 MB). Loaded Objects now: 7469.
+Memory consumption went from 200.3 MB to 191.8 MB.
+Total: 10.157700 ms (FindLiveObjects: 0.897100 ms CreateObjectMapping: 0.670900 ms MarkObjects: 5.292800 ms  DeleteObjects: 3.295700 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.801 seconds
+Refreshing native plugins compatible for Editor in 2.44 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.943 seconds
+Domain Reload Profiling: 1739ms
+	BeginReloadAssembly (195ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (49ms)
+	RebuildCommonClasses (40ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (33ms)
+	LoadAllAssembliesAndSetupDomain (510ms)
+		LoadAssemblies (373ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (232ms)
+			TypeCache.Refresh (11ms)
+				TypeCache.ScanAssembly (2ms)
+			BuildScriptInfoCaches (202ms)
+			ResolveRequiredComponents (16ms)
+	FinalizeReload (944ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (677ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (93ms)
+			ProcessInitializeOnLoadAttributes (535ms)
+			ProcessInitializeOnLoadMethodAttributes (33ms)
+			AfterProcessingInitializeOnLoad (8ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (36ms)
+Refreshing native plugins compatible for Editor in 3.31 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.4 MB). Loaded Objects now: 7470.
+Memory consumption went from 202.1 MB to 193.8 MB.
+Total: 12.373300 ms (FindLiveObjects: 1.180900 ms CreateObjectMapping: 0.685900 ms MarkObjects: 6.208200 ms  DeleteObjects: 4.296900 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 144.702904 seconds.
+  path: Assets/tree2.fbx
+  artifactKey: Guid(49db79176a66b9042be10df350cab20c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tree2.fbx using Guid(49db79176a66b9042be10df350cab20c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'eaa81f3db1161f9b7d17fa4be437f537') in 0.3766136 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 36
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.890 seconds
+Refreshing native plugins compatible for Editor in 2.28 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.902 seconds
+Domain Reload Profiling: 1789ms
+	BeginReloadAssembly (232ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (13ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (60ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (31ms)
+	LoadAllAssembliesAndSetupDomain (572ms)
+		LoadAssemblies (421ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (259ms)
+			TypeCache.Refresh (11ms)
+				TypeCache.ScanAssembly (2ms)
+			BuildScriptInfoCaches (227ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (902ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (646ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (84ms)
+			ProcessInitializeOnLoadAttributes (512ms)
+			ProcessInitializeOnLoadMethodAttributes (34ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (32ms)
+Refreshing native plugins compatible for Editor in 2.10 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.5 MB). Loaded Objects now: 7493.
+Memory consumption went from 204.2 MB to 195.7 MB.
+Total: 10.800900 ms (FindLiveObjects: 0.958300 ms CreateObjectMapping: 0.430600 ms MarkObjects: 5.722800 ms  DeleteObjects: 3.687600 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.788 seconds
+Refreshing native plugins compatible for Editor in 2.95 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Error saving file Library/StateCache/LayerSettings/9e/9ecc5c3c162a7aba29bafa64c8b94b7c.json. Error: System.IO.IOException: Sharing violation on path C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\StateCache\LayerSettings\9e\9ecc5c3c162a7aba29bafa64c8b94b7c.json
+  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.Boolean anonymous, System.IO.FileOptions options) [0x0019e] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize, System.IO.FileOptions options) [0x00000] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.FileStream..ctor(string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,int,System.IO.FileOptions)
+  at System.IO.StreamWriter..ctor (System.String path, System.Boolean append, System.Text.Encoding encoding, System.Int32 bufferSize) [0x00055] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at System.IO.StreamWriter..ctor (System.String path, System.Boolean append, System.Text.Encoding encoding) [0x00000] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.StreamWriter..ctor(string,bool,System.Text.Encoding)
+  at System.IO.File.WriteAllText (System.String path, System.String contents, System.Text.Encoding encoding) [0x00034] in <ecf276dcb8654fa5bed2c5ea1a4ad870>:0 
+  at UnityEditor.StateCache`1[T].SetState (UnityEngine.Hash128 key, T obj) [0x0004b] in <8f5ff83e453e49179847370b820a0398>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+UnityEditor.StateCache`1<UnityEditor.Tools/LayerSettings>:SetState (UnityEngine.Hash128,UnityEditor.Tools/LayerSettings)
+UnityEditor.Tools:set_lockedLayers (int)
+UnityEditor.Tools:OnEnable ()
+UnityEngine.ScriptableObject:CreateScriptableObjectInstanceFromType (System.Type,bool)
+UnityEngine.ScriptableObject:CreateInstance (System.Type)
+UnityEngine.ScriptableObject:CreateInstance<UnityEditor.Tools> ()
+UnityEditor.Tools:get_get ()
+UnityEditor.Tools:get_visibleLayers ()
+UnityEditor.Animations.Rigging.BoneRendererUtils:.cctor () (at ./Library/PackageCache/com.unity.animation.rigging@1.3.0/Editor/Utils/BoneRendererUtils.cs:121)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: ./Library/PackageCache/com.unity.animation.rigging@1.3.0/Editor/Utils/BoneRendererUtils.cs Line: 121)
+
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.002 seconds
+Domain Reload Profiling: 1786ms
+	BeginReloadAssembly (224ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (48ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (30ms)
+	LoadAllAssembliesAndSetupDomain (478ms)
+		LoadAssemblies (406ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (191ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (168ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (1002ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (741ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (86ms)
+			ProcessInitializeOnLoadAttributes (598ms)
+			ProcessInitializeOnLoadMethodAttributes (42ms)
+			AfterProcessingInitializeOnLoad (8ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (36ms)
+Refreshing native plugins compatible for Editor in 3.54 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (9.0 MB). Loaded Objects now: 7494.
+Memory consumption went from 206.0 MB to 197.0 MB.
+Total: 15.486200 ms (FindLiveObjects: 1.554100 ms CreateObjectMapping: 1.249300 ms MarkObjects: 6.894100 ms  DeleteObjects: 5.786400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 46.182328 seconds.
+  path: Assets/GenProfile/Air.asset
+  artifactKey: Guid(225fcbc856c9a5846a4daa2184971187) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/GenProfile/Air.asset using Guid(225fcbc856c9a5846a4daa2184971187) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'eb5ca7529518139da45818dda82bdda2') in 0.7128229 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 156
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.845 seconds
+Refreshing native plugins compatible for Editor in 2.46 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.924 seconds
+Domain Reload Profiling: 1765ms
+	BeginReloadAssembly (206ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (51ms)
+	RebuildCommonClasses (39ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (31ms)
+	LoadAllAssembliesAndSetupDomain (551ms)
+		LoadAssemblies (451ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (201ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (176ms)
+			ResolveRequiredComponents (14ms)
+	FinalizeReload (924ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (647ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (9ms)
+			BeforeProcessingInitializeOnLoad (89ms)
+			ProcessInitializeOnLoadAttributes (499ms)
+			ProcessInitializeOnLoadMethodAttributes (35ms)
+			AfterProcessingInitializeOnLoad (10ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (42ms)
+Refreshing native plugins compatible for Editor in 3.94 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.4 MB). Loaded Objects now: 7496.
+Memory consumption went from 207.9 MB to 199.5 MB.
+Total: 15.425500 ms (FindLiveObjects: 1.620700 ms CreateObjectMapping: 0.969800 ms MarkObjects: 7.878800 ms  DeleteObjects: 4.954000 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 50.821381 seconds.
+  path: Assets/tree1.fbx
+  artifactKey: Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tree1.fbx using Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd91af347bf72c1779dc4d303ac7ac161') in 0.3698102 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 36
+
+========================================================================
+Received Import Request.
+  Time since last request: 15.308530 seconds.
+  path: Assets/tree1.fbx
+  artifactKey: Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/tree1.fbx using Guid(65fb9671108af6744820dfc890032345) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5948f6e78e89f89667ebd11145bd1453') in 0.0403376 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 38
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.843 seconds
+Refreshing native plugins compatible for Editor in 2.42 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.915 seconds
+Domain Reload Profiling: 1755ms
+	BeginReloadAssembly (279ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (12ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (82ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (33ms)
+	LoadAllAssembliesAndSetupDomain (475ms)
+		LoadAssemblies (422ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (180ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (158ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (915ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (658ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (84ms)
+			ProcessInitializeOnLoadAttributes (522ms)
+			ProcessInitializeOnLoadMethodAttributes (38ms)
+			AfterProcessingInitializeOnLoad (8ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (41ms)
+Refreshing native plugins compatible for Editor in 2.50 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.6 MB). Loaded Objects now: 7519.
+Memory consumption went from 210.0 MB to 201.4 MB.
+Total: 12.831700 ms (FindLiveObjects: 1.103100 ms CreateObjectMapping: 0.707300 ms MarkObjects: 6.035000 ms  DeleteObjects: 4.984500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 191.841214 seconds.
+  path: Assets/Prefabs/brush (1).prefab
+  artifactKey: Guid(fc37fbcc81b782949bef41882e44e5c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/brush (1).prefab using Guid(fc37fbcc81b782949bef41882e44e5c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c11008f41857aca5b9cf4310f587dcb5') in 0.4377874 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 37
+
+========================================================================
+Received Import Request.
+  Time since last request: 39.087113 seconds.
+  path: Assets/Prefabs/tree1.prefab
+  artifactKey: Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree1.prefab using Guid(2925790e49ebf034abeae5485cfc54bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '092b0f1a8069803035dde8b5f0309e65') in 0.0215841 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 48
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.679692 seconds.
+  path: Assets/Prefabs/tree2.prefab
+  artifactKey: Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/tree2.prefab using Guid(e9a5a185916350642a1c952c5d0a99ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f5588817bc47ebbe0e5a7e618395c155') in 0.0437167 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 47
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.548890 seconds.
+  path: Assets/brush.fbx
+  artifactKey: Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/brush.fbx using Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ebb694cd62277dae6b021884e0f99104') in 0.1014674 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.861009 seconds.
+  path: Assets/brush.fbx
+  artifactKey: Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/brush.fbx using Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a003a56d5bfefdc2e71d8e608b583e5e') in 0.1400129 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.443 seconds
+Refreshing native plugins compatible for Editor in 3.57 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.015 seconds
+Domain Reload Profiling: 2454ms
+	BeginReloadAssembly (259ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (23ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (59ms)
+	RebuildCommonClasses (39ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (46ms)
+	LoadAllAssembliesAndSetupDomain (1082ms)
+		LoadAssemblies (981ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (207ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (183ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (1015ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (726ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (95ms)
+			ProcessInitializeOnLoadAttributes (574ms)
+			ProcessInitializeOnLoadMethodAttributes (41ms)
+			AfterProcessingInitializeOnLoad (10ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (42ms)
+Refreshing native plugins compatible for Editor in 2.36 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6461 unused Assets / (8.6 MB). Loaded Objects now: 7542.
+Memory consumption went from 212.0 MB to 203.4 MB.
+Total: 12.584700 ms (FindLiveObjects: 1.099100 ms CreateObjectMapping: 0.681800 ms MarkObjects: 6.412200 ms  DeleteObjects: 4.390300 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 31.805491 seconds.
+  path: Assets/Low-Poly Medieval Market/Prefabs/Environment/grass_03.prefab
+  artifactKey: Guid(ffacc465341324446990e4db47402106) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Prefabs/Environment/grass_03.prefab using Guid(ffacc465341324446990e4db47402106) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f7a3ca2093d12c770c0faeaae75be4a8') in 0.3533356 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 58.048092 seconds.
+  path: Assets/Prefabs/brush (1).prefab
+  artifactKey: Guid(fc37fbcc81b782949bef41882e44e5c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/brush (1).prefab using Guid(fc37fbcc81b782949bef41882e44e5c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd9f0d42a20d6bf40b6fd3bcb64dc723a') in 0.0547222 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 37
+
+========================================================================
+Received Import Request.
+  Time since last request: 85.155799 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Plate.fbx
+  artifactKey: Guid(5ea2f20c59b62c94cb5613b2b9d46328) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Plate.fbx using Guid(5ea2f20c59b62c94cb5613b2b9d46328) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5fc2833e946eb0f8fcfe7ce0d9d2f15b') in 0.0336359 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.028238 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/PolybrushMesh26394.asset
+  artifactKey: Guid(df09a8efd32072346b139c03530316b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/PolybrushMesh26394.asset using Guid(df09a8efd32072346b139c03530316b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd353928f61bc2355cefbdbf531a8777a') in 0.2842783 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/PortalGate/Mesh/PortalGate_Symbol.fbx
+  artifactKey: Guid(f31f888b3524e4040afbb14b942cfa15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/PortalGate/Mesh/PortalGate_Symbol.fbx using Guid(f31f888b3524e4040afbb14b942cfa15) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6885996d971456015dc771b4d7942e9a') in 0.2825117 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 37
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/PortalGate/Mesh/PortalGate_Collision.fbx
+  artifactKey: Guid(186cbdaa5349eb94b89b6cfc66dc4ed3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/PortalGate/Mesh/PortalGate_Collision.fbx using Guid(186cbdaa5349eb94b89b6cfc66dc4ed3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1a39d80eb5c6cedea92f680ed180852b') in 0.022 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Colliders/Tiles/Portcullis_Metal_col.fbx
+  artifactKey: Guid(825310f923447084fb8cd4d1729dc0aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Colliders/Tiles/Portcullis_Metal_col.fbx using Guid(825310f923447084fb8cd4d1729dc0aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '67071d42a07f5d7bbb5d6962fdb26f3a') in 0.0324359 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/RPGHero/Meshes/NewFreeRPGHeroPolyart.fbx
+  artifactKey: Guid(e4aa31f274820b94eb0d0b764e0f383b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RPGHero/Meshes/NewFreeRPGHeroPolyart.fbx using Guid(e4aa31f274820b94eb0d0b764e0f383b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'bff0dafe2786a33ebd098ac5cc706b7e') in 0.0415583 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 157
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/PortalGate_Simple/Mesh/PortalGate_Simple.fbx
+  artifactKey: Guid(3fbaefd53fba16c4f8cf13956fddc614) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/PortalGate_Simple/Mesh/PortalGate_Simple.fbx using Guid(3fbaefd53fba16c4f8cf13956fddc614) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2a523d4e6d67f0a834beab5fa1c630e9') in 0.3030212 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 47
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Scroll.003.fbx
+  artifactKey: Guid(31d525f8221254f4c86a0bac5eaf74bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Scroll.003.fbx using Guid(31d525f8221254f4c86a0bac5eaf74bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '4a67fcb32a441935374dd90898252a58') in 0.0419787 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Potion_Blue.fbx
+  artifactKey: Guid(e873cbc7c65c12b409ffa8b357ef3039) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Potion_Blue.fbx using Guid(e873cbc7c65c12b409ffa8b357ef3039) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '65737122ffb9bea98c2e1db4933aa42b') in 0.0330158 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 33
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000070 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Potion_Red.fbx
+  artifactKey: Guid(c6179e854b44e2541a9956947c806de0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Potion_Red.fbx using Guid(c6179e854b44e2541a9956947c806de0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '05e11ff78fb23cfc85926ee44b9042d0') in 0.0277442 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 33
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000059 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Colliders/Tiles/Portcullis_Wood_col.fbx
+  artifactKey: Guid(d6c5272c24aac2241b77698daa7a38a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Colliders/Tiles/Portcullis_Wood_col.fbx using Guid(d6c5272c24aac2241b77698daa7a38a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0421d5637248c5e80251d3a9d9d870a6') in 0.0258003 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/RPGHero/Meshes/NewFreeRPGHero.fbx
+  artifactKey: Guid(9ce6002518e821e43b4f97c76700fbac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/RPGHero/Meshes/NewFreeRPGHero.fbx using Guid(9ce6002518e821e43b4f97c76700fbac) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd03df63040661d6b5c996a741a6a490a') in 0.0390123 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 157
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Potato.fbx
+  artifactKey: Guid(0f7a0546cdceb1f4d8df8c7fb52f2523) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Potato.fbx using Guid(0f7a0546cdceb1f4d8df8c7fb52f2523) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd2eae492bc68133b626a06b87cb5245b') in 0.0464201 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Scroll_Small.fbx
+  artifactKey: Guid(07c11632f362e9544a7c89ada554f4f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Scroll_Small.fbx using Guid(07c11632f362e9544a7c89ada554f4f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c36088b654f1c3882f145e3ee71acad6') in 0.0405568 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Scales.fbx
+  artifactKey: Guid(d148b357b948fda4e90a57588e5662f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Scales.fbx using Guid(d148b357b948fda4e90a57588e5662f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c520dc29f9a06deed5c7c1746f2ee977') in 0.0348503 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Scroll_Elder.fbx
+  artifactKey: Guid(1cc69bcd5c8feea4493059cb89fd3104) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Scroll_Elder.fbx using Guid(1cc69bcd5c8feea4493059cb89fd3104) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f548cde3bf3f7af35ce56678f2842856') in 0.0391926 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 33
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/section_02.fbx
+  artifactKey: Guid(5a7ced3fa5d616349b80fd0a2e4fbca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/section_02.fbx using Guid(5a7ced3fa5d616349b80fd0a2e4fbca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3c6d981f435ae0bc1006b3a0a96bcd0d') in 0.0357969 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/BrokenVector/LowPolyDungeon/Models/Tiles/Portcullis_Wood.fbx
+  artifactKey: Guid(958cc0f31c08a224f83e3a8d953ee82f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BrokenVector/LowPolyDungeon/Models/Tiles/Portcullis_Wood.fbx using Guid(958cc0f31c08a224f83e3a8d953ee82f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e41b8be49655d25d03968c3bdb01d043') in 0.0527666 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 33
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/pretzel.fbx
+  artifactKey: Guid(f93f3f7071c58e94e8616a61b8ccb73b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/pretzel.fbx using Guid(f93f3f7071c58e94e8616a61b8ccb73b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'cd4c45c36bfc2240f7c0455e61b3fbbf') in 0.032162 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000053 seconds.
+  path: Assets/@PaulosCreations/RunesAndPortals/PortalGate/Mesh/PortalGate.fbx
+  artifactKey: Guid(bfe317edcf97e7043bbb18222efe0f93) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@PaulosCreations/RunesAndPortals/PortalGate/Mesh/PortalGate.fbx using Guid(bfe317edcf97e7043bbb18222efe0f93) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9aa905cbeeddd4f83192b106d2adcd25') in 0.090095 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 46
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/section_01.fbx
+  artifactKey: Guid(3f7264317de665d42975f9ae4905d2d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/section_01.fbx using Guid(3f7264317de665d42975f9ae4905d2d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a5e9edac27fd4fd67686516fe52d7dc9') in 0.0397379 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/section_03.fbx
+  artifactKey: Guid(ed8102e1c7df3c648b958df65f36a6e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/section_03.fbx using Guid(ed8102e1c7df3c648b958df65f36a6e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '79387f5912e82ca792c0a02574e9cdff') in 0.0360146 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Low-Poly Medieval Market/Models/potato.fbx
+  artifactKey: Guid(5616f010a47c9c94baf783bf4686dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Low-Poly Medieval Market/Models/potato.fbx using Guid(5616f010a47c9c94baf783bf4686dad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '987f53ea64b08299a059f674b7aa2591') in 0.2329466 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
+
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

@@ -14,10 +14,12 @@ public class DamageText : MonoBehaviour
     private float timer;
     private Vector3 startPos;
     private Vector3 endPos;
+    private Camera mainCamera;
 
     private void Awake()
     {
         textMesh = GetComponent<TextMeshPro>();
+        mainCamera = Camera.main;
 
         textColor = textMesh.color;
         startPos = transform.position;
@@ -31,6 +33,12 @@ public class DamageText : MonoBehaviour
 
     private void Update()
     {
+        // Faire face à la caméra (billboard effect)
+        if (mainCamera != null)
+        {
+            transform.rotation = mainCamera.transform.rotation;
+        }
+
         timer += Time.deltaTime;
         float t = timer / moveDuration;
 

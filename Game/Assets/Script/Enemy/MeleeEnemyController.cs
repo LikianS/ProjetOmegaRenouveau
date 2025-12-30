@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class MeleeEnemyController : MonoBehaviour
 {
-    [Header("Références")]
+    [Header("Rï¿½fï¿½rences")]
     public Animator animator;
     public NavMeshAgent agent;
 
@@ -237,8 +237,8 @@ public class MeleeEnemyController : MonoBehaviour
             transform.position = end;
         }
 
-        // Attendre un temps fixe pour simuler la durée de l'animation de hit
-        float hitAnimationDuration = 0.75f; // Durée de l'animation de hit en secondes
+        // Attendre un temps fixe pour simuler la durï¿½e de l'animation de hit
+        float hitAnimationDuration = 0.75f; // Durï¿½e de l'animation de hit en secondes
         yield return new WaitForSeconds(hitAnimationDuration);
 
         // === RESTAURE LA VITESSE ET LE MOUVEMENT ===
@@ -294,14 +294,16 @@ public class MeleeEnemyController : MonoBehaviour
             case EnemyState.Idle:
                 agent.isStopped = true;
                 agent.speed = defaultSpeed;
-                SoundManager.Instance.PlayEnemyWalk();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyWalk();
                 animator.SetFloat("speed", 0f);
                 break;
 
             case EnemyState.Patrol:
                 agent.isStopped = false;
                 agent.speed = defaultSpeed;
-                SoundManager.Instance.PlayEnemyWalk();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyWalk();
                 GetNewPatrolPoint();
                 break;
 
@@ -315,14 +317,16 @@ public class MeleeEnemyController : MonoBehaviour
             case EnemyState.Chase:
                 agent.speed = 4;
                 agent.isStopped = false;
-                SoundManager.Instance.PlayEnemyRun();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyRun();
                 break;
 
             case EnemyState.MeleeAttack:
                 agent.isStopped = true;
                 agent.speed = defaultSpeed;
                 attackTimer = attackCooldown;
-                SoundManager.Instance.PlayEnemyAttackMelee();
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.PlayEnemyAttackMelee();
                 animator.SetFloat("speed", 0f);
                 break;
 

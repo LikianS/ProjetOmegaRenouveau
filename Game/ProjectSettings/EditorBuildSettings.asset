@@ -21,8 +21,14 @@ EditorBuildSettings:
     path: Assets/Scenes/DonjonMob.unity
     guid: cf9466998fbf01246973f253e295067e
   - enabled: 1
+    path: Assets/Scenes/Armure enigme.unity
+    guid: fa4840c7abde6a24aad0531c454dff85
+  - enabled: 1
     path: Assets/Scenes/MirrorScene 1.unity
     guid: 3af73a56396024449a29447475124cfc
+  - enabled: 1
+    path: Assets/Scenes/MirrorScene 2.unity
+    guid: 30d62c93d93d8d246942144597eec5ba
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c0e921972b56b804c861bcf154f5b057,
       type: 2}

@@ -13,6 +13,25 @@ public class DungeonPostProcessingSimple: MonoBehaviour
 
     private Emotion currentEmotion;
 
+    private void OnEnable()
+    {
+        Subscribe();
+        // Refresh current emotion if manager exists
+        if (GlobalEmotionManager.Instance != null)
+        {
+            currentEmotion = GlobalEmotionManager.Instance.currentDungeonEmotion;
+            OnDungeonEmotionChanged(currentEmotion);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GlobalEmotionManager.Instance != null)
+        {
+            GlobalEmotionManager.Instance.OnEmotionChanged -= OnDungeonEmotionChanged;
+        }
+    }
+
     void Start()
     {
         volume.profile.TryGet(out colorAdj);
@@ -23,9 +42,18 @@ public class DungeonPostProcessingSimple: MonoBehaviour
 
         if (GlobalEmotionManager.Instance != null)
         {
-            GlobalEmotionManager.Instance.OnEmotionChanged += OnDungeonEmotionChanged;
+            Subscribe();
             currentEmotion = GlobalEmotionManager.Instance.currentDungeonEmotion;
             OnDungeonEmotionChanged(currentEmotion);
+        }
+    }
+
+    private void Subscribe()
+    {
+        if (GlobalEmotionManager.Instance != null)
+        {
+            GlobalEmotionManager.Instance.OnEmotionChanged -= OnDungeonEmotionChanged;
+            GlobalEmotionManager.Instance.OnEmotionChanged += OnDungeonEmotionChanged;
         }
     }
 

@@ -1,20 +1,12 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Game/Assets/Sprite/Cadre.png.meta
 guid: 3ee03aebdfa18d244a5fc4b4d1308212
-========
-guid: 19525626c4e50f147bc7c84de6ea040e
->>>>>>>> origin/modif-enigme:Game/Assets/textures/splash.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-<<<<<<<< HEAD:Game/Assets/Sprite/Cadre.png.meta
     enableMipMap: 0
-========
-    enableMipMap: 1
->>>>>>>> origin/modif-enigme:Game/Assets/textures/splash.png.meta
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -62,11 +54,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-<<<<<<<< HEAD:Game/Assets/Sprite/Cadre.png.meta
   textureType: 8
-========
-  textureType: 0
->>>>>>>> origin/modif-enigme:Game/Assets/textures/splash.png.meta
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -152,12 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-<<<<<<<< HEAD:Game/Assets/Sprite/Cadre.png.meta
     nameFileIdTable:
       Cadre_0: 897961636
-========
-    nameFileIdTable: {}
->>>>>>>> origin/modif-enigme:Game/Assets/textures/splash.png.meta
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

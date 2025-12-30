@@ -67,8 +67,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
-
-        mainCameraTransform = Camera.main.transform;
+        // Fallback if no main camera is tagged in the scene
+        mainCameraTransform = (Camera.main != null) ? Camera.main.transform : transform;
         audioSource = GetComponent<AudioSource>();
 
     }
@@ -80,7 +80,8 @@ public class PlayerController : MonoBehaviour
             Die();
             return;
         }
-        if (!Gamepad.current.leftStickButton.isPressed)
+        // Safe check: handle cases with no gamepad connected
+        if (Gamepad.current == null || !Gamepad.current.leftStickButton.isPressed)
         {
             isRunning = false;
         }
@@ -91,12 +92,12 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsSprinting", false);
             return;
         }
-        if (!Gamepad.current.leftStickButton.isPressed && isSprinting)
+        if ((Gamepad.current == null || !Gamepad.current.leftStickButton.isPressed) && isSprinting)
         {
             isSprinting = false;
             animator.SetBool("IsSprinting", isSprinting);
         }
-        if (!Gamepad.current.buttonEast.isPressed && isParrying)
+        if ((Gamepad.current == null || !Gamepad.current.buttonEast.isPressed) && isParrying)
         {
             isParrying = false;
             animator.SetBool("IsBlocking", isParrying);

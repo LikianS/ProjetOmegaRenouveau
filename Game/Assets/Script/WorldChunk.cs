@@ -27,6 +27,7 @@ public class WorldChunk : MonoBehaviour
 
     // --- FLAGS ---
     private bool hasLavaLakeInChunk = false;
+    private bool hasWaterInChunk = false;
     private bool isDungeonChunk = false;
     private float lavaSurfaceHeight = -2.5f; 
 
@@ -67,6 +68,7 @@ public class WorldChunk : MonoBehaviour
         vertices.Clear(); triangles.Clear(); colors.Clear();
         int vertIndex = 0;
         hasLavaLakeInChunk = false;
+        hasWaterInChunk = false;
 
         for (int x = 0; x < size; x++)
         {
@@ -76,13 +78,14 @@ public class WorldChunk : MonoBehaviour
                 float gZ = offset.y + z;
 
                 // --- 1. HAUTEUR ---
-                bool l00, l01, l11, l10;
-                float h00 = GetPreciseHeight(gX, gZ, out l00);
-                float h01 = GetPreciseHeight(gX, gZ + 1, out l01);
-                float h11 = GetPreciseHeight(gX + 1, gZ + 1, out l11);
-                float h10 = GetPreciseHeight(gX + 1, gZ, out l10);
+                bool l00, l01, l11, l10, w00, w01, w11, w10;
+                float h00 = GetPreciseHeight(gX, gZ, out l00, out w00);
+                float h01 = GetPreciseHeight(gX, gZ + 1, out l01, out w01);
+                float h11 = GetPreciseHeight(gX + 1, gZ + 1, out l11, out w11);
+                float h10 = GetPreciseHeight(gX + 1, gZ, out l10, out w10);
 
                 if (l00 || l01 || l11 || l10) hasLavaLakeInChunk = true;
+                if (w00 || w01 || w11 || w10) hasWaterInChunk = true;
                 if (Vector2.Distance(Vector2.zero, new Vector2(gX, gZ)) < villageRadius) continue;
 
                 vertices.Add(new Vector3(x, h00, z));
@@ -249,9 +252,10 @@ public class WorldChunk : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
-float GetPreciseHeight(float gX, float gZ, out bool isLavaZone)
+float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWaterZone)
     {
         isLavaZone = false;
+        isWaterZone = false;
         Vector2 pos = new Vector2(gX, gZ);
         float distCenter = Vector2.Distance(Vector2.zero, pos);
         float angle = Mathf.Atan2(gZ, gX);
@@ -403,7 +407,7 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone)
             // CONFIGURATION
             float seaFloorDepth = -9.0f;  // Profondeur du fond marin
             float islandLevel = 1.5f;     // Hauteur de base des îles
-            float waterLevel = -0.5f;     // Niveau visuel de l'eau (juste pour info)
+            float waterLevel = -0.4f;     // Niveau visuel de l'eau (juste pour info)
             
             // RAMPE D'ENTRÉE PROGRESSIVE - Commence DÈS la sortie du village
             float rampLength = 50.0f;     // Longueur de la rampe d'entrée (plus longue pour plus de douceur)
@@ -429,6 +433,7 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone)
             else
             {
                 // C'est de l'eau (Fond marin)
+                isWaterZone = true;
                 targetWaterHeight = seaFloorDepth + (detailNoise * 1.5f);
             }
 
@@ -546,7 +551,7 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone)
             liquid.transform.localScale = new Vector3(size / 10f, 1, size / 10f); 
             liquid.name = "Lava_Surface";
         }
-        if ( centerBiome.type == BiomeProfile.BiomeType.Water && centerBiome.liquidSurfacePrefab != null)
+        if (hasWaterInChunk && centerBiome.type == BiomeProfile.BiomeType.Water && centerBiome.liquidSurfacePrefab != null)
         {
             GameObject liquid = Instantiate(centerBiome.liquidSurfacePrefab, transform);
             liquid.transform.localPosition = new Vector3(size / 2f, lavaSurfaceHeight, size / 2f);

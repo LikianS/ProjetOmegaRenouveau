@@ -1260,6 +1260,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quest
       objectReference: {fileID: 0}
+    - target: {fileID: 3090635917180674626, guid: 5b5e83bf42d92284e99973ee82bbaf87,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3137,6 +3142,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 533257669616607962, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1919512423489993597, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3239,8 +3249,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4775097773756241373, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775097773756241373, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
+        type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4898113039070102331, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
         type: 3}
@@ -3249,13 +3264,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7900563091556577339, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900563091556577339, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
+        type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8376757206938394568, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376757206938394568, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8539405281270514986, guid: 72ed428f0926c0045bdca1e26c2fc7fa,
         type: 3}
