@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class WorldChunk : MonoBehaviour
 {
-    // --- PARAMÈTRES ---
     private int size;
     private Vector2 offset;
     private int seed;
@@ -13,23 +13,24 @@ public class WorldChunk : MonoBehaviour
     private BiomeProfile[] biomes; 
     private Dictionary<BiomeProfile.BiomeType, Vector3> dungeonPositions;
 
-    // --- CONFIGURATION BARRIERE (Obsidienne) ---
     private Color barrierColor = new Color(0.15f, 0.15f, 0.2f); 
     private float barrierWidth = 0.35f; 
 
-    // --- DATA ---
     List<Vector3> vertices = new List<Vector3>();
     List<int> triangles = new List<int>();
     List<Color> colors = new List<Color>();
-    
-    // Pour l'optimisation (Arbres/Rochers statiques)
+
     private Dictionary<GameObject, List<CombineInstance>> propsToCombine = new Dictionary<GameObject, List<CombineInstance>>();
 
-    // --- FLAGS ---
+    private List<Vector3> enemySpawnPoints = new List<Vector3>();
+
+    private NavMeshDataInstance navMeshDataInstance;
+
     private bool hasLavaLakeInChunk = false;
     private bool hasWaterInChunk = false;
     private bool isDungeonChunk = false;
-    private float lavaSurfaceHeight = -2.5f; 
+    private float lavaSurfaceHeight = -2.5f;
+    private const float airVoidFloorHeight = -20.0f;
 
     public void Initialize(int size, Vector2 offset, int seed, BiomeProfile[] biomes, float villageRad, Dictionary<BiomeProfile.BiomeType, Vector3> dPos)
     {
@@ -40,7 +41,6 @@ public class WorldChunk : MonoBehaviour
         this.villageRadius = villageRad;
         this.dungeonPositions = dPos;
 
-        // Calcul de la limite du monde
         float maxDungeonDist = 0;
         foreach(var d in dPos.Values) {
             float dist = Vector3.Distance(Vector3.zero, d);
@@ -48,19 +48,18 @@ public class WorldChunk : MonoBehaviour
         }
         this.worldLimitRadius = maxDungeonDist + 15.0f;
 
-        // Détection chunk proche donjon
         Vector2 chunkCenter = offset + new Vector2(size/2f, size/2f);
         foreach(var d in dPos.Values)
         {
             if (Vector2.Distance(chunkCenter, new Vector2(d.x, d.z)) < (size * 0.8f)) isDungeonChunk = true; 
         }
 
-        // Sécurité: s'assurer que les composants requis existent
         EnsureRequiredComponents();
 
         GenerateTerrain();
         GenerateProps(); 
         SpawnLiquidSurface();
+        StartCoroutine(SpawnEnemiesDelayed());
     }
 
     void GenerateTerrain()
@@ -77,7 +76,7 @@ public class WorldChunk : MonoBehaviour
                 float gX = offset.x + x;
                 float gZ = offset.y + z;
 
-                // --- 1. HAUTEUR ---
+                
                 bool l00, l01, l11, l10, w00, w01, w11, w10;
                 float h00 = GetPreciseHeight(gX, gZ, out l00, out w00);
                 float h01 = GetPreciseHeight(gX, gZ + 1, out l01, out w01);
@@ -97,44 +96,34 @@ public class WorldChunk : MonoBehaviour
                 triangles.Add(vertIndex + 0); triangles.Add(vertIndex + 2); triangles.Add(vertIndex + 3);
                 vertIndex += 4;
 
-                // --- 2. ANALYSE ---
                 float centerX = gX + 0.5f; float centerZ = gZ + 0.5f;
                 BiomeProfile mainBiome = GetDominantBiome(centerX, centerZ);
                 float distCenter = Vector2.Distance(Vector2.zero, new Vector2(centerX, centerZ));
                 bool isEventRaw = IsEventZone(centerX, centerZ);
 
-                // Barrières
                 float angle = Mathf.Atan2(centerZ, centerX);
                 float barrierVal = Mathf.Abs(Mathf.Sin(2 * angle)); 
                 bool isAnyBarrier = (barrierVal < barrierWidth || distCenter >= worldLimitRadius);
 
-                // Donjon
                 float minDistDung = 9999f;
                 foreach(var d in dungeonPositions.Values) {
                     float dDist = Vector2.Distance(new Vector2(centerX, centerZ), new Vector2(d.x, d.z));
                     if(dDist < minDistDung) minDistDung = dDist;
                 }
 
-                // --- ZONES A RISQUE ---
                 float avgH = (h00 + h11) / 2f;
-                
-                // Lave (Feu bas)
                 bool isVisualLava = (avgH < lavaSurfaceHeight - 0.5f && mainBiome.type == BiomeProfile.BiomeType.Fire);
-                
-                // Mur Terre (Terre haut)
                 bool isMazeWallEarth = (mainBiome.type == BiomeProfile.BiomeType.Earth && avgH > 5.0f);
-                
-                // Vide Air (Air bas) -> C'est ici qu'on détecte si on est tombé du pont
                 bool isAirVoid = (mainBiome.type == BiomeProfile.BiomeType.Air && avgH < 5.0f);
+                if (isAirVoid && mainBiome.voidZonePrefab != null)
+                {
+                    SpawnAirVoidZoneAt(mainBiome.voidZonePrefab, new Vector3(x + 0.5f, airVoidFloorHeight, z + 0.5f));
+                }
 
-                // --- SUPER FILTRE EVENT ---
-                // On ajoute !isAirVoid à la liste des interdits
                 bool isValidEvent = isEventRaw && !isVisualLava && !isMazeWallEarth && !isAirVoid && !isAnyBarrier && minDistDung > 30;
 
-                // --- 3. COULEURS ---
                 Color c = mainBiome.baseGroundColor;
 
-                // APPLICATION DES COULEURS DE BASE
                 if (minDistDung < 25.0f) 
                 {
                     c = mainBiome.dungeonZoneColor * 0.8f;
@@ -142,44 +131,32 @@ public class WorldChunk : MonoBehaviour
                 else if (isAnyBarrier) 
                     c = barrierColor;
                 else if (isVisualLava && !isDungeonChunk) 
-                    c = new Color(0.1f, 0, 0); // Lave
+                    c = new Color(0.1f, 0, 0);
                 else if (isValidEvent) 
                     c = mainBiome.eventZoneColor;
                 else if (isAirVoid)
-                    c = new Color(0.6f, 0.7f, 0.8f); // Couleur du "Vide"
+                    c = new Color(0.6f, 0.7f, 0.8f);
                 else if (mainBiome.type == BiomeProfile.BiomeType.Earth && !isMazeWallEarth) 
-                    c = c * 0.7f; // Sol Terre
+                    c = c * 0.7f;
 
-                // CONTAMINATION PIXELLISÉE DONJON (25m à 50m)
                 if (minDistDung >= 25.0f && minDistDung < 50.0f)
                 {
-                    // Bruit haute fréquence pour les pixels
                     float pixelNoise = Mathf.PerlinNoise(gX * 0.8f + seed * 3, gZ * 0.8f + seed * 3);
-                    // Probabilité de contamination (diminue avec la distance)
                     float contaminationChance = 1.0f - ((minDistDung - 25.0f) / 25.0f);
-                    
-                    // Si le pixel est contaminé
-                    if (pixelNoise < contaminationChance * 0.4f) // 0.4 = densité de contamination
+                    if (pixelNoise < contaminationChance * 0.4f)
                     {
                         c = mainBiome.dungeonZoneColor * 0.8f;
                     }
                 }
-                
-                // CONTAMINATION PIXELLISÉE EVENT (rayon de 20m autour des events)
                 if (isEventRaw && !isValidEvent && minDistDung > 30)
                 {
-                    // Distance au centre de l'event (approximatif via le bruit)
                     float eventCenterNoise = Mathf.PerlinNoise(centerX * 0.025f + seed + 200, centerZ * 0.025f + seed + 200);
                     
-                    if (eventCenterNoise > 0.7f && eventCenterNoise < 0.82f) // Zone autour de l'event
+                    if (eventCenterNoise > 0.7f && eventCenterNoise < 0.82f)
                     {
-                        // Bruit haute fréquence pour les pixels
                         float pixelNoise = Mathf.PerlinNoise(gX * 0.9f + seed * 5, gZ * 0.9f + seed * 5);
-                        // Proximité au centre (0.7-0.82 = 0 à 1)
                         float proximity = (eventCenterNoise - 0.7f) / 0.12f;
-                        
-                        // Si le pixel est contaminé
-                        if (pixelNoise < proximity * 0.5f) // 0.5 = densité
+                        if (pixelNoise < proximity * 0.5f)
                         {
                             c = mainBiome.eventZoneColor;
                         }
@@ -188,29 +165,22 @@ public class WorldChunk : MonoBehaviour
 
                 colors.Add(c); colors.Add(c); colors.Add(c); colors.Add(c);
 
-                // --- 4. SPAWN ---
                 Vector3 centerPos = new Vector3(x + 0.5f, avgH, z + 0.5f); 
                 CheckDungeonSpawn(gX, gZ, centerPos);
 
-                // Détecte si on est dans l'eau (pour le biome Water)
                 bool isUnderwater = false;
                 if (mainBiome.type == BiomeProfile.BiomeType.Water)
                 {
-                    // Utilise le même bruit que pour la génération du terrain
                     float islandNoise = Mathf.PerlinNoise(centerX * 0.035f + seed * 4, centerZ * 0.035f + seed * 4);
-                    isUnderwater = (islandNoise <= 0.55f); // Si <= 0.55, c'est de l'eau
+                    isUnderwater = (islandNoise <= 0.55f);
                 }
 
-                // On interdit le spawn dans le vide d'air, la lave, et l'eau
                 if (!isVisualLava && !isAnyBarrier && !isMazeWallEarth && !isAirVoid && !isUnderwater && minDistDung > 20f)
                 {
                     if (isValidEvent) 
                     {
-                        if(Random.value < 0.25f) {
-                            GameObject prefabToSpawn = null;
-                            if (Random.value < 0.5f) prefabToSpawn = mainBiome.GetRandomGameplay(BiomeProfile.GameplayType.Enemy);
-                            else prefabToSpawn = mainBiome.GetRandomGameplay(BiomeProfile.GameplayType.Collectible);
-
+                        if(Random.value < 0.15f) {
+                            GameObject prefabToSpawn = mainBiome.GetRandomGameplay(BiomeProfile.GameplayType.Collectible);
                             if (prefabToSpawn != null) {
                                 GameObject instance = Instantiate(prefabToSpawn, transform);
                                 instance.transform.localPosition = centerPos; 
@@ -225,7 +195,6 @@ public class WorldChunk : MonoBehaviour
                 }
             }
         }
-        // Fallback: si aucune géométrie n'a été générée (ex: chunk entièrement exclu), créer un quad minimal
         if (triangles.Count == 0 || vertices.Count < 4)
         {
             BiomeProfile centerBiome = GetDominantBiome(offset.x + size / 2f, offset.y + size / 2f);
@@ -250,6 +219,83 @@ public class WorldChunk : MonoBehaviour
         mesh.RecalculateBounds();
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
+        
+        BakeNavMesh();
+    }
+    
+    void BakeNavMesh()
+    {
+        List<NavMeshBuildSource> sources = new List<NavMeshBuildSource>();
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        if (meshFilter != null && meshFilter.mesh != null)
+        {
+            NavMeshBuildSource source = new NavMeshBuildSource();
+            source.shape = NavMeshBuildSourceShape.Mesh;
+            source.sourceObject = meshFilter.mesh;
+            source.transform = transform.localToWorldMatrix;
+            source.area = 0;
+            sources.Add(source);
+        }
+        WorldChunk[] allChunks = FindObjectsOfType<WorldChunk>();
+        foreach (WorldChunk neighborChunk in allChunks)
+        {
+            if (neighborChunk == this) continue;
+            
+            float distance = Vector3.Distance(transform.position, neighborChunk.transform.position);
+            if (distance <= size * 1.5f)
+            {
+                MeshFilter neighborMesh = neighborChunk.GetComponent<MeshFilter>();
+                if (neighborMesh != null && neighborMesh.mesh != null)
+                {
+                    NavMeshBuildSource neighborSource = new NavMeshBuildSource();
+                    neighborSource.shape = NavMeshBuildSourceShape.Mesh;
+                    neighborSource.sourceObject = neighborMesh.mesh;
+                    neighborSource.transform = neighborChunk.transform.localToWorldMatrix;
+                    neighborSource.area = 0;
+                    sources.Add(neighborSource);
+                }
+            }
+        }
+        
+        NavMeshBuildSettings settings = NavMesh.GetSettingsByID(0);
+        settings.overrideVoxelSize = true;
+        settings.voxelSize = 0.5f;
+        settings.agentRadius = 0.5f;
+        settings.agentHeight = 2.0f;
+        settings.agentClimb = 0.4f;
+        settings.agentSlope = 45f;
+        settings.ledgeDropHeight = 0;
+        settings.maxJumpAcrossDistance = 0;
+        
+        float overlapSize = 5.0f;
+        Bounds chunkBounds = new Bounds(
+            transform.position + new Vector3(size / 2f, 0, size / 2f),
+            new Vector3(size + overlapSize * 2, 50f, size + overlapSize * 2)
+        );
+        
+        NavMeshData navMeshData = NavMeshBuilder.BuildNavMeshData(
+            settings,
+            sources,
+            chunkBounds,
+            Vector3.zero,
+            Quaternion.identity
+        );
+        
+        if (navMeshData != null)
+        {
+            navMeshDataInstance = NavMesh.AddNavMeshData(navMeshData);
+        }
+        else
+        {
+        }
+    }
+    
+    void OnDestroy()
+    {
+        if (navMeshDataInstance.valid)
+        {
+            NavMesh.RemoveNavMeshData(navMeshDataInstance);
+        }
     }
 
 float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWaterZone)
@@ -260,7 +306,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         float distCenter = Vector2.Distance(Vector2.zero, pos);
         float angle = Mathf.Atan2(gZ, gX);
 
-        // --- 1. CALCULS DE BASE ---
         float noise = Mathf.PerlinNoise(gX * 0.1f + seed, gZ * 0.1f + seed);
         float hEarth = noise * biomes[2].heightMultiplier; 
         float hAir = (noise > 0.5f) ? noise * biomes[3].heightMultiplier + 8 : -15;
@@ -274,7 +319,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
 
         float mixedHeight = (-2f * wWater) + (hFire * wFire) + (hEarth * wEarth) + (hAir * wAir);
         
-        // INFO DONJON
         float minDistToDungeon = 9999f;
         Vector2 nearestDungeonPos = Vector2.zero;
         foreach(var d in dungeonPositions.Values) {
@@ -292,7 +336,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         BiomeProfile dungeonBiome = GetDominantBiome(nearestDungeonPos.x, nearestDungeonPos.y);
         float targetDungeonHeight = 0.5f; 
 
-        // --- 2. BIOME ACTUEL & MURS ---
         BiomeProfile currentBiome = GetDominantBiome(gX, gZ);
         float barrierVal = Mathf.Abs(Mathf.Sin(2 * angle));
         bool isUnderSeparator = (barrierVal < barrierWidth * 1.05f && distCenter > villageRadius && distCenter < worldLimitRadius);
@@ -301,11 +344,7 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
 
         float finalHeight = mixedHeight; 
 
-        // ====================================================================
-        // >>> 3. OVERRIDES PAR LES LABYRINTHES
-        // ====================================================================
         
-        // --- TERRE (Canyon Classique) ---
         if (currentBiome.type == BiomeProfile.BiomeType.Earth && distCenter > villageRadius + 5f && !isUnderAnyWall)
         {
             float cellSize = 14.0f; float wallHeight = 13.0f;
@@ -329,68 +368,49 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
             } else finalHeight = wallHeight + Mathf.PerlinNoise(gX*0.5f, gZ*0.5f);
         }
         
-        // --- AIR (Archipel Céleste Complexe) ---
         else if (currentBiome.type == BiomeProfile.BiomeType.Air && distCenter > villageRadius + 5f && !isUnderAnyWall)
         {
-            float baseLevel = 13.0f; // Niveau de référence (Moyen)
-            float voidHeight = -20.0f;
+            float baseLevel = 13.0f;
+            float voidHeight = airVoidFloorHeight;
 
-            // Paramètres Rampe
             float rampLength = 40.0f; 
             float rampStart = villageRadius + 5f;
             bool isOnRamp = (distCenter < rampStart + rampLength);
             
-            // Paramètres Labyrinthe
-            // On utilise une distorsion plus forte pour des îles plus organiques
             float warpFreq = 0.06f; float warpAmp = 7.0f; 
             float mX = gX + Mathf.PerlinNoise(gX*warpFreq, gZ*warpFreq)*warpAmp;
             float mZ = gZ + Mathf.PerlinNoise(gX*warpFreq+50, gZ*warpFreq+50)*warpAmp;
             
-            // Grille plus petite pour plus de détails
             float cellSize = 10.0f; 
             int cX = Mathf.FloorToInt(mX/cellSize); 
             int cZ = Mathf.FloorToInt(mZ/cellSize);
             
-            // Bruit de structure (Est-ce qu'il y a un pont ?)
             float hStruct = Mathf.PerlinNoise(cX*0.8f + seed, cZ*0.8f + seed);
-            // Bruit de hauteur (Quel étage ?)
             float hTier = Mathf.PerlinNoise(cX*1.2f + seed*2, cZ*1.2f + seed*2);
 
             bool isPlatform = false;
             
-            // Logique de génération plus "Fracturée"
-            // On garde des chemins, mais on ajoute des "îles" aléatoires
-            if (hStruct > 0.4f && hStruct < 0.75f) isPlatform = true; // Chemin principal
-            if (hStruct > 0.85f) isPlatform = true; // Grosses îles isolées
+            if (hStruct > 0.4f && hStruct < 0.75f) isPlatform = true;
+            if (hStruct > 0.85f) isPlatform = true;
 
-            // Forcer le passage vers le donjon
             bool nearDungeon = (minDistToDungeon < 45.0f);
             if (nearDungeon) isPlatform = true;
 
-            // --- GESTION DES NIVEAUX (TIERS) ---
             float platformHeight = baseLevel;
             
-            // Si on est LOIN de la rampe, on autorise les changements de hauteur
-            // (Sinon on reste à 13m pour que la rampe arrive bien)
             if (!isOnRamp && distCenter > rampStart + rampLength + 10f && !nearDungeon)
             {
-                // 3 Niveaux : -6m, 0m, +6m
-                if (hTier < 0.33f) platformHeight = baseLevel - 6.0f;      // Niveau Bas (7m)
-                else if (hTier > 0.66f) platformHeight = baseLevel + 6.0f; // Niveau Haut (19m)
-                // Sinon Niveau Moyen (13m)
+                if (hTier < 0.33f) platformHeight = baseLevel - 6.0f;
+                else if (hTier > 0.66f) platformHeight = baseLevel + 6.0f;
             }
             
-            // Détail de surface (bosses sur les îles)
             float surfaceDetail = Mathf.PerlinNoise(gX*0.3f, gZ*0.3f) * 1.5f;
 
-            // --- CALCUL FINAL AIR ---
             if (isOnRamp)
             {
                 float groundStart = 0; 
                 float t = (distCenter - rampStart) / rampLength;
                 float blend = Mathf.SmoothStep(0, 1, t);
-                
-                // La rampe monte toujours vers le niveau "Moyen" (baseLevel)
                 float rampH = Mathf.Lerp(groundStart, baseLevel, blend);
                 finalHeight = rampH + surfaceDetail * 0.5f;
             }
@@ -404,57 +424,42 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         }
         else if (currentBiome.type == BiomeProfile.BiomeType.Water && distCenter > villageRadius && !isUnderAnyWall)
         {
-            // CONFIGURATION
-            float seaFloorDepth = -9.0f;  // Profondeur du fond marin
-            float islandLevel = 1.5f;     // Hauteur de base des îles
-            float waterLevel = -0.4f;     // Niveau visuel de l'eau (juste pour info)
+            float seaFloorDepth = -9.0f;
+            float islandLevel = 1.5f;
+            float waterLevel = -0.4f;
             
-            // RAMPE D'ENTRÉE PROGRESSIVE - Commence DÈS la sortie du village
-            float rampLength = 50.0f;     // Longueur de la rampe d'entrée (plus longue pour plus de douceur)
-            float rampStart = villageRadius;  // Commence immédiatement après le village
+            float rampLength = 50.0f;
+            float rampStart = villageRadius;
             bool isOnRamp = (distCenter < rampStart + rampLength);
             
-            // 1. BRUIT DES ÎLES (Forme des continents)
-            // Fréquence basse = Grandes étendues d'eau et îles moyennes
             float islandNoise = Mathf.PerlinNoise(gX * 0.035f + seed * 4, gZ * 0.035f + seed * 4);
-            
-            // 2. BRUIT DE RELIEF (Détails sur les îles)
             float detailNoise = Mathf.PerlinNoise(gX * 0.15f, gZ * 0.15f);
 
-            // 3. CALCUL DE LA HAUTEUR FINALE DU BIOME
             float targetWaterHeight;
             
             if (islandNoise > 0.55f)
             {
-                // C'est une île !
                 float heightFactor = (islandNoise - 0.55f) / 0.45f; 
                 targetWaterHeight = islandLevel + (heightFactor * 6.0f) + (detailNoise * 2.0f);
             }
             else
             {
-                // C'est de l'eau (Fond marin)
                 isWaterZone = true;
                 targetWaterHeight = seaFloorDepth + (detailNoise * 1.5f);
             }
 
-            // 4. RAMPE D'ENTRÉE (Transition douce depuis le village)
             if (isOnRamp)
             {
-                float groundStart = 0.5f;  // Hauteur du village (niveau plat)
+                float groundStart = 0.5f;
                 float t = (distCenter - rampStart) / rampLength;
-                // Double lissage pour une descente ultra progressive
                 float blend = Mathf.Pow(Mathf.SmoothStep(0, 1, t), 1.8f);
-                
-                // Descente progressive vers le niveau Water
                 finalHeight = Mathf.Lerp(groundStart, targetWaterHeight, blend);
             }
             else
             {
-                // Hors rampe, on utilise la hauteur normale du biome
                 finalHeight = targetWaterHeight;
             }
 
-            // 5. SÉCURITÉ DONJON (Force une île sous le donjon)
             if (minDistToDungeon < 35.0f)
             {
                 float t = Mathf.Clamp01((35.0f - minDistToDungeon) / 10.0f);
@@ -470,7 +475,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         }
         
 
-        // --- 4. MONTAGNES ---
         float rNoise = Mathf.PerlinNoise(gX*0.15f+seed*8, gZ*0.15f+seed*8);
         float rockTex = (0.4f + 0.6f*(rNoise*rNoise));
         if (distCenter > villageRadius + 5f && distCenter < worldLimitRadius && barrierVal < barrierWidth) {
@@ -480,7 +484,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
             finalHeight = Mathf.Max(finalHeight, Mathf.Clamp((distCenter-worldLimitRadius)*4f,0,50)*rockTex + 5f);
         }
 
-        // --- 5. LISSAGE DONJON ---
         float flatRadius = 20.0f;      
         float smoothLength = 25.0f;      
         if (minDistToDungeon < (flatRadius + smoothLength))
@@ -495,13 +498,9 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
 
         float startBorder = villageRadius -1f; 
         
-        // La longueur de la pente (sur combien de mètres on descend)
         float slopeLength = 15.0f; 
-        
-        // Si on est dans la zone de transition (juste après le village)
         if (distCenter >= startBorder && distCenter < (startBorder + slopeLength))
         {
-            // t va de 0 (au bord du village) à 1 (15m plus loin)
             float t = (distCenter - startBorder) / slopeLength;
             float blend = Mathf.SmoothStep(0, 1, t);
             finalHeight = Mathf.Lerp(-0.33f, finalHeight, blend);
@@ -517,17 +516,16 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         return noise > 0.82f; 
     }
 
-    // --- SPAWN CONTENU NATUREL (Batching) ---
     void SpawnNaturalContent(float gX, float gZ, Vector3 basePos, BiomeProfile biome)
     {
         float noise = Mathf.PerlinNoise(gX * 0.05f + seed, gZ * 0.05f + seed);
 
-        if (noise > 0.45f) // Forêts
+        if (noise > 0.45f)
         {
              if (Random.value < biome.vegetationDensity)
                 AddPropToCombineList(biome.GetRandomProp(0), basePos + new Vector3(0.5f,0,0.5f), Random.Range(0, 360), Random.Range(0.8f, 1.5f));
         }
-        else if (Random.value < 0.9f) // Petits détails
+        else if (Random.value < 0.9f)
         {
             int density = Random.Range(3, 8); 
             for(int i=0; i < density; i++)
@@ -560,6 +558,205 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         }
     }
 
+    void SpawnAirVoidZoneAt(GameObject prefab, Vector3 localPos)
+    {
+        GameObject zone = Instantiate(prefab, transform);
+        zone.transform.localPosition = localPos;
+        zone.transform.localScale = Vector3.one;
+    }
+
+    void SpawnEnemies()
+    {
+        if (isDungeonChunk) return;
+        
+        enemySpawnPoints.Clear();
+        int spawnedCount = 0;
+        int totalChecked = 0;
+        int failedBiome = 0;
+        int failedDistance = 0;
+        int failedWalkable = 0;
+        int failedRandom = 0;
+        int failedNavMesh = 0;
+        
+        for (int x = 0; x < size; x += 3)
+        {
+            for (int z = 0; z < size; z += 3)
+            {
+                totalChecked++;
+                float gX = offset.x + x;
+                float gZ = offset.y + z;
+                
+                float distFromVillage = Vector2.Distance(Vector2.zero, new Vector2(gX, gZ));
+                
+                BiomeProfile biome = GetDominantBiome(gX, gZ);
+                if (biome == null || biome.enemies == null || biome.enemies.Length == 0) 
+                {
+                    failedBiome++;
+                    continue;
+                }
+                if (distFromVillage < biome.minVillageDistance) 
+                {
+                    failedDistance++;
+                    continue;
+                }
+                
+                bool isLava, isWater;
+                float height = GetPreciseHeight(gX, gZ, out isLava, out isWater);
+                
+                if (!IsWalkableForEnemy(gX, gZ, height, isLava, isWater, biome)) 
+                {
+                    failedWalkable++;
+                    continue;
+                }
+                
+                Vector3 spawnWorldPos = transform.position + new Vector3(x, height + 0.5f, z);
+                Vector3 spawnLocalPos = new Vector3(x, height + 0.5f, z);
+                
+                NavMeshHit hit;
+                if (!NavMesh.SamplePosition(spawnWorldPos, out hit, 5.0f, NavMesh.AllAreas))
+                {
+                    failedNavMesh++;
+                    continue;
+                }
+                
+                Vector3 validatedWorldPos = hit.position;
+                Vector3 validatedLocalPos = validatedWorldPos - transform.position;
+                
+                if (IsTooCloseToOtherSpawns(validatedLocalPos, biome.minEnemyDistance)) continue;
+                
+                enemySpawnPoints.Add(validatedLocalPos);
+                SpawnEnemyAtPosition(validatedWorldPos, biome, true);
+                spawnedCount++;
+            }
+        }
+    }
+    
+    System.Collections.IEnumerator SpawnEnemiesDelayed()
+    {
+        yield return null;
+        yield return null;
+        SpawnEnemies();
+    }
+    
+    System.Collections.IEnumerator EnableNavMeshAgentDelayed(GameObject enemy)
+    {
+        if (enemy == null) yield break;
+        yield return new WaitForSeconds(0.2f);
+        
+        if (enemy == null) yield break;
+        
+        UnityEngine.AI.NavMeshAgent agent = enemy.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null)
+        {
+            UnityEngine.AI.NavMeshHit hit;
+            Vector3 worldPos = enemy.transform.position;
+            
+            if (UnityEngine.AI.NavMesh.SamplePosition(worldPos, out hit, 5.0f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                enemy.transform.position = hit.position;
+                agent.enabled = true;
+                agent.Warp(hit.position);
+            }
+            else
+            {
+                Destroy(enemy);
+            }
+        }
+    }
+    
+    bool IsWalkableForEnemy(float gX, float gZ, float height, bool isLava, bool isWater, BiomeProfile biome)
+    {
+        float distCenter = Mathf.Sqrt(gX * gX + gZ * gZ);
+        float angle = Mathf.Atan2(gZ, gX);
+        float barrierVal = Mathf.Abs(Mathf.Sin(2f * angle));
+        bool onObsidianWall = (barrierVal < barrierWidth * 1.05f && distCenter > villageRadius && distCenter < worldLimitRadius)
+                              || distCenter >= worldLimitRadius - 0.5f;
+        if (onObsidianWall)
+            return false;
+
+        if (biome.type == BiomeProfile.BiomeType.Fire && height < lavaSurfaceHeight - 0.5f)
+            return false;
+
+        if (isWater)
+            return false;
+
+        if (biome.type == BiomeProfile.BiomeType.Water && height < 1.0f)
+            return false;
+
+        if (biome.type == BiomeProfile.BiomeType.Earth && height > 5.0f)
+            return false;
+
+        if (biome.type == BiomeProfile.BiomeType.Air && height < 5.0f)
+            return false;
+
+        return true;
+    }
+    
+    bool IsTooCloseToOtherSpawns(Vector3 pos, float minDist)
+    {
+        foreach (Vector3 existingSpawn in enemySpawnPoints)
+        {
+            if (Vector3.Distance(pos, existingSpawn) < minDist)
+                return true;
+        }
+        return false;
+    }
+    
+    void SpawnEnemyAtPosition(Vector3 spawnPos, BiomeProfile biome, bool isWorldPos = false)
+    {
+        if (biome.enemies == null || biome.enemies.Length == 0) return;
+        
+        GameObject enemyPrefab = biome.GetRandomGameplay(BiomeProfile.GameplayType.Enemy);
+        if (enemyPrefab == null) return;
+        
+        GameObject enemy = Instantiate(enemyPrefab, transform);
+        
+        if (isWorldPos)
+        {
+            enemy.transform.position = spawnPos;
+        }
+        else
+        {
+            enemy.transform.localPosition = spawnPos;
+        }
+        
+        enemy.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        enemy.name = $"Enemy_{biome.type}_{enemySpawnPoints.Count}";
+        
+        UnityEngine.AI.NavMeshAgent agent = enemy.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+        
+        ActivateBiomeParticles(enemy, biome.type);
+        
+        StartCoroutine(EnableNavMeshAgentDelayed(enemy));
+    }
+    
+    void ActivateBiomeParticles(GameObject enemy, BiomeProfile.BiomeType biomeType)
+    {
+        ParticleSystem[] allParticles = enemy.GetComponentsInChildren<ParticleSystem>(true);
+        
+        if (allParticles.Length == 0) return;
+        
+        string targetParticleName = biomeType.ToString();
+        
+        foreach (ParticleSystem ps in allParticles)
+        {
+            if (ps.gameObject.name.Contains(targetParticleName))
+            {
+                ps.gameObject.SetActive(true);
+                ps.Play();
+            }
+            else
+            {
+                ps.Stop();
+                ps.gameObject.SetActive(false);
+            }
+        }
+    }
+
     void CheckDungeonSpawn(float gX, float gZ, Vector3 localPos)
     {
         int cX = Mathf.FloorToInt(gX);
@@ -579,7 +776,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         }
     }
 
-    // --- UTILITAIRES ---
     void EnsureRequiredComponents()
     {
         if (GetComponent<MeshFilter>() == null) gameObject.AddComponent<MeshFilter>();
@@ -609,7 +805,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         return null;
     }
 
-    // --- BATCHING & OPTIMISATION ---
     void AddPropToCombineList(GameObject prefab, Vector3 localPos, float rotY, float scale)
     {
         if (prefab == null) return;
@@ -638,10 +833,9 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
             Mesh m = new Mesh();
             m.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             m.CombineMeshes(entry.Value.ToArray(), true, true);
-            m.RecalculateBounds(); // IMPORTANT : Recalcule les bounds pour le frustum culling
+            m.RecalculateBounds();
             mf.mesh = m;
 
-            // --- FILTRAGE INTELLIGENT DES COLLIDERS ---
             if (entry.Key.GetComponent<Collider>() != null)
             {
                 MeshCollider mc = holder.AddComponent<MeshCollider>();

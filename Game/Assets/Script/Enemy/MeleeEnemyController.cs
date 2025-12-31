@@ -288,6 +288,10 @@ public class MeleeEnemyController : MonoBehaviour
     {
         if (currentState == newState)
             return;
+        
+        // Safety check: ensure agent is enabled before trying to control it
+        if (agent == null || !agent.isOnNavMesh || !agent.enabled)
+            return;
 
         switch (newState)
         {

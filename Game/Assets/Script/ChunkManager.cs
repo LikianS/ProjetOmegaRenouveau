@@ -193,6 +193,14 @@ public class ChunkManager : MonoBehaviour
             dPos: dungeonPositions
         );
         
+        // AJOUT DU NAVMESH DYNAMIQUE (Nécessite le package "AI Navigation")
+        // Si le package n'est pas installé, commente cette section
+        #if UNITY_AI_NAVIGATION
+        var navSurface = chunkObj.AddComponent<Unity.AI.Navigation.NavMeshSurface>();
+        navSurface.collectObjects = Unity.AI.Navigation.CollectObjects.Children;
+        navSurface.BuildNavMesh();
+        #endif
+        
         // Enregistrement
         activeChunks[coord] = chunk;
     }

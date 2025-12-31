@@ -18,7 +18,6 @@ MonoBehaviour:
   liquidSurfacePrefab: {fileID: 1705910686673941448, guid: 3e41e1b182ad5104f87f755a9a726296,
     type: 3}
   baseGroundColor: {r: 0.4339623, g: 0, b: 0, a: 1}
-  roadColor: {r: 0.4, g: 0.3, b: 0.2, a: 1}
   dungeonZoneColor: {r: 0.8773585, g: 0, b: 0, a: 1}
   eventZoneColor: {r: 0.9137255, g: 0.38157582, b: 0, a: 1}
   heightMultiplier: 6.82
@@ -34,7 +33,12 @@ MonoBehaviour:
   rocks:
   - {fileID: 2488292168518885586, guid: 385d14da46984e547b4b5ae3e82fb30d, type: 3}
   vegetationDensity: 0.092
-  enemies: []
+  enemies:
+  - {fileID: 5663511763623396653, guid: b63e6f526f2c30b4ba9e3e3d0f518000, type: 3}
+  - {fileID: 4160715422695743508, guid: c1c43a2ee2caada438c9ff69ca6d4f7b, type: 3}
   puzzles: []
   collectibles:
   - {fileID: 5748222353490076782, guid: badbc5032a9a42a4da9fea1eeb332ab4, type: 3}
+  enemyDensity: 0.01
+  minEnemyDistance: 10
+  minVillageDistance: 100

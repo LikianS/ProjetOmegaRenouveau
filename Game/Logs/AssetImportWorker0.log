@@ -15,7 +15,7 @@ C:/Users/77kik/Documents/ProjetOmegaRenouveau/Game
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-49539
+50537
 -job-worker-count
 7
 -background-job-worker-count
@@ -58,12 +58,12 @@ C:/Users/77kik/Documents/ProjetOmegaRenouveau/Game
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [32728] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 2197406591 [EditorId] 2197406591 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
-Player connection [32728] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 2197406591 [EditorId] 2197406591 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [34500] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 3755889522 [EditorId] 3755889522 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [34500] Host "[IP] 192.168.1.173 [Port] 0 [Flags] 2 [Guid] 3755889522 [EditorId] 3755889522 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-FOFTD1M) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 7
 [Physics::Module] Initialized MultithreadedJobDispatcher with 7 workers.
 Library Redirect Path: Library/
-Refreshing native plugins compatible for Editor in 339.59 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 490.95 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2023.2.20f1 (0e25a174756c)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/Resources/UnitySubsystems
@@ -79,45 +79,45 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56744
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56168
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2023.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.222525 seconds.
-- Loaded All Assemblies, in  2.345 seconds
+Registered in 0.007326 seconds.
+- Loaded All Assemblies, in  0.723 seconds
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.371 seconds
-Domain Reload Profiling: 2714ms
-	BeginReloadAssembly (427ms)
+- Finished resetting the current domain, in  0.380 seconds
+Domain Reload Profiling: 1100ms
+	BeginReloadAssembly (254ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (603ms)
+	RebuildCommonClasses (43ms)
 	RebuildNativeTypeToScriptingClass (14ms)
-	initialDomainReloadingComplete (276ms)
-	LoadAllAssembliesAndSetupDomain (1023ms)
-		LoadAssemblies (423ms)
+	initialDomainReloadingComplete (60ms)
+	LoadAllAssembliesAndSetupDomain (348ms)
+		LoadAssemblies (249ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (1020ms)
-			TypeCache.Refresh (1018ms)
-				TypeCache.ScanAssembly (696ms)
+		AnalyzeDomain (345ms)
+			TypeCache.Refresh (343ms)
+				TypeCache.ScanAssembly (325ms)
 			BuildScriptInfoCaches (0ms)
-			ResolveRequiredComponents (0ms)
-	FinalizeReload (372ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (381ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (311ms)
+		SetupLoadedEditorAssemblies (314ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (11ms)
+			InitializePlatformSupportModulesInManaged (10ms)
 			SetLoadedEditorAssemblies (5ms)
-			BeforeProcessingInitializeOnLoad (6ms)
-			ProcessInitializeOnLoadAttributes (232ms)
-			ProcessInitializeOnLoadMethodAttributes (57ms)
+			BeforeProcessingInitializeOnLoad (5ms)
+			ProcessInitializeOnLoadAttributes (230ms)
+			ProcessInitializeOnLoadMethodAttributes (64ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -128,550 +128,178 @@ Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  7.257 seconds
-Refreshing native plugins compatible for Editor in 2.15 ms, found 6 plugins.
+- Loaded All Assemblies, in  6.103 seconds
+Refreshing native plugins compatible for Editor in 2.80 ms, found 6 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 [MODES] ModeService[none].Initialize
 [MODES] ModeService[none].LoadModes
 [MODES] Loading mode Default (0) for mode-current-id-Game
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  2.546 seconds
-Domain Reload Profiling: 9781ms
-	BeginReloadAssembly (1481ms)
+- Finished resetting the current domain, in  1.874 seconds
+Domain Reload Profiling: 7965ms
+	BeginReloadAssembly (2825ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (5ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (34ms)
-	RebuildCommonClasses (41ms)
-	RebuildNativeTypeToScriptingClass (14ms)
-	initialDomainReloadingComplete (46ms)
-	LoadAllAssembliesAndSetupDomain (5653ms)
-		LoadAssemblies (4292ms)
+		CreateAndSetChildDomain (43ms)
+	RebuildCommonClasses (48ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (52ms)
+	LoadAllAssembliesAndSetupDomain (3151ms)
+		LoadAssemblies (2932ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (1474ms)
-			TypeCache.Refresh (1418ms)
-				TypeCache.ScanAssembly (1343ms)
-			BuildScriptInfoCaches (40ms)
-			ResolveRequiredComponents (13ms)
-	FinalizeReload (2547ms)
+		AnalyzeDomain (398ms)
+			TypeCache.Refresh (330ms)
+				TypeCache.ScanAssembly (234ms)
+			BuildScriptInfoCaches (49ms)
+			ResolveRequiredComponents (16ms)
+	FinalizeReload (1875ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1651ms)
+		SetupLoadedEditorAssemblies (871ms)
 			LogAssemblyErrors (0ms)
 			InitializePlatformSupportModulesInManaged (3ms)
 			SetLoadedEditorAssemblies (4ms)
-			BeforeProcessingInitializeOnLoad (82ms)
-			ProcessInitializeOnLoadAttributes (1517ms)
-			ProcessInitializeOnLoadMethodAttributes (37ms)
-			AfterProcessingInitializeOnLoad (8ms)
+			BeforeProcessingInitializeOnLoad (99ms)
+			ProcessInitializeOnLoadAttributes (710ms)
+			ProcessInitializeOnLoadMethodAttributes (46ms)
+			AfterProcessingInitializeOnLoad (9ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (9ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
-Refreshing native plugins compatible for Editor in 3.08 ms, found 6 plugins.
+		AwakeInstancesAfterBackupRestoration (11ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 4.66 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 299 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 6462 unused Assets / (8.7 MB). Loaded Objects now: 7248.
-Memory consumption went from 216.5 MB to 207.8 MB.
-Total: 10.983100 ms (FindLiveObjects: 1.002900 ms CreateObjectMapping: 0.615000 ms MarkObjects: 5.370500 ms  DeleteObjects: 3.993500 ms)
+Unloading 6481 unused Assets / (9.3 MB). Loaded Objects now: 7267.
+Memory consumption went from 214.7 MB to 205.4 MB.
+Total: 16.665700 ms (FindLiveObjects: 1.293600 ms CreateObjectMapping: 0.785700 ms MarkObjects: 7.811700 ms  DeleteObjects: 6.772600 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 37038.919593 seconds.
-  path: Assets/tree2.fbx
-  artifactKey: Guid(49db79176a66b9042be10df350cab20c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/tree2.fbx using Guid(49db79176a66b9042be10df350cab20c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8c8dad2be6e4f7e3f95ca9bfc1dbefcc') in 1.2560167 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 45
-
-========================================================================
-Received Import Request.
-  Time since last request: 47.647800 seconds.
-  path: Assets/brush.fbx
-  artifactKey: Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/brush.fbx using Guid(b27069bd635b5314aa661be8bbb53d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '45715732cecbf3bdb08551a33dc6494f') in 0.0956542 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 126.005334 seconds.
-  path: Assets/Scenes/Design world_Profiles/Post-process Volume Profile.asset
-  artifactKey: Guid(e645f2a30fdecd344b2a92eeb4fe84eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/Design world_Profiles/Post-process Volume Profile.asset using Guid(e645f2a30fdecd344b2a92eeb4fe84eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fd55f2afbd88a216d0648ce28ea6641c') in 0.002046 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
-
-========================================================================
-Received Import Request.
-  Time since last request: 1036.918568 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Grass.001.fbx
-  artifactKey: Guid(4a4af7af25def604ba4df44f898e567e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Grass.001.fbx using Guid(4a4af7af25def604ba4df44f898e567e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a04bfe77d87007963e822863bf6fc38d') in 0.2078179 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Grass.003.fbx
-  artifactKey: Guid(dc8a10dbdb328d94aba7463c786c9488) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Grass.003.fbx using Guid(dc8a10dbdb328d94aba7463c786c9488) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'cfd49edf496054b977b8e1508715f0ad') in 0.0220038 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000031 seconds.
-  path: Assets/Low-Poly Medieval Market/Models/grass_02.fbx
-  artifactKey: Guid(cb029d78bdbe3f04e81a7eb0ee858b03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Low-Poly Medieval Market/Models/grass_02.fbx using Guid(cb029d78bdbe3f04e81a7eb0ee858b03) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '0e132cfb98a9b093797bf76712b4cd1a') in 0.0263408 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/Low-Poly Medieval Market/Models/grass_03.fbx
-  artifactKey: Guid(bece97dd7e0a6d2498db3387b559641c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Low-Poly Medieval Market/Models/grass_03.fbx using Guid(bece97dd7e0a6d2498db3387b559641c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5eed8778a3998c47db205e3029c2ada7') in 0.0260961 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000037 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Grass.002.fbx
-  artifactKey: Guid(32a642eac35668e40a60a1987097abb6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Grass.002.fbx using Guid(32a642eac35668e40a60a1987097abb6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'cb1135091a1c73f63332b4fc3bcca3bb') in 0.0247706 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.307547 seconds.
-  path: Assets/Low-Poly Medieval Market/Prefabs/Fruits and vegetables/carrot.prefab
-  artifactKey: Guid(9540292a453dac645bad435792805b94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Low-Poly Medieval Market/Prefabs/Fruits and vegetables/carrot.prefab using Guid(9540292a453dac645bad435792805b94) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8cf5fb50e698e088b1974f0569fa9ff9') in 0.0596613 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.111361 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/CauldronString.fbx
-  artifactKey: Guid(1d49aa9832a846a419acf7b4ce2b5b80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/CauldronString.fbx using Guid(1d49aa9832a846a419acf7b4ce2b5b80) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '85bd9a00d2ed006d7fd5194ecbe1d146') in 0.0554916 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.340394 seconds.
-  path: Assets/Low-Poly Medieval Market/Models/egg_brown.fbx
-  artifactKey: Guid(4fdd31f04f1abfa499e3467943c426fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Low-Poly Medieval Market/Models/egg_brown.fbx using Guid(4fdd31f04f1abfa499e3467943c426fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '03bc08d2a0b4b588c038d7ffba780543') in 0.0219022 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.007387 seconds.
-  path: Assets/Low-Poly Medieval Market/Models/fishing_rod.fbx
-  artifactKey: Guid(095c7254214cf304ea29b3561adb1351) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Low-Poly Medieval Market/Models/fishing_rod.fbx using Guid(095c7254214cf304ea29b3561adb1351) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b52f5cb1cc7b77930e085c443f9e9b68') in 0.0292873 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.090864 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.001.fbx
-  artifactKey: Guid(2383af54ceb87bc45acb4a9bf205a311) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.001.fbx using Guid(2383af54ceb87bc45acb4a9bf205a311) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2e5dabb168250916adf960a78344d0c0') in 0.0250998 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.003.fbx
-  artifactKey: Guid(a8fc03cb2ddb93c489909deda2bf65e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.003.fbx using Guid(a8fc03cb2ddb93c489909deda2bf65e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7a0182cfdf87d41eb6619aca6edca857') in 0.0283673 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000024 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.004.prefab
-  artifactKey: Guid(943e81527a053a840a8c2b8c0e3ada19) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.004.prefab using Guid(943e81527a053a840a8c2b8c0e3ada19) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '584d6ca10bb44b04fb54a9ed52ad86bd') in 0.0225516 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.006.prefab
-  artifactKey: Guid(b3819429403e2b5438c7a85122c33295) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Weapons and Shields/Shields/Iron Shields/IronShield.006.prefab using Guid(b3819429403e2b5438c7a85122c33295) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7e6601ca318e605879d3b83532185b36') in 0.0249841 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.007.fbx
-  artifactKey: Guid(cbe405939e08c744287e2bb4df546b65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/IronShield.007.fbx using Guid(cbe405939e08c744287e2bb4df546b65) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ac1dbd5372d507224842bdfe637185fc') in 0.0361991 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.699423 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.001.prefab
-  artifactKey: Guid(7e63aa36916418e498f8ce1afef4b52f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.001.prefab using Guid(7e63aa36916418e498f8ce1afef4b52f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '549561daf0a15cfbd9026bd682a40a12') in 0.0220238 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.003.prefab
-  artifactKey: Guid(2eb1b1876581a2746a96ad8a3b234fa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.003.prefab using Guid(2eb1b1876581a2746a96ad8a3b234fa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a7f82a0b93212dc211638ec9353c7a08') in 0.025105 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.004.fbx
-  artifactKey: Guid(f609bab318be73f4cbe4cfaad7c64f45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.004.fbx using Guid(f609bab318be73f4cbe4cfaad7c64f45) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '24b3f9542f34329edacc3b2d9a3fca7c') in 0.026589 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000037 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.011.fbx
-  artifactKey: Guid(31fe6a0f4c24cab48bed0c2aa048731f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.011.fbx using Guid(31fe6a0f4c24cab48bed0c2aa048731f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2c589a2533a8d1b337417a413af36b75') in 0.03099 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.012.prefab
-  artifactKey: Guid(07709d46085772949b86c895be5c960f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.012.prefab using Guid(07709d46085772949b86c895be5c960f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '295da641c3210470bab6e4f9ac781705') in 0.021385 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000028 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.019.prefab
-  artifactKey: Guid(68d896acaf4c3254caaa5aa17b189395) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.019.prefab using Guid(68d896acaf4c3254caaa5aa17b189395) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1d443d436df963ff9155c2259f9b14dc') in 0.0201411 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.020.prefab
-  artifactKey: Guid(4dc9dfcada85d4341a5924d4147a4473) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rocks/Rock.020.prefab using Guid(4dc9dfcada85d4341a5924d4147a4473) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5a3e49fdff52e1ad7de058e0ff4a800b') in 0.0230418 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.022.fbx
-  artifactKey: Guid(3852705841a330f489a28cd1d1866f96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Rock.022.fbx using Guid(3852705841a330f489a28cd1d1866f96) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e3ee0d385ca2bb50c84ce2e1778e389f') in 0.0245859 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000328 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/RockMoss.001.fbx
-  artifactKey: Guid(b4895f5fc5f24214f8665b0702e80038) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/RockMoss.001.fbx using Guid(b4895f5fc5f24214f8665b0702e80038) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '000eac3673e162199b38bf0b3c41c804') in 0.0242286 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000023 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rock + Moss/RockMoss.003.prefab
-  artifactKey: Guid(a7ee887b5d402bb4389743b69c90cc07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rock + Moss/RockMoss.003.prefab using Guid(a7ee887b5d402bb4389743b69c90cc07) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e6adc93fa01327a5fb777b7f453e687c') in 0.0197464 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000023 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rock + Moss/RockMoss.004.prefab
-  artifactKey: Guid(880692a6b25508d45bd3737a5743112b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/Prefabs/Nature/Rocks/Rock + Moss/RockMoss.004.prefab using Guid(880692a6b25508d45bd3737a5743112b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '83430d8e4c4f476e42d3d77e1465937a') in 0.028465 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.115779 seconds.
-  path: Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Quill.fbx
-  artifactKey: Guid(2e41661bbaacdea4dbb88e6b20ca88d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/BrokenVector/LowPolyDungeon/Models/Clutter/Quill.fbx using Guid(2e41661bbaacdea4dbb88e6b20ca88d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '4367129860861f39e6feb0cbec83067d') in 0.0361899 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001388 seconds.
-  path: Assets/Level 1 Monster Pack/Prefabs/Rabbit/Rabbit_Green.prefab
-  artifactKey: Guid(0f21afde7a41dfb4e930ca290ca46dee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Level 1 Monster Pack/Prefabs/Rabbit/Rabbit_Green.prefab using Guid(0f21afde7a41dfb4e930ca290ca46dee) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f2b83f369ea9c456c685534adb22b7af') in 0.1091378 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 78
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Low-Poly Medieval Market/Models/rag.fbx
-  artifactKey: Guid(6866ebb83c09d0849ade44c49a23b726) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Low-Poly Medieval Market/Models/rag.fbx using Guid(6866ebb83c09d0849ade44c49a23b726) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'e205595c4acb360fe2e2c1f902df276e') in 0.023446 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000032 seconds.
-  path: Assets/@PaulosCreations/RunesAndPortals/Rift/Mesh/Rift_Base_Collision.fbx
-  artifactKey: Guid(0d0c328d942d51a489a4f93469739974) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@PaulosCreations/RunesAndPortals/Rift/Mesh/Rift_Base_Collision.fbx using Guid(0d0c328d942d51a489a4f93469739974) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '72c39a936941e3e2c5737744608e821f') in 0.0227239 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000031 seconds.
-  path: Assets/Andtech/Star Pack/Samples/Star Pack Demo/Prefabs/Rainbow.prefab
-  artifactKey: Guid(5d8258c0b29b78a428be76c2d2102992) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Andtech/Star Pack/Samples/Star Pack Demo/Prefabs/Rainbow.prefab using Guid(5d8258c0b29b78a428be76c2d2102992) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '9a0cc19ac3d99a046cb7bcdbdaff7b38') in 0.2224687 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000055 seconds.
-  path: Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 2.prefab
-  artifactKey: Guid(48d710a611970164a84586c5b83fea21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 2.prefab using Guid(48d710a611970164a84586c5b83fea21) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '756b3f6dc28cf73690d8438304c96be5') in 0.0984417 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000042 seconds.
-  path: Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Top Cover 2.prefab
-  artifactKey: Guid(3502981343da54049aaf0b98fe7c795d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Top Cover 2.prefab using Guid(3502981343da54049aaf0b98fe7c795d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd3e5956aefe86121813eebcf3e8f8694') in 0.0192032 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Top Cover 3.prefab
-  artifactKey: Guid(fdc694385aea1234a950feefad7466ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Top Cover 3.prefab using Guid(fdc694385aea1234a950feefad7466ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '502743a7d5247b3d2a7a71eab83d085d') in 0.018034 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Prefabs/Enigme/Receiver.prefab
-  artifactKey: Guid(436780a97f6c9214ea0f784cd661efb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Enigme/Receiver.prefab using Guid(436780a97f6c9214ea0f784cd661efb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7fe1fdc8def45fe1445aee1d058a63e9') in 0.0296574 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/RPGHero/Prefabs/RPGHeroPBR.prefab
-  artifactKey: Guid(1543549dcdf638d488bd40cb68dd9b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/RPGHero/Prefabs/RPGHeroPBR.prefab using Guid(1543549dcdf638d488bd40cb68dd9b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8682d49dc9d998462d2a217d2583d44f') in 0.6451067 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 215
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 3.prefab
-  artifactKey: Guid(ec80a49a17517bb4d83f231c76a4e1ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 3.prefab using Guid(ec80a49a17517bb4d83f231c76a4e1ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7da17242b47f27bce112208dfdbd9910') in 0.0233171 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000040 seconds.
-  path: Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 5.prefab
-  artifactKey: Guid(fa3e5aeda8c8f344984cb84753ee4b9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Urp/Prefab/Roof Tile/Roof Tile 5.prefab using Guid(fa3e5aeda8c8f344984cb84753ee4b9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '18687fa8748d48333fb6eab4f0f6339e') in 0.0206794 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 32
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Top Cover 1.prefab
-  artifactKey: Guid(6c6fa7dbff6466f4dbb684f769f53a18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Top Cover 1.prefab using Guid(6c6fa7dbff6466f4dbb684f769f53a18) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'aca72add07fda8731fb47e6abb413b13') in 0.0177627 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Tile 4.prefab
-  artifactKey: Guid(6327d2f3159eb4642a0b145b8bf63418) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Built In/Prefab/Roof Tile/Roof Tile 4.prefab using Guid(6327d2f3159eb4642a0b145b8bf63418) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f6a20ea30a61568ad15de18cf9e59258') in 0.0183547 seconds
-Internal: JobTempAlloc has allocations that are more than the maximum lifespan of 4 frames old - this is not allowed and likely a leak
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/@PaulosCreations/RunesAndPortals/RuneStone/Mesh/RuneStone_Collision.fbx
-  artifactKey: Guid(560a7508155daac46a96000058fef78b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@PaulosCreations/RunesAndPortals/RuneStone/Mesh/RuneStone_Collision.fbx using Guid(560a7508155daac46a96000058fef78b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5585efe17563b0378a8b355ff789b8be') in 0.0253383 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 30
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/@PaulosCreations/RunesAndPortals/Props/Mesh/Rune_Part_1.fbx
-  artifactKey: Guid(b64a9ad57989e614495741c560004a11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@PaulosCreations/RunesAndPortals/Props/Mesh/Rune_Part_1.fbx using Guid(b64a9ad57989e614495741c560004a11) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '32bf03e9095c5d8c0fd42ff3a52b2edc') in 0.0833485 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 38
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/@PaulosCreations/RunesAndPortals/Vortex/Mesh/RunePile.fbx
-  artifactKey: Guid(3cde81dbbeaf01e46ac776a851b340e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@PaulosCreations/RunesAndPortals/Vortex/Mesh/RunePile.fbx using Guid(3cde81dbbeaf01e46ac776a851b340e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8281a0fe19746dd06f3ba85201e4179b') in 0.085705 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 38
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000032 seconds.
-  path: Assets/Low-Poly Medieval Market/Prefabs/round_bread_basket.prefab
-  artifactKey: Guid(90f15e791bd7a46409914c71c35c27ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Low-Poly Medieval Market/Prefabs/round_bread_basket.prefab using Guid(90f15e791bd7a46409914c71c35c27ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c73f47ddc64bcf80bb630241d161f11f') in 0.0930416 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 55
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.163834 seconds.
-  path: Assets/Modular Building Kit/Built In/Prefab/Books/Book 2.prefab
-  artifactKey: Guid(981c03d198a58f2449d867dbe4daa9de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Built In/Prefab/Books/Book 2.prefab using Guid(981c03d198a58f2449d867dbe4daa9de) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '30453e02b56d1646c3a14d10d4d5049c') in 0.0166897 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.025744 seconds.
-  path: Assets/Modular Building Kit/Built In/Prefab/Books/Book 4.prefab
-  artifactKey: Guid(e6774ba709451764ba3eaf50468f69d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Modular Building Kit/Built In/Prefab/Books/Book 4.prefab using Guid(e6774ba709451764ba3eaf50468f69d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd21f7d3783c3c1438ff6c19bec28c127') in 0.0157367 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 28
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.068229 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Book.001.fbx
-  artifactKey: Guid(1937a6a2dbb95e042bb833e1c0cf08ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Book.001.fbx using Guid(1937a6a2dbb95e042bb833e1c0cf08ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b7ac1fe9102cdf8761bc4d705edb0a51') in 0.0390841 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.012154 seconds.
-  path: Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Book.003.fbx
-  artifactKey: Guid(5e1e98c6f3836dc4788d31c16535958f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Daniel Mistage/Stylized Fantasy Armory/FBX/Book.003.fbx using Guid(5e1e98c6f3836dc4788d31c16535958f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'f14333e9a82f12f17faa47fa21c29fbb') in 0.0306116 seconds
-Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
-To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 31
+  Time since last request: 120632.826151 seconds.
+  path: Assets/Prefabs/Entré donjon.prefab
+  artifactKey: Guid(6d784bc12b440804fb263bfc75cd9f29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Entré donjon.prefab using Guid(6d784bc12b440804fb263bfc75cd9f29) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '24f0608f4a1c03e419b329d88eb32d49') in 0.0498601 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 6
 
 ========================================================================
 Received Prepare
-Refreshing native plugins compatible for Editor in 11.35 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 3.21 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 44 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 43 unused Assets / (4.8 MB). Loaded Objects now: 7393.
-Memory consumption went from 171.4 MB to 166.7 MB.
-Total: 10.283700 ms (FindLiveObjects: 0.528500 ms CreateObjectMapping: 0.152900 ms MarkObjects: 8.180200 ms  DeleteObjects: 1.420500 ms)
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 43 unused Assets / (4.8 MB). Loaded Objects now: 7270.
+Memory consumption went from 157.0 MB to 152.3 MB.
+Total: 8.443900 ms (FindLiveObjects: 0.527700 ms CreateObjectMapping: 0.165900 ms MarkObjects: 6.433200 ms  DeleteObjects: 1.315400 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
-Internal: deleting an allocation that is older than its permitted lifetime of 4 frames (age = 13)
-Internal: deleting an allocation that is older than its permitted lifetime of 4 frames (age = 13)
 Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-- Loaded All Assemblies, in  1.078 seconds
-Refreshing native plugins compatible for Editor in 2.51 ms, found 6 plugins.
+- Loaded All Assemblies, in  0.816 seconds
+Refreshing native plugins compatible for Editor in 2.02 ms, found 6 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 [MODES] ModeService[none].Initialize
 [MODES] ModeService[none].LoadModes
 [MODES] Loading mode Default (0) for mode-current-id-Game
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.001 seconds
-Domain Reload Profiling: 2077ms
-	BeginReloadAssembly (248ms)
+- Finished resetting the current domain, in  0.923 seconds
+Domain Reload Profiling: 1734ms
+	BeginReloadAssembly (213ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (13ms)
+		DisableScriptedObjects (5ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (64ms)
-	RebuildCommonClasses (40ms)
-	RebuildNativeTypeToScriptingClass (14ms)
-	initialDomainReloadingComplete (42ms)
-	LoadAllAssembliesAndSetupDomain (732ms)
-		LoadAssemblies (626ms)
+		CreateAndSetChildDomain (51ms)
+	RebuildCommonClasses (39ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (33ms)
+	LoadAllAssembliesAndSetupDomain (511ms)
+		LoadAssemblies (411ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (223ms)
-			TypeCache.Refresh (13ms)
+		AnalyzeDomain (202ms)
+			TypeCache.Refresh (11ms)
 				TypeCache.ScanAssembly (0ms)
-			BuildScriptInfoCaches (187ms)
-			ResolveRequiredComponents (14ms)
-	FinalizeReload (1002ms)
+			BuildScriptInfoCaches (175ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (923ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (713ms)
+		SetupLoadedEditorAssemblies (662ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (99ms)
+			ProcessInitializeOnLoadAttributes (508ms)
+			ProcessInitializeOnLoadMethodAttributes (40ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (20ms)
+Refreshing native plugins compatible for Editor in 2.01 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 44 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6480 unused Assets / (8.7 MB). Loaded Objects now: 7272.
+Memory consumption went from 168.8 MB to 160.0 MB.
+Total: 10.760200 ms (FindLiveObjects: 0.827100 ms CreateObjectMapping: 0.982200 ms MarkObjects: 5.258200 ms  DeleteObjects: 3.691400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\77kik\Documents\ProjetOmegaRenouveau\Game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.940 seconds
+Refreshing native plugins compatible for Editor in 2.75 ms, found 6 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Game
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.937 seconds
+Domain Reload Profiling: 1873ms
+	BeginReloadAssembly (234ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (55ms)
+	RebuildCommonClasses (38ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (36ms)
+	LoadAllAssembliesAndSetupDomain (612ms)
+		LoadAssemblies (551ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (186ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (163ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (938ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (706ms)
 			LogAssemblyErrors (0ms)
 			InitializePlatformSupportModulesInManaged (3ms)
 			SetLoadedEditorAssemblies (4ms)
-			BeforeProcessingInitializeOnLoad (102ms)
-			ProcessInitializeOnLoadAttributes (556ms)
-			ProcessInitializeOnLoadMethodAttributes (37ms)
-			AfterProcessingInitializeOnLoad (10ms)
+			BeforeProcessingInitializeOnLoad (98ms)
+			ProcessInitializeOnLoadAttributes (557ms)
+			ProcessInitializeOnLoadMethodAttributes (35ms)
+			AfterProcessingInitializeOnLoad (9ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (22ms)
-Refreshing native plugins compatible for Editor in 3.90 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 2.46 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 53 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 6461 unused Assets / (8.1 MB). Loaded Objects now: 7329.
-Memory consumption went from 187.1 MB to 179.0 MB.
-Total: 11.456000 ms (FindLiveObjects: 1.085900 ms CreateObjectMapping: 0.602800 ms MarkObjects: 5.668000 ms  DeleteObjects: 4.097200 ms)
+Unloading 43 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6480 unused Assets / (8.1 MB). Loaded Objects now: 7273.
+Memory consumption went from 170.5 MB to 162.4 MB.
+Total: 13.492800 ms (FindLiveObjects: 1.090700 ms CreateObjectMapping: 0.590400 ms MarkObjects: 6.836200 ms  DeleteObjects: 4.974000 ms)
 
 Prepare: number of updated asset objects reloaded= 0
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
-Exiting without the bug reporter. Application will terminate with return code 0

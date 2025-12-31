@@ -13,6 +13,7 @@ public class BiomeProfile : ScriptableObject
     [Header("Assets Spéciaux")]
     public GameObject dungeonPrefab;
     public GameObject liquidSurfacePrefab;
+    public GameObject voidZonePrefab;
 
     [Header("Couleurs")]
     public Color baseGroundColor = Color.white;
@@ -34,6 +35,11 @@ public class BiomeProfile : ScriptableObject
     public GameObject[] enemies;      // Type Enemy
     public GameObject[] puzzles;      // Type Puzzle
     public GameObject[] collectibles; // Type Collectible
+    
+    [Header("Spawn Configuration")]
+    [Range(0, 1)] public float enemyDensity = 0.05f; // Densité de spawn des ennemis
+    public float minEnemyDistance = 10f; // Distance minimale entre ennemis
+    public float minVillageDistance = 30f; // Distance minimale du village pour spawn
 
     // --- HELPER PROPS (On garde int pour l'instant pour la végétation) ---
     public GameObject GetRandomProp(int type) {
