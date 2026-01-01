@@ -12,8 +12,12 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
-# ✅ Added: Ignore Library folder inside a subfolder like Game/
+# ✅ Added: Ignore Unity-generated folders inside Game/
 Game/Library/
+Game/Temp/
+Game/obj/
+Game/Logs/
+Game/UserSettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
