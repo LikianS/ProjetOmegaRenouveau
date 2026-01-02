@@ -40737,8 +40737,7 @@ MonoBehaviour:
     arme est li\xE9e \xE0 un autre blason : celui du Cerf. Celui qui rev\xEAt ce
     blason porte la Masse et s\u2019\xE9lance dans la bataille avec une force in\xE9gal\xE9e.
     Mais attention : ce n\u2019est pas l\u2019armure qui se trouve \xE0 l\u2019extr\xE9mit\xE9
-    droite qui portera la Masse. Le myst\xE8re se cache ailleurs\u2026\n\nbleu =
-    sanglier, rouge = cerf, jaune = dragon "
+    droite qui portera la Masse. Le myst\xE8re se cache ailleurs\u2026\n\n "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
