@@ -131,6 +131,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""99450c2c-2e4d-4f61-8524-f8537adba122"",
+                    ""path"": ""<QuestProTouchController>{LeftHand}/thumbstick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c8f472f-0c89-43e8-9a94-98f58eed018e"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -218,6 +229,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""6bf54f4a-51cd-4f2b-8756-6f33fe00d1d4"",
+                    ""path"": ""<QuestProTouchController>/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""58fb81f8-918d-4a6f-919f-ef6590216498"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -242,6 +264,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c7e3cd91-9db1-42c4-8230-805854dea245"",
                     ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb672207-eb92-4721-8cb3-4164ddb5f9fa"",
+                    ""path"": ""<QuestProTouchController>{RightHand}/thumbstick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

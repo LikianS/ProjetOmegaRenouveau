@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         rotationX -= mouseY;
         rotationX = Mathf.Clamp(rotationX, -80f, 80f);
 
-        // Rotation caméra
+        // Rotation camï¿½ra
         cameraTransform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
 
         // Rotation joueur (le Yaw)

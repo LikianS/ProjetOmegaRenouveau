@@ -6,6 +6,7 @@ using Cinemachine;
 using System;
 using UnityEngine.SceneManagement;
 using System.Transactions;
+using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [Header("Attack Settings")]
     public float attackDuration = 0.5f;
     public float attackCooldown = 0.5f;
+    public float vrAttackVelocityThreshold = 2.0f; // Seuil de vitesse pour l'attaque VR
 
     [Header("Enemy Lock")]
     public float lockRange = 10f;
@@ -64,6 +66,8 @@ public class PlayerController : MonoBehaviour
     private float footstepInterval = 0.4f;
 
 
+
+
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
@@ -85,7 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             isRunning = false;
         }
-        if(inDialogueMode || isInteracting)
+        if (inDialogueMode || isInteracting)
         {
             moveInput = Vector2.zero;
             animator.SetBool("IsRunning", false);
@@ -113,12 +117,12 @@ public class PlayerController : MonoBehaviour
                 if (isSprinting)
                 {
                     SoundManager.Instance.PlayPlayerRun();
-                    footstepInterval = 0.25f; 
+                    footstepInterval = 0.25f;
                 }
                 else
                 {
                     SoundManager.Instance.PlayPlayerWalk();
-                    footstepInterval = 0.5f; 
+                    footstepInterval = 0.5f;
                 }
                 footstepTimer = footstepInterval;
             }
@@ -130,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
         HandleCooldowns();
         HandleMovement();
+        CheckVRAttackGesture();
     }
     public void PlayAttackSound()
     {
@@ -174,6 +179,30 @@ public class PlayerController : MonoBehaviour
             if (attackCooldownTimer <= 0)
             {
                 canAttack = true;
+            }
+        }
+    }
+
+    private void CheckVRAttackGesture()
+    {
+        if (inDialogueMode || isInteracting || !canAttack)
+            return;
+        // Récupère le contrôleur de la main droite
+        UnityEngine.XR.InputDevice rightHand = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+        if (rightHand.isValid)
+        {
+         
+
+            // Tente d'obtenir la vélocité du contrôleur
+            if (rightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceVelocity, out Vector3 velocity))
+            {
+                // Vérifie la vitesse du mouvement vers l'avant selon la direction de la caméra
+                float forwardVelocity = Vector3.Dot(velocity, mainCameraTransform.forward);
+
+                if (forwardVelocity > vrAttackVelocityThreshold && playerStats.CurrentStamina >= playerStats.attackStaminaCost)
+                {
+                    HandleAttack();
+                }
             }
         }
     }
@@ -247,7 +276,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (ShopManager.Instance.shopPanel.activeSelf || inDialogueMode|| context.ReadValue<Vector2>().magnitude == 0)
+        if (ShopManager.Instance.shopPanel.activeSelf || inDialogueMode || context.ReadValue<Vector2>().magnitude == 0)
         {
             moveInput = Vector2.zero;
             isRunning = false;
@@ -388,7 +417,7 @@ public class PlayerController : MonoBehaviour
     {
         if (parryBlockedDamage)
         {
-            parryBlockedDamage = false; 
+            parryBlockedDamage = false;
             return;
         }
 
@@ -404,7 +433,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Die()
-    { 
+    {
         if (animator != null)
         {
             animator.SetTrigger("IsDead");
@@ -443,14 +472,14 @@ public class PlayerController : MonoBehaviour
                 interactableItem.Collect(playerStats);
                 interactableItem = null;
             }
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f); 
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f);
             foreach (var hitCollider in hitColliders)
             {
                 WeaponPickup weaponPickup = hitCollider.GetComponent<WeaponPickup>();
                 if (weaponPickup != null)
                 {
                     playerStats.EquipWeapon(weaponPickup.weaponStats);
-                    Destroy(weaponPickup.gameObject); 
+                    Destroy(weaponPickup.gameObject);
                     break;
                 }
             }

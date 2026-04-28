@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MirrorScene 2.unity
     guid: 30d62c93d93d8d246942144597eec5ba
   m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: c0e921972b56b804c861bcf154f5b057,
+    com.unity.input.settings: {fileID: 11400000, guid: dc5da54c23daffc4fbd01361c3675157,
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fc7fbb85d5a0d2f4db8afd7c6b76428f,
       type: 2}
