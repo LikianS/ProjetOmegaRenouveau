@@ -125,6 +125,15 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa809cae-2e5a-4ff0-8b54-383fc2f825a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -295,6 +304,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""762249b7-e28b-4bb2-a6f7-223d2214a3d6"",
+                    ""path"": ""<OculusTouchController>/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""e25c6ca8-de82-4dbd-98c5-7a64ebeb33a0"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -345,6 +365,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""processors"": ""StickDeadzone"",
                     ""groups"": """",
                     ""action"": ""CameraRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f4e3883-152c-4b81-b1a0-63df2e80092d"",
+                    ""path"": ""<OculusTouchController>/primaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -581,6 +612,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         m_Player_ToggleStats = m_Player.FindAction("ToggleStats", throwIfNotFound: true);
         m_Player_Parry = m_Player.FindAction("Parry", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -668,6 +700,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ToggleStats;
     private readonly InputAction m_Player_Parry;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Rotate;
     public struct PlayerActions
     {
         private @NewControls m_Wrapper;
@@ -683,6 +716,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         public InputAction @ToggleStats => m_Wrapper.m_Player_ToggleStats;
         public InputAction @Parry => m_Wrapper.m_Player_Parry;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -725,6 +759,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -762,6 +799,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -978,6 +1018,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         void OnToggleStats(InputAction.CallbackContext context);
         void OnParry(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
