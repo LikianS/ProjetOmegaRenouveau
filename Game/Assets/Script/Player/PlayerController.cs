@@ -134,7 +134,6 @@ public class PlayerController : MonoBehaviour
 
         HandleCooldowns();
         HandleMovement();
-        CheckVRAttackGesture();
     }
     public void PlayAttackSound()
     {
@@ -179,30 +178,6 @@ public class PlayerController : MonoBehaviour
             if (attackCooldownTimer <= 0)
             {
                 canAttack = true;
-            }
-        }
-    }
-
-    private void CheckVRAttackGesture()
-    {
-        if (inDialogueMode || isInteracting || !canAttack)
-            return;
-        // Récupère le contrôleur de la main droite
-        UnityEngine.XR.InputDevice rightHand = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-        if (rightHand.isValid)
-        {
-         
-
-            // Tente d'obtenir la vélocité du contrôleur
-            if (rightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceVelocity, out Vector3 velocity))
-            {
-                // Vérifie la vitesse du mouvement vers l'avant selon la direction de la caméra
-                float forwardVelocity = Vector3.Dot(velocity, mainCameraTransform.forward);
-
-                if (forwardVelocity > vrAttackVelocityThreshold && playerStats.CurrentStamina >= playerStats.attackStaminaCost)
-                {
-                    HandleAttack();
-                }
             }
         }
     }

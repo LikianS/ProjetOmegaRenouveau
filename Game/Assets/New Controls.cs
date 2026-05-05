@@ -130,17 +130,6 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""99450c2c-2e4d-4f61-8524-f8537adba122"",
-                    ""path"": ""<QuestProTouchController>{LeftHand}/thumbstick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9c8f472f-0c89-43e8-9a94-98f58eed018e"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
@@ -207,8 +196,30 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""433c95d4-c06c-414e-ab1c-b837f1369d55"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/thumbstick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a7fabcff-7f00-4d95-be87-3298cd5c302f"",
                     ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d04e06b-7ba6-4b15-81c3-207ac1ba9fbc"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/triggerpressed"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -230,7 +241,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6bf54f4a-51cd-4f2b-8756-6f33fe00d1d4"",
-                    ""path"": ""<QuestProTouchController>/primaryButton"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{LeftHand}/primarytouched"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -264,17 +275,6 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c7e3cd91-9db1-42c4-8230-805854dea245"",
                     ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cb672207-eb92-4721-8cb3-4164ddb5f9fa"",
-                    ""path"": ""<QuestProTouchController>{RightHand}/thumbstick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -334,6 +334,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b5f526d-a548-453d-83ac-7a339de83696"",
+                    ""path"": ""<OculusTouchController>{RightHand}/thumbstick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
+                    ""groups"": """",
+                    ""action"": ""CameraRotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
