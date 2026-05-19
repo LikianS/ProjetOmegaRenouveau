@@ -9,24 +9,18 @@ public class SoundPanelUI : MonoBehaviour
     public Slider effectsSlider;
     public Slider voiceSlider;
     [HideInInspector] public GameObject menuPanel;
-    private float navCooldown = 0.25f;
-    private float lastNavTime = 0f;
 
     private void OnEnable()
     {
-        if (musicSlider != null && EventSystem.current != null)
-            EventSystem.current.SetSelectedGameObject(musicSlider.gameObject);
-        if (menuPanel != null)
-            menuPanel.SetActive(false);
+        SelectMusicSlider();
+        SetMenuPanelActive(false);
     }
 
     private void Update()
     {
         if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
         {
-            gameObject.SetActive(false);
-            if (menuPanel != null)
-                menuPanel.SetActive(true);
+            ReturnToMenu();
             return;
         }
     }
@@ -42,5 +36,23 @@ public class SoundPanelUI : MonoBehaviour
         effectsSlider.onValueChanged.AddListener(SoundManager.Instance.SetEffectsVolume);
         voiceSlider.onValueChanged.AddListener(SoundManager.Instance.SetVoiceVolume);
 
+    }
+
+    private void SelectMusicSlider()
+    {
+        if (musicSlider != null && EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(musicSlider.gameObject);
+    }
+
+    private void SetMenuPanelActive(bool isActive)
+    {
+        if (menuPanel != null)
+            menuPanel.SetActive(isActive);
+    }
+
+    private void ReturnToMenu()
+    {
+        gameObject.SetActive(false);
+        SetMenuPanelActive(true);
     }
 }

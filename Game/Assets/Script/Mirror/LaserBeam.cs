@@ -5,11 +5,31 @@ public class LaserBeam : MonoBehaviour
     public LineRenderer lineRenderer;  // Le composant LineRenderer
     public int maxReflections = 5;     // Nombre maximal de rebonds
     public float maxDistance = 100f;   // Distance maximale du rayon
+    public LayerMask raycastMask = ~0;
+    public LayerMask mirrorLayerMask;
+    public LayerMask receiverLayerMask;
+
+    void Awake()
+    {
+        if (mirrorLayerMask.value == 0)
+        {
+            int mirrorLayer = LayerMask.NameToLayer("Mirror");
+            if (mirrorLayer >= 0)
+                mirrorLayerMask = 1 << mirrorLayer;
+        }
+
+        if (receiverLayerMask.value == 0)
+        {
+            int receiverLayer = LayerMask.NameToLayer("Receiver");
+            if (receiverLayer >= 0)
+                receiverLayerMask = 1 << receiverLayer;
+        }
+    }
 
     void Update()
     {
         Vector3 direction = transform.forward;  // Direction du rayon
-        Vector3 currentPos = transform.position;  // Position de départ
+        Vector3 currentPos = transform.position;  // Position de dï¿½part
 
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, currentPos);
@@ -17,32 +37,32 @@ public class LaserBeam : MonoBehaviour
         for (int i = 0; i < maxReflections; i++)
         {
             Ray ray = new Ray(currentPos, direction);
-            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, raycastMask, QueryTriggerInteraction.Ignore))
             {
-                //Debug.Log(">>> Quelque chose a été touché : " + hit.collider.name);
+                //Debug.Log(">>> Quelque chose a ï¿½tï¿½ touchï¿½ : " + hit.collider.name);
 
                 lineRenderer.positionCount++;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
 
-                if (hit.collider.CompareTag("Mirror"))
+                int hitLayerBit = 1 << hit.collider.gameObject.layer;
+                if ((mirrorLayerMask.value & hitLayerBit) != 0)
                 {
-                    //Debug.Log(">>> Miroir détecté !");
+                    //Debug.Log(">>> Miroir dï¿½tectï¿½ !");
                     direction = Vector3.Reflect(direction, hit.normal);
                     currentPos = hit.point;
                 }
-                else if (hit.collider.CompareTag("Receiver"))
+                else if ((receiverLayerMask.value & hitLayerBit) != 0)
                 {
-                    //Debug.Log(">>> Récepteur touché !");
-                    Receiver receiver = hit.collider.GetComponent<Receiver>();
-                    if (receiver != null)
+                    //Debug.Log(">>> Rï¿½cepteur touchï¿½ !");
+                    if (hit.collider.TryGetComponent<Receiver>(out Receiver receiver))
                     {
                         receiver.Activate();
                     }
-                    break; // on arrête après avoir touché le receiver
+                    break; // on arrï¿½te aprï¿½s avoir touchï¿½ le receiver
                 }
                 else
                 {
-                    //Debug.Log(">>> Objet NON miroir et NON receiver détecté : " + hit.collider.tag);
+                    //Debug.Log(">>> Objet NON miroir et NON receiver dï¿½tectï¿½ : " + hit.collider.tag);
                     break;
                 }
             }

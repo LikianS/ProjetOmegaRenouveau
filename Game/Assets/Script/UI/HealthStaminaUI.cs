@@ -13,28 +13,22 @@ public class HealthStaminaUI : MonoBehaviour
 
     public void SetMaxHealth(int maxHealth)
     {
-        if (!IsValid(healthSlider) || !IsValid(healthFillImage)) return;
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = healthSlider.value;
+        ApplySliderMaxValue(healthSlider, healthFillImage, maxHealth);
     }
 
     public void SetHealth(int health)
     {
-        if (!IsValid(healthSlider) || !IsValid(healthFillImage)) return;
-        healthSlider.value = health;
+        ApplySliderValue(healthSlider, healthFillImage, health);
     }
 
     public void SetMaxStamina(float maxStamina)
     {
-        if (!IsValid(staminaSlider) || !IsValid(staminaFillImage)) return;
-        staminaSlider.maxValue = maxStamina;
-        staminaSlider.value = staminaSlider.value;
+        ApplySliderMaxValue(staminaSlider, staminaFillImage, maxStamina);
     }
 
     public void SetStamina(float stamina)
     {
-        if (!IsValid(staminaSlider) || !IsValid(staminaFillImage)) return;
-        staminaSlider.value = stamina;
+        ApplySliderValue(staminaSlider, staminaFillImage, stamina);
     }
 
     public void HandleHealthChanged(int currentHealth, int maxHealth)
@@ -49,8 +43,16 @@ public class HealthStaminaUI : MonoBehaviour
         SetStamina(currentStamina);
     }
 
-    private bool IsValid(Object obj)
+    private void ApplySliderMaxValue(Slider slider, Image fillImage, float maxValue)
     {
-        return obj != null;
+        if (slider == null || fillImage == null) return;
+        slider.maxValue = maxValue;
+        slider.value = slider.value;
+    }
+
+    private void ApplySliderValue(Slider slider, Image fillImage, float value)
+    {
+        if (slider == null || fillImage == null) return;
+        slider.value = value;
     }
 }

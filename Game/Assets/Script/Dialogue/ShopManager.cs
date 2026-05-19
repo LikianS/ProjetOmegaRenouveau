@@ -84,6 +84,8 @@ public class ShopManager : MonoBehaviour
     private float lastInputTime = 0f;
 
     private PlayerInput playerInput;
+    private PlayerController playerController;
+    private DualAnimPlayerController dualAnimPlayerController;
 
     public static ShopManager Instance { get; private set; }
 
@@ -118,6 +120,7 @@ public class ShopManager : MonoBehaviour
     {
         playerStats = FindAnyObjectByType<PlayerStats>();
         playerInput = FindAnyObjectByType<PlayerInput>();
+        CachePlayerReferences();
         shopPanel.SetActive(false);
         statsText.text = "";
         previewText.text = "";
@@ -132,14 +135,14 @@ public class ShopManager : MonoBehaviour
 
     public void OpenShop(string shopType, string weaponName = null)
     {
+        CachePlayerReferences();
+
         if (playerInput != null)
             playerInput.SwitchCurrentActionMap("Shop");
-        var player = FindAnyObjectByType<PlayerController>();
-        if (player != null)
-            player.SetDialogueMode(false);
-        var dualPlayer = FindAnyObjectByType<DualAnimPlayerController>();
-        if (dualPlayer != null)
-            dualPlayer.SetDialogueMode(false);
+        if (playerController != null)
+            playerController.SetDialogueMode(false);
+        if (dualAnimPlayerController != null)
+            dualAnimPlayerController.SetDialogueMode(false);
 
         ShopConfiguration shopConfig = shopConfigurations.Find(config => config.shopType == shopType);
         if (shopConfig == null)
@@ -148,10 +151,10 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        if (player != null)
-            player.SetDialogueMode(true);
-        if (dualPlayer != null)
-            dualPlayer.SetDialogueMode(true);
+        if (playerController != null)
+            playerController.SetDialogueMode(true);
+        if (dualAnimPlayerController != null)
+            dualAnimPlayerController.SetDialogueMode(true);
 
         if (shopConfig.targetType == ShopConfiguration.TargetType.WeaponStats && !string.IsNullOrEmpty(weaponName))
         {
@@ -276,18 +279,18 @@ public class ShopManager : MonoBehaviour
 
     public void CloseShop()
     {
+        CachePlayerReferences();
+
         if (playerInput != null)
             playerInput.SwitchCurrentActionMap("Player");
         shopPanel.SetActive(false);
         selectionArrow.SetActive(false);
         statsPanel.SetActive(false);
 
-        var player = FindAnyObjectByType<PlayerController>();
-        if (player != null)
-            player.SetDialogueMode(false);
-        var dualPlayer = FindAnyObjectByType<DualAnimPlayerController>();
-        if (dualPlayer != null)
-            dualPlayer.SetDialogueMode(false);
+        if (playerController != null)
+            playerController.SetDialogueMode(false);
+        if (dualAnimPlayerController != null)
+            dualAnimPlayerController.SetDialogueMode(false);
 
         SoundManager.Instance.PlayUIClose();
     }
@@ -579,6 +582,21 @@ public class ShopManager : MonoBehaviour
         {
             CloseShop();
         }
+    }
+
+    private void CachePlayerReferences()
+    {
+        if (playerController == null)
+            playerController = FindAnyObjectByType<PlayerController>();
+
+        if (dualAnimPlayerController == null)
+            dualAnimPlayerController = FindAnyObjectByType<DualAnimPlayerController>();
+
+        if (playerStats == null)
+            playerStats = FindAnyObjectByType<PlayerStats>();
+
+        if (playerInput == null)
+            playerInput = FindAnyObjectByType<PlayerInput>();
     }
 
 }

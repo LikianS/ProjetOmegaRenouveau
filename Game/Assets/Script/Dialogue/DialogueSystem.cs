@@ -21,6 +21,8 @@ public class DialogueSystem : MonoBehaviour
     public float typingSpeed = 0.03f;
     public float minDistance = 2.0f;
     public string interactButtonText = "A";
+    [SerializeField, Min(0.05f)]
+    private float npcCheckInterval = 0.2f;
 
     private Camera mainCamera;
     private PlayerController playerController;
@@ -33,6 +35,13 @@ public class DialogueSystem : MonoBehaviour
     private int currentChoiceIndex = 0;
     private List<GameObject> choiceObjects = new List<GameObject>();
     private PlayerInput playerInput;
+    private ShopManager shopManager;
+    private QuestManager questManager;
+    private PlayerStats playerStats;
+    private readonly Dictionary<int, DialogueLine> dialogueLinesById = new Dictionary<int, DialogueLine>();
+    private Coroutine typingCoroutine;
+    private Coroutine highlightChoiceCoroutine;
+    private Action pendingOnDialogueEnd;
 
     [Header("Selection Indicator")]
     public GameObject selectionArrow;
@@ -44,6 +53,7 @@ public class DialogueSystem : MonoBehaviour
     private float choiceAppearTime = 0f;
     private float minChoiceDisplayTime = 0.15f;
     private bool justDisplayedChoices = false;
+    private float npcCheckTimer;
 
 
     private void Start()
@@ -52,6 +62,9 @@ public class DialogueSystem : MonoBehaviour
         playerController = FindAnyObjectByType<PlayerController>();
         dualAnimPlayerController = FindAnyObjectByType<DualAnimPlayerController>();
         playerInput = FindAnyObjectByType<PlayerInput>();
+        shopManager = FindAnyObjectByType<ShopManager>();
+        questManager = FindAnyObjectByType<QuestManager>();
+        playerStats = FindAnyObjectByType<PlayerStats>();
         InteractionManager.Instance.HideInteraction();
         dialoguePanel.SetActive(false);
         choicesPanel.SetActive(false);
@@ -62,7 +75,7 @@ public class DialogueSystem : MonoBehaviour
     {
         if (context.performed)
         {
-            ShopManager shopManager = FindAnyObjectByType<ShopManager>();
+            EnsureRuntimeReferences();
             if (shopManager != null && shopManager.shopPanel.activeSelf)
                 return;
 
@@ -74,7 +87,7 @@ public class DialogueSystem : MonoBehaviour
             {
                 if (isTyping)
                 {
-                    StopAllCoroutines();
+                    StopTypingCoroutine();
                     dialogueText.text = currentLine.dialogueText;
                     isTyping = false;
 
@@ -104,9 +117,10 @@ public class DialogueSystem : MonoBehaviour
 
     private void ProgressDialogue()
     {
+        EnsureRuntimeReferences();
+
         if (currentLine.opensShop)
         {
-            ShopManager shopManager = FindAnyObjectByType<ShopManager>();
             if (shopManager != null)
             {
                 EndDialogue();
@@ -121,7 +135,6 @@ public class DialogueSystem : MonoBehaviour
 
         if (currentLine.opensQuest)
         {
-            QuestManager questManager = FindAnyObjectByType<QuestManager>();
             if (currentLine.quest is QuestDataScriptable questData)
             {
                 questManager.AddQuest(questData);
@@ -130,7 +143,6 @@ public class DialogueSystem : MonoBehaviour
 
         if (currentLine.updatesQuestStep)
         {
-            QuestManager questManager = FindAnyObjectByType<QuestManager>();
             if (currentLine.quest is QuestDataScriptable questData)
             {
                 questManager.UpdateQuestStep(questData, currentLine.questStepId);
@@ -152,6 +164,9 @@ public class DialogueSystem : MonoBehaviour
     {
         if (!isInDialogue)
         {
+            npcCheckTimer -= Time.deltaTime;
+            if (npcCheckTimer > 0f) return;
+            npcCheckTimer = npcCheckInterval;
             CheckForNearbyNPC();
         }
     }
@@ -214,7 +229,9 @@ public class DialogueSystem : MonoBehaviour
         }
 
         currentDialogue = validDialogue;
+        BuildDialogueLineLookup(currentDialogue);
         isInDialogue = true;
+        pendingOnDialogueEnd = null;
 
         if (playerController != null)
             playerController.SetDialogueMode(isInDialogue);
@@ -227,9 +244,7 @@ public class DialogueSystem : MonoBehaviour
 
     private void ShowDialogueLine(int dialogueId)
     {
-        currentLine = currentDialogue.dialogueLines.Find(line => line.id == dialogueId);
-
-        if (currentLine == null)
+        if (!TryGetDialogueLine(dialogueId, out currentLine))
         {
             EndDialogue();
             return;
@@ -286,11 +301,14 @@ public class DialogueSystem : MonoBehaviour
         dialoguePanel.SetActive(true);
         speakerNameText.text = currentLine.speakerName;
 
-        StartCoroutine(TypeDialogue(currentLine.dialogueText));
+        StopTypingCoroutine();
+        typingCoroutine = StartCoroutine(TypeDialogue(currentLine.dialogueText));
     }
     public void SetDialogueActive(int dialogueId, bool isActive)
     {
-        DialogueLine line = currentDialogue.dialogueLines.Find(l => l.id == dialogueId);
+        if (!TryGetDialogueLine(dialogueId, out DialogueLine line))
+            return;
+
         if (line != null)
         {
             line.isActive = isActive;
@@ -315,6 +333,8 @@ public class DialogueSystem : MonoBehaviour
         {
             ShowChoices();
         }
+
+        typingCoroutine = null;
     }
 
     private void ShowChoices()
@@ -343,12 +363,17 @@ public class DialogueSystem : MonoBehaviour
         currentChoiceIndex = 0;
         HighlightChoice(currentChoiceIndex);
 
-        StartCoroutine(HighlightChoiceNextFrame(currentChoiceIndex));
+        if (highlightChoiceCoroutine != null)
+        {
+            StopCoroutine(highlightChoiceCoroutine);
+            highlightChoiceCoroutine = null;
+        }
+        highlightChoiceCoroutine = StartCoroutine(HighlightChoiceNextFrame(currentChoiceIndex));
 
         PositionUIElement(choicesPanel, playerTransform.position + Vector3.up * 2.5f);
 
         choiceAppearTime = Time.unscaledTime;
-        justDisplayedChoices = true; // <-- Ajouté
+        justDisplayedChoices = true; // <-- Ajoutï¿½
 
     }
 
@@ -357,6 +382,7 @@ public class DialogueSystem : MonoBehaviour
     {
         yield return null;
         HighlightChoice(index);
+        highlightChoiceCoroutine = null;
     }
 
     private void HighlightChoice(int index)
@@ -389,7 +415,7 @@ public class DialogueSystem : MonoBehaviour
 
         if (choice.opensShop)
         {
-            ShopManager shopManager = FindAnyObjectByType<ShopManager>();
+            EnsureRuntimeReferences();
             if (shopManager != null)
             {
                 EndDialogue();
@@ -410,6 +436,13 @@ public class DialogueSystem : MonoBehaviour
 
     public void EndDialogue()
     {
+        StopTypingCoroutine();
+        if (highlightChoiceCoroutine != null)
+        {
+            StopCoroutine(highlightChoiceCoroutine);
+            highlightChoiceCoroutine = null;
+        }
+
         if (playerInput != null)
             playerInput.SwitchCurrentActionMap("Player");
         dialoguePanel.SetActive(false);
@@ -424,6 +457,13 @@ public class DialogueSystem : MonoBehaviour
             playerController.SetDialogueMode(false);
         if (dualAnimPlayerController != null)
             dualAnimPlayerController.SetDialogueMode(false);
+
+        if (pendingOnDialogueEnd != null)
+        {
+            var callback = pendingOnDialogueEnd;
+            pendingOnDialogueEnd = null;
+            callback.Invoke();
+        }
 
     }
 
@@ -440,7 +480,8 @@ public class DialogueSystem : MonoBehaviour
 
     private bool AreConditionsMet(DialogueLine line)
     {
-        QuestManager questManager = QuestManager.Instance;
+        EnsureRuntimeReferences();
+        QuestManager questManager = QuestManager.Instance != null ? QuestManager.Instance : this.questManager;
         if (questManager == null)
         {
             return false;
@@ -489,7 +530,15 @@ public class DialogueSystem : MonoBehaviour
 
             if (condition.requiredStepId != -1)
             {
-                QuestStep step = condition.quest.steps.Find(s => s.stepId == condition.requiredStepId);
+                QuestStep step = null;
+                for (int i = 0; i < condition.quest.steps.Count; i++)
+                {
+                    if (condition.quest.steps[i].stepId == condition.requiredStepId)
+                    {
+                        step = condition.quest.steps[i];
+                        break;
+                    }
+                }
                 if (step == null || !step.isCompleted)
                 {
                     return false;
@@ -502,9 +551,11 @@ public class DialogueSystem : MonoBehaviour
 
     private DialogueData GetValidDialogueData(NPC npc)
     {
-        QuestManager questManager = QuestManager.Instance;
-        PlayerStats playerStats = FindAnyObjectByType<PlayerStats>();
+        EnsureRuntimeReferences();
+        QuestManager questManager = QuestManager.Instance != null ? QuestManager.Instance : this.questManager;
+        PlayerStats playerStats = this.playerStats;
         if (questManager == null) return null;
+        if (playerStats == null) return null;
 
         foreach (var group in npc.dialogueGroups)
         {
@@ -590,31 +641,71 @@ public class DialogueSystem : MonoBehaviour
         if (data == null) return;
 
         currentDialogue = data;
+        BuildDialogueLineLookup(currentDialogue);
         currentLine = null;
         isInDialogue = true;
         InteractionManager.Instance.HideInteraction();
 
-        DialogueLine startLine = currentDialogue.dialogueLines.Find(line => line.id == currentDialogue.startDialogueId);
-        if (startLine == null)
+        if (!TryGetDialogueLine(currentDialogue.startDialogueId, out DialogueLine startLine))
         {
             Debug.LogError($"Aucune ligne de dialogue avec l'ID {currentDialogue.startDialogueId} dans {currentDialogue.name}");
             EndDialogue();
             return;
         }
 
-        ShowDialogueLine(currentDialogue.startDialogueId);
+        pendingOnDialogueEnd = onEnd;
+        ShowDialogueLine(startLine.id);
+    }
 
-        if (onEnd != null)
+    private void EnsureRuntimeReferences()
+    {
+        if (shopManager == null)
+            shopManager = FindAnyObjectByType<ShopManager>();
+        if (questManager == null)
+            questManager = FindAnyObjectByType<QuestManager>();
+        if (playerStats == null)
+            playerStats = FindAnyObjectByType<PlayerStats>();
+        if (playerController == null)
+            playerController = FindAnyObjectByType<PlayerController>();
+        if (dualAnimPlayerController == null)
+            dualAnimPlayerController = FindAnyObjectByType<DualAnimPlayerController>();
+        if (playerInput == null)
+            playerInput = FindAnyObjectByType<PlayerInput>();
+    }
+
+    private void BuildDialogueLineLookup(DialogueData data)
+    {
+        dialogueLinesById.Clear();
+        if (data == null || data.dialogueLines == null)
+            return;
+
+        for (int i = 0; i < data.dialogueLines.Count; i++)
         {
-            StartCoroutine(WaitForDialogueEnd(onEnd));
+            DialogueLine line = data.dialogueLines[i];
+            if (line != null)
+            {
+                dialogueLinesById[line.id] = line;
+            }
         }
     }
 
-    private System.Collections.IEnumerator WaitForDialogueEnd(System.Action onEnd)
+    private bool TryGetDialogueLine(int dialogueId, out DialogueLine line)
     {
-        while (isInDialogue)
-            yield return null;
-        onEnd?.Invoke();
+        if (dialogueLinesById.Count == 0 && currentDialogue != null)
+        {
+            BuildDialogueLineLookup(currentDialogue);
+        }
+
+        return dialogueLinesById.TryGetValue(dialogueId, out line);
+    }
+
+    private void StopTypingCoroutine()
+    {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
     }
 
     public void OnDialogueNext(InputAction.CallbackContext context)
@@ -626,7 +717,7 @@ public class DialogueSystem : MonoBehaviour
         {
             if (isTyping)
             {
-                StopAllCoroutines();
+                StopTypingCoroutine();
                 dialogueText.text = currentLine.dialogueText;
                 isTyping = false;
 

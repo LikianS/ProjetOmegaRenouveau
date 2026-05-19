@@ -11,6 +11,8 @@ public enum EnemyType
 
 public class EnemyController : MonoBehaviour
 {
+    public static int ActiveCount { get; private set; }
+
     [Header("R�f�rences")]
     public Animator animator;
     public NavMeshAgent agent;
@@ -74,6 +76,21 @@ public class EnemyController : MonoBehaviour
     private Coroutine hitCoroutine;
     private bool isInKnockback = false;
     private float defaultSpeed = 3.5f;
+    private bool isCounted;
+
+    private void OnEnable()
+    {
+        if (isCounted) return;
+        ActiveCount++;
+        isCounted = true;
+    }
+
+    private void OnDisable()
+    {
+        if (!isCounted) return;
+        ActiveCount = Mathf.Max(0, ActiveCount - 1);
+        isCounted = false;
+    }
 
     private void Awake()
     {

@@ -137,21 +137,11 @@ public class PlayerStats : MonoBehaviour
     public float DamageMultiplier => equippedWeapon != null ? equippedWeapon.damage : 1f;
     private void Start()
     {
-        if (uiManager == null)
-        {
-            uiManager = FindAnyObjectByType<HealthStaminaUI>();
-            if (uiManager == null)
-            {
-                Debug.LogError("uiManager n'est pas assigné dans PlayerStats et aucun HealthStaminaUI trouvé dans la scène !");
-            }
-        }
+        ResolveUiManager();
+        SubscribeUiEvents();
 
-        if (uiManager != null)
-        {
-            OnHealthChanged += uiManager.HandleHealthChanged;
-            OnStaminaChanged += uiManager.HandleStaminaChanged;
-        }
-        GameManager.Instance.LoadGame();
+        if (GameManager.Instance != null)
+            GameManager.Instance.LoadGame();
 
     }
 
@@ -172,7 +162,8 @@ public class PlayerStats : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        GameManager.Instance.SaveGame();
+        if (GameManager.Instance != null)
+            GameManager.Instance.SaveGame();
     }
 
     /*private void OnApplicationPause(bool pause)
@@ -190,7 +181,7 @@ public class PlayerStats : MonoBehaviour
     {
         availableWeapons.Add(new WeaponStats("Grande Hache", 50, 0.1f, 0.8f, 0.2f, 3f, 100, 0.3f, 1.2f, 0.5f));
         availableWeapons.Add(new WeaponStats("Arc", 30, 0.2f, 1.5f, 0.3f, 10f, 60, 0.4f, 2f, 0.6f));
-        availableWeapons.Add(new WeaponStats("Épée", 40, 0.15f, 1f, 0.25f, 2f, 80, 0.35f, 1.5f, 0.5f));
+        availableWeapons.Add(new WeaponStats("ï¿½pï¿½e", 40, 0.15f, 1f, 0.25f, 2f, 80, 0.35f, 1.5f, 0.5f));
         availableWeapons.Add(new WeaponStats("Dague", 25, 0.3f, 2f, 0.4f, 1.5f, 50, 0.5f, 2.5f, 0.7f));
         equippedWeapon = availableWeapons[2];
     }
@@ -273,12 +264,15 @@ public class PlayerStats : MonoBehaviour
     public void EquipWeapon(WeaponStats weapon)
     {
         equippedWeapon = weapon;
-        Debug.Log($"Arme équipée : {weapon.weaponName}");
+        Debug.Log($"Arme ï¿½quipï¿½e : {weapon.weaponName}");
         UpdatePlayerStatsUI();
         GameManager.Instance.SaveGame();
     }
     public void UpdatePlayerStatsUI()
     {
+        if (uiManager == null)
+            return;
+
         uiManager.SetMaxHealth(baseStats.maxHealth);
         uiManager.SetHealth(Mathf.RoundToInt(currentHealth));
         uiManager.SetMaxStamina(baseStats.maxStamina);
@@ -312,6 +306,9 @@ public class PlayerStats : MonoBehaviour
 
     public void LoadPlayerStats(SaveData saveData)
     {
+        if (saveData == null || saveData.playerStats == null)
+            return;
+
         baseStats.maxHealth = saveData.playerStats.maxHealth > 0 ? saveData.playerStats.maxHealth : baseStats.maxHealth;
         currentHealth = saveData.playerStats.currentHealth > 0 ? saveData.playerStats.currentHealth : baseStats.maxHealth;
         baseStats.maxStamina = saveData.playerStats.maxStamina > 0 ? saveData.playerStats.maxStamina : baseStats.maxStamina;
@@ -350,6 +347,28 @@ public class PlayerStats : MonoBehaviour
         }
         UpdatePlayerStatsUI();
     }
+
+    private void ResolveUiManager()
+    {
+        if (uiManager != null)
+            return;
+
+        uiManager = FindAnyObjectByType<HealthStaminaUI>();
+        if (uiManager == null)
+        {
+            Debug.LogError("uiManager n'est pas assignï¿½ dans PlayerStats et aucun HealthStaminaUI trouvï¿½ dans la scï¿½ne !");
+        }
+    }
+
+    private void SubscribeUiEvents()
+    {
+        if (uiManager == null)
+            return;
+
+        OnHealthChanged += uiManager.HandleHealthChanged;
+        OnStaminaChanged += uiManager.HandleStaminaChanged;
+    }
+
     public bool IsDead
     {
         get { return currentHealth <= 0; }

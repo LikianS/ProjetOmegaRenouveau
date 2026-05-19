@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
+    public static int ActiveCount { get; private set; }
+
     [Header("Type de Collectible")]
     [Tooltip("D�finissez le type de collectible : Item, Weapon ou StatBoost.")]
     public CollectibleType collectibleType;
@@ -35,51 +37,50 @@ public class Collectible : MonoBehaviour
     public AudioClip collectSound;
     private AudioSource audioSource;
     public string itemName;
+    private bool isCounted;
+
+    private void OnEnable()
+    {
+        if (isCounted) return;
+        ActiveCount++;
+        isCounted = true;
+    }
+
+    private void OnDisable()
+    {
+        if (!isCounted) return;
+        ActiveCount = Mathf.Max(0, ActiveCount - 1);
+        isCounted = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player"))
+            return;
+
+        ShowPickupPrompt();
+
+        PlayerController playerController = GetPlayerController(other);
+        if (playerController != null)
         {
-            if (InteractionManager.Instance != null)
-            {
-                InteractionManager.Instance.ShowInteraction($"Appuyer sur A pour ramasser {itemName}");
-                InteractionManager.Instance.PositionInteractionUI(transform.position + Vector3.up * 1.5f);
-            }
-
-            PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController == null)
-            {
-                playerController = other.GetComponentInParent<PlayerController>();
-            }
-
-            if (playerController != null)
-            {
-                playerController.SetInteractableItem(this);
-            }
-
+            playerController.SetInteractableItem(this);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player"))
+            return;
+
+        PlayerController playerController = GetPlayerController(other);
+        if (playerController != null)
         {
-            PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController == null)
-            {
-                playerController = other.GetComponentInParent<PlayerController>();
-            }
-
-            if (playerController != null)
-            {
-                playerController.SetInteractableItem(null);
-            }
-
-            if (InteractionManager.Instance != null)
-            {
-                InteractionManager.Instance.HideInteraction();
-            }
+            playerController.SetInteractableItem(null);
         }
+
+        HidePickupPrompt();
     }
+
     public void Collect(PlayerStats playerStats)
     {
         PlayCollectEffects();
@@ -97,7 +98,7 @@ public class Collectible : MonoBehaviour
                 ApplyStatBoost(playerStats);
                 break;
         }
-        InteractionManager.Instance.HideInteraction();
+        HidePickupPrompt();
         Destroy(gameObject);
     }
 
@@ -105,7 +106,7 @@ public class Collectible : MonoBehaviour
     {
         playerStats.AddGold(goldAmount);
         playerStats.AddAchievement(achievementPoints);
-        InteractionManager.Instance.HideInteraction();
+        HidePickupPrompt();
     }
 
     private void CollectWeapon(PlayerStats playerStats)
@@ -147,8 +148,42 @@ public class Collectible : MonoBehaviour
     }
     private void PlayCollectEffects()
     {
-        Instantiate(collectEffect, transform.position, Quaternion.identity);
-        SoundManager.Instance.PlayItemPickup();
+        if (collectEffect != null)
+        {
+            Instantiate(collectEffect, transform.position, Quaternion.identity);
+        }
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayItemPickup();
+        }
+    }
+
+    private void ShowPickupPrompt()
+    {
+        if (InteractionManager.Instance == null)
+            return;
+
+        InteractionManager.Instance.ShowInteraction($"Appuyer sur A pour ramasser {itemName}");
+        InteractionManager.Instance.PositionInteractionUI(transform.position + Vector3.up * 1.5f);
+    }
+
+    private void HidePickupPrompt()
+    {
+        if (InteractionManager.Instance == null)
+            return;
+
+        InteractionManager.Instance.HideInteraction();
+    }
+
+    private PlayerController GetPlayerController(Collider other)
+    {
+        if (other == null) return null;
+
+        PlayerController playerController = other.GetComponent<PlayerController>();
+        if (playerController != null) return playerController;
+
+        return other.GetComponentInParent<PlayerController>();
     }
 
 }

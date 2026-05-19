@@ -19,7 +19,7 @@ public class MenuAdditiveManager : MonoBehaviour
     public CinemachineVirtualCamera menuVirtualCamera;
     public CinemachineVirtualCamera gameplayVirtualCamera;
 
-    [Header("Nom de la scène menu")]
+    [Header("Nom de la scï¿½ne menu")]
     public string menuSceneName = "MenuScene";
 
     private int currentIndex = 0;
@@ -53,8 +53,7 @@ public class MenuAdditiveManager : MonoBehaviour
             gameplayVirtualCamera.Priority = 0;
 
 
-        playerController = FindAnyObjectByType<PlayerController>();
-        dualAnimController = FindAnyObjectByType<DualAnimPlayerController>();
+        CachePlayerReferences();
 
         if (playerController != null)
             playerController.enabled = false;
@@ -103,11 +102,11 @@ public class MenuAdditiveManager : MonoBehaviour
 
     private void HighlightButton(int index)
     {
-        if (selectionArrow != null)
-        {
-            selectionArrow.gameObject.SetActive(true);
-            selectionArrow.position = menuButtons[index].transform.position + Vector3.left * 150f;
-        }
+        if (selectionArrow == null || menuButtons == null || menuButtons.Count == 0)
+            return;
+
+        selectionArrow.gameObject.SetActive(true);
+        selectionArrow.position = menuButtons[index].transform.position + Vector3.left * 150f;
     }
 
 
@@ -137,10 +136,7 @@ public class MenuAdditiveManager : MonoBehaviour
 
     public void OnPlayButton()
     {
-        if (playerController == null)
-            playerController = FindAnyObjectByType<PlayerController>();
-        if (dualAnimController == null)
-            dualAnimController = FindAnyObjectByType<DualAnimPlayerController>();
+        CachePlayerReferences();
 
         if (playerController != null)
             playerController.enabled = true;
@@ -173,8 +169,7 @@ public class MenuAdditiveManager : MonoBehaviour
             controlsPanelUI = controlsPanel.GetComponent<ControlsPanelUI>();
         if (controlsPanelUI != null)
             controlsPanelUI.menuPanel = menuPanel;
-        menuPanel.SetActive(false);
-        controlsPanel.SetActive(true);
+        ShowSubPanel(controlsPanel);
     }
 
     public void OnSoundButton()
@@ -183,8 +178,7 @@ public class MenuAdditiveManager : MonoBehaviour
             soundPanelUI = soundPanel.GetComponent<SoundPanelUI>();
         if (soundPanelUI != null)
             soundPanelUI.menuPanel = menuPanel;
-        menuPanel.SetActive(false);
-        soundPanel.SetActive(true);
+        ShowSubPanel(soundPanel);
 
         if (soundPanelUI != null && soundPanelUI.musicSlider != null && UnityEngine.EventSystems.EventSystem.current != null)
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(soundPanelUI.musicSlider.gameObject);
@@ -202,7 +196,7 @@ public class MenuAdditiveManager : MonoBehaviour
         PlayerStats refStats = FindAnyObjectByType<PlayerStats>();
         if (refStats == null)
         {
-            Debug.LogError("Aucun PlayerStats trouvé dans la scène pour le reset !");
+            Debug.LogError("Aucun PlayerStats trouvï¿½ dans la scï¿½ne pour le reset !");
             return;
         }
 
@@ -263,7 +257,7 @@ public class MenuAdditiveManager : MonoBehaviour
         if (refStats.availableWeapons.Count > 0)
             newSave.equippedWeaponName = refStats.availableWeapons[0].weaponName;
         else
-            newSave.equippedWeaponName = "Épée";
+            newSave.equippedWeaponName = "ï¿½pï¿½e";
 
         newSave.currentSceneName = SceneManager.GetActiveScene().name;
 
@@ -295,14 +289,12 @@ public class MenuAdditiveManager : MonoBehaviour
         {
             if (controlsPanel != null && controlsPanel.activeSelf)
             {
-                controlsPanel.SetActive(false);
-                menuPanel.SetActive(true);
+                ReturnToMainPanel(controlsPanel);
                 HighlightButton(currentIndex);
             }
             else if (soundPanel != null && soundPanel.activeSelf)
             {
-                soundPanel.SetActive(false);
-                menuPanel.SetActive(true);
+                ReturnToMainPanel(soundPanel);
                 HighlightButton(currentIndex);
             }
             else
@@ -312,6 +304,30 @@ public class MenuAdditiveManager : MonoBehaviour
                 SceneManager.UnloadSceneAsync(menuSceneName);
             }
         }
+    }
+
+    private void CachePlayerReferences()
+    {
+        if (playerController == null)
+            playerController = FindAnyObjectByType<PlayerController>();
+        if (dualAnimController == null)
+            dualAnimController = FindAnyObjectByType<DualAnimPlayerController>();
+    }
+
+    private void ShowSubPanel(GameObject subPanel)
+    {
+        if (menuPanel != null)
+            menuPanel.SetActive(false);
+        if (subPanel != null)
+            subPanel.SetActive(true);
+    }
+
+    private void ReturnToMainPanel(GameObject subPanel)
+    {
+        if (subPanel != null)
+            subPanel.SetActive(false);
+        if (menuPanel != null)
+            menuPanel.SetActive(true);
     }
 
 }

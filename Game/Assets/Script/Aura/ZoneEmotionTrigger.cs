@@ -22,6 +22,14 @@ public class ZoneEmotionTrigger : MonoBehaviour
     public Color glowColor = Color.yellow;     // Glow color to set on emissive
 
     private Emotion _currentApplied = Emotion.None;
+    private Material[] normalMaterialSet;
+    private Material[] joyMaterialSet;
+
+    private void Awake()
+    {
+        normalMaterialSet = new[] { normalMaterial };
+        joyMaterialSet = new[] { normalMaterial, glowMaterial };
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -88,7 +96,7 @@ public class ZoneEmotionTrigger : MonoBehaviour
 
         if (normalMaterial != null && glowMaterial != null)
         {
-            playerRenderer.materials = new Material[] { normalMaterial, glowMaterial };
+            playerRenderer.materials = joyMaterialSet;
             // Set emissive color if the shader uses _EmissionColor
             if (glowMaterial.HasProperty("_EmissionColor"))
             {
@@ -101,7 +109,7 @@ public class ZoneEmotionTrigger : MonoBehaviour
         if (playerRenderer == null || normalMaterial == null)
             return;
 
-        playerRenderer.materials = new Material[] { normalMaterial };
+        playerRenderer.materials = normalMaterialSet;
     }
 }
 

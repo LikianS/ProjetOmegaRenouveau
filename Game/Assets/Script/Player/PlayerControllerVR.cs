@@ -11,7 +11,7 @@ using UnityEngine.XR;
 // - Rotate yaw with the other joystick (OnRotate)
 // - Dash with button (OnDash)
 // - Interact with button (OnInteract)
-// - Attack / Parry intentionally omitted
+// - Attack triggered by fast VR controller swing
 
 public class PlayerControllerVR : MonoBehaviour
 {
@@ -41,6 +41,8 @@ public class PlayerControllerVR : MonoBehaviour
     public bool autoAlignYawToHead = true;
     [Tooltip("How fast the body aligns to head yaw (higher = faster)")]
     public float alignYawSpeed = 5f;
+    [Tooltip("Minimum forward input required before the body starts following the camera yaw")]
+    public float bodyAlignForwardThreshold = 0.1f;
 
     [Header("Dash")]
     public float dashDistance = 4f;
@@ -52,10 +54,24 @@ public class PlayerControllerVR : MonoBehaviour
 
     [Header("Character Height Auto-Adjust")]
     public bool autoAdjustHeight = true;
-    public bool followHeadHorizontally = false; // if true, capsule X/Z follows head (can cause camera shift)
+    public bool followHeadHorizontally = false;
     public float minHeight = 1.0f;
     public float characterSkinWidth = 0.08f;
     public float maxHeight = 2.5f;
+
+    [Header("VR Attack (Swing Detection)")]
+    [Tooltip("Vitesse minimale d'un swing de manette pour déclencher une attaque (m/s)")]
+    public float swingVelocityThreshold = 2.5f;
+    [Tooltip("Rayon de détection autour de la manette pour toucher les ennemis")]
+    public float vrAttackRange = 1.2f;
+    [Tooltip("Layer des ennemis pour la détection d'attaque VR")]
+    public LayerMask enemyLayer;
+    [Tooltip("Référence au collider d'attaque du joueur (enfant du XR Rig)")]
+    public Collider vrAttackCollider;
+
+    [Header("Attack Settings")]
+    public float attackDuration = 0.5f;
+    public float attackCooldown = 0.5f;
 
     [Header("Debug")]
     public bool debugLogs = false;
@@ -67,12 +83,21 @@ public class PlayerControllerVR : MonoBehaviour
     private bool canDash = true;
     private float dashCooldownTimer = 0f;
 
+    private bool isAttacking = false;
+    private bool canAttack = true;
+    private float attackCooldownTimer = 0f;
+
     private float verticalVelocity = 0f;
     private float previousHeadHeight = 1.7f;
 
     private float footstepTimer = 0f;
     private float footstepInterval = 0.4f;
     private bool isMoving = false;
+
+    // VR swing tracking
+    private Vector3 prevLeftHandPos;
+    private Vector3 prevRightHandPos;
+    private bool prevHandPositionsValid = false;
 
     // InputAction references
     private InputAction m_MoveAction;
@@ -292,12 +317,15 @@ public class PlayerControllerVR : MonoBehaviour
             ApplyMovement();
         }
 
-        // Always align body yaw with head so the player is always facing head direction
-        if (xrHead != null)
+        // Only align body yaw with head while moving forward, so small head turns do not spin the body
+        if (xrHead != null && moveInput.y > bodyAlignForwardThreshold)
             AlignYawWithHead();
 
         // Handle animations based on movement speed
         UpdateAnimations();
+
+        // Detect VR controller swing for attack
+        DetectVRSwingAttack();
 
         // joystick rotate is ignored when body follows head
         // if you want joystick rotate, set logic here (currently disabled)
@@ -355,19 +383,24 @@ public class PlayerControllerVR : MonoBehaviour
 
     private void LateUpdate()
     {
-        // Si XR Rig assigné, déplace-le pour suivre le player (XZ), sinon déplace la caméra
+        UpdateRigOrHeadPosition();
+    }
+
+    private void UpdateRigOrHeadPosition()
+    {
+        Vector3 playerPos = transform.position;
+
         if (xrRig != null)
         {
-            // Positionner le XR Rig sur la même XZ que le player et utiliser
-            // la hauteur du player pour éviter que le rig tombe sous le sol.
-            Vector3 playerPos = transform.position;
-            xrRig.position = new Vector3(playerPos.x, playerPos.y, playerPos.z);
+            Vector3 rigPos = xrRig.position;
+            xrRig.position = new Vector3(playerPos.x, rigPos.y, playerPos.z);
+            return;
         }
-        else if (xrHead != null)
+
+        if (xrHead != null)
         {
-            Vector3 camPos = xrHead.position;
-            Vector3 playerPos = transform.position;
-            xrHead.position = new Vector3(playerPos.x, camPos.y, playerPos.z);
+            Vector3 headPos = xrHead.position;
+            xrHead.position = new Vector3(playerPos.x, headPos.y, playerPos.z);
         }
     }
 
@@ -378,6 +411,13 @@ public class PlayerControllerVR : MonoBehaviour
             dashCooldownTimer -= Time.deltaTime;
             if (dashCooldownTimer <= 0f)
                 canDash = true;
+        }
+
+        if (!canAttack)
+        {
+            attackCooldownTimer -= Time.deltaTime;
+            if (attackCooldownTimer <= 0f)
+                canAttack = true;
         }
     }
 
@@ -394,11 +434,12 @@ public class PlayerControllerVR : MonoBehaviour
 
         // Compute the world yaw angle that would make the player face the same direction as the HMD
         float targetYaw = Mathf.Atan2(headForward.x, headForward.z) * Mathf.Rad2Deg;
-        Vector3 currentEuler = transform.eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, targetYaw, 0f);
+        float currentYaw = transform.eulerAngles.y;
+        float newYaw = Mathf.MoveTowardsAngle(currentYaw, targetYaw, alignYawSpeed * Time.deltaTime * 60f);
+        transform.rotation = Quaternion.Euler(0f, newYaw, 0f);
 
         if (debugLogs)
-            Debug.Log($"[PlayerVR] AlignYawWithHead: targetYaw={targetYaw} headForward={headForward}");
+            Debug.Log($"[PlayerVR] AlignYawWithHead: targetYaw={targetYaw} currentYaw={currentYaw} newYaw={newYaw} headForward={headForward}");
     }
 
     private void UpdateCharacterControllerHeight()
@@ -444,8 +485,7 @@ public class PlayerControllerVR : MonoBehaviour
             newCenter.z = 0f;
         }
         // center.y should be half of the height plus a small offset, ensure positive
-        newCenter.y = Mathf.Max(characterController.height * 0.5f + characterSkinWidth, 0.1f);
-
+        newCenter.y = characterController.height * 0.5f;
         characterController.center = newCenter;
     }
 
@@ -489,6 +529,136 @@ public class PlayerControllerVR : MonoBehaviour
             if (playerStats.CurrentStamina <= 0f)
                 isRunning = false;
         }
+    }
+
+    private void DetectVRSwingAttack()
+    {
+        // Get VR hand positions via XRInputSubsystem or InputDevice
+        Vector3 leftHandPos = Vector3.zero;
+        Vector3 rightHandPos = Vector3.zero;
+        bool leftValid = false;
+        bool rightValid = false;
+
+        var leftHand = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+        var rightHand = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+
+        if (leftHand.isValid)
+            leftValid = leftHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.devicePosition, out leftHandPos);
+        if (rightHand.isValid)
+            rightValid = rightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.devicePosition, out rightHandPos);
+
+        if (!leftValid && !rightValid)
+        {
+            // Fallback: try via InputActionAsset
+            var map = inputActions != null ? inputActions.FindActionMap("Player", false) : null;
+            if (map != null)
+            {
+                var leftPosAction = map.FindAction("LeftHandPosition", false);
+                var rightPosAction = map.FindAction("RightHandPosition", false);
+
+                if (leftPosAction != null) { leftHandPos = leftPosAction.ReadValue<Vector3>(); leftValid = true; }
+                if (rightPosAction != null) { rightHandPos = rightPosAction.ReadValue<Vector3>(); rightValid = true; }
+            }
+        }
+
+        if (!prevHandPositionsValid)
+        {
+            if (leftValid) prevLeftHandPos = leftHandPos;
+            if (rightValid) prevRightHandPos = rightHandPos;
+            prevHandPositionsValid = leftValid || rightValid;
+            return;
+        }
+
+        float leftSpeed = 0f;
+        float rightSpeed = 0f;
+        Vector3 swingWorldPos = transform.position;
+
+        if (leftValid)
+        {
+            leftSpeed = (leftHandPos - prevLeftHandPos).magnitude / Time.deltaTime;
+            if (leftSpeed >= swingVelocityThreshold)
+                swingWorldPos = transform.TransformPoint(leftHandPos);
+            prevLeftHandPos = leftHandPos;
+        }
+
+        if (rightValid)
+        {
+            rightSpeed = (rightHandPos - prevRightHandPos).magnitude / Time.deltaTime;
+            if (rightSpeed >= swingVelocityThreshold)
+                swingWorldPos = transform.TransformPoint(rightHandPos);
+            prevRightHandPos = rightHandPos;
+        }
+
+        if (!leftValid) prevLeftHandPos = Vector3.zero;
+        if (!rightValid) prevRightHandPos = Vector3.zero;
+        prevHandPositionsValid = leftValid || rightValid;
+
+        bool swingDetected = leftSpeed >= swingVelocityThreshold || rightSpeed >= swingVelocityThreshold;
+
+        if (swingDetected && canAttack && !isAttacking && playerStats != null && playerStats.CurrentStamina >= playerStats.attackStaminaCost)
+        {
+            HandleAttack(swingWorldPos);
+        }
+    }
+
+    private void HandleAttack(Vector3 swingWorldPos)
+    {
+        if (isAttacking || !canAttack) return;
+
+        isAttacking = true;
+        canAttack = false;
+
+        if (playerStats != null)
+            playerStats.UseStamina(playerStats.attackStaminaCost);
+
+        int randomAttackIndex = Random.Range(1, 4);
+
+        if (animator != null)
+        {
+            animator.SetInteger("AttackIndex", randomAttackIndex);
+            animator.SetTrigger("Attack");
+        }
+
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayPlayerAttack();
+
+        attackCooldownTimer = attackCooldown / (playerStats != null ? playerStats.AttackSpeedMultiplier : 1f);
+
+        // Apply damage to enemies in range of the swing
+        Collider[] hitEnemies = Physics.OverlapSphere(swingWorldPos, vrAttackRange, enemyLayer);
+        foreach (var hitCollider in hitEnemies)
+        {
+            if (!hitCollider.CompareTag("Enemy")) continue;
+
+            int damage = playerStats != null && playerStats.equippedWeapon != null ? playerStats.equippedWeapon.damage : 10;
+            Vector3 hitDir = (hitCollider.transform.position - swingWorldPos).normalized;
+
+            EnemyController enemy = hitCollider.GetComponent<EnemyController>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage, hitDir, 2f);
+                continue;
+            }
+
+            MeleeEnemyController meleeEnemy = hitCollider.GetComponent<MeleeEnemyController>();
+            if (meleeEnemy != null)
+            {
+                meleeEnemy.TakeDamage(damage, hitDir, 2f);
+            }
+        }
+
+        StartCoroutine(ResetAttackAfterCooldown());
+    }
+
+    private IEnumerator ResetAttackAfterCooldown()
+    {
+        yield return new WaitForSeconds(attackDuration);
+        isAttacking = false;
+    }
+
+    public void ResetAttack()
+    {
+        isAttacking = false;
     }
 
     private void ApplyRotate()

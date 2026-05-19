@@ -23,8 +23,7 @@ public class PauseMenuManager : MonoBehaviour
     private void Start()
     {
         currentIndex = 0;
-        if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && pauseMenuButtons[0] != null && UnityEngine.EventSystems.EventSystem.current != null)
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(pauseMenuButtons[0].gameObject);
+        SelectCurrentButton();
 
         playerInput = FindAnyObjectByType<PlayerInput>();
         if (playerInput != null)
@@ -61,11 +60,7 @@ public class PauseMenuManager : MonoBehaviour
     private void OnEnable()
     {
         currentIndex = 0;
-        if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && pauseMenuButtons[0] != null && UnityEngine.EventSystems.EventSystem.current != null)
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(pauseMenuButtons[0].gameObject);
-
-        if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && pauseMenuButtons[0] != null && UnityEngine.EventSystems.EventSystem.current != null)
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(pauseMenuButtons[0].gameObject);
+        SelectCurrentButton();
 
         if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && selectionArrow != null)
         {
@@ -104,42 +99,23 @@ public class PauseMenuManager : MonoBehaviour
             if (moved)
             {
                 lastNavTime = Time.unscaledTime;
-                if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && pauseMenuButtons[currentIndex] != null && UnityEngine.EventSystems.EventSystem.current != null)
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(pauseMenuButtons[currentIndex].gameObject);
+                SelectCurrentButton();
             }
         }
 
-        if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && selectionArrow != null)
-        {
-            selectionArrow.gameObject.SetActive(true);
-            selectionArrow.position = pauseMenuButtons[currentIndex].transform.position + Vector3.left * 150f;
-        }
+        UpdateSelectionArrow();
 
         if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
-        {
-            pauseMenuButtons[currentIndex].onClick.Invoke();
-        }
+            InvokeCurrentButton();
 
-        if ((Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))
+        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
         {
             if (controlsPanel != null && controlsPanel.activeSelf)
-            {
-                controlsPanel.SetActive(false);
-                pauseMenuPanel.SetActive(true);
-                if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && pauseMenuButtons[currentIndex] != null && UnityEngine.EventSystems.EventSystem.current != null)
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(pauseMenuButtons[currentIndex].gameObject);
-            }
+                ReturnToMainMenu(controlsPanel);
             else if (soundPanel != null && soundPanel.activeSelf)
-            {
-                soundPanel.SetActive(false);
-                pauseMenuPanel.SetActive(true);
-                if (pauseMenuButtons != null && pauseMenuButtons.Count > 0 && pauseMenuButtons[currentIndex] != null && UnityEngine.EventSystems.EventSystem.current != null)
-                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(pauseMenuButtons[currentIndex].gameObject);
-            }
+                ReturnToMainMenu(soundPanel);
             else
-            {
                 ResumeGame();
-            }
         }
     }
 
@@ -158,16 +134,14 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (controlsPanelUI != null)
             controlsPanelUI.menuPanel = pauseMenuPanel;
-        pauseMenuPanel.SetActive(false);
-        controlsPanel.SetActive(true);
+        ShowSubPanel(controlsPanel);
     }
 
     public void OnSoundButton()
     {
         if (soundPanelUI != null)
             soundPanelUI.menuPanel = pauseMenuPanel;
-        pauseMenuPanel.SetActive(false);
-        soundPanel.SetActive(true);
+        ShowSubPanel(soundPanel);
 
         if (soundPanelUI != null && soundPanelUI.musicSlider != null && UnityEngine.EventSystems.EventSystem.current != null)
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(soundPanelUI.musicSlider.gameObject);
@@ -187,6 +161,51 @@ public class PauseMenuManager : MonoBehaviour
         if (selectionArrow != null)
             selectionArrow.gameObject.SetActive(false);
         Application.Quit();
+    }
+
+    private void ShowSubPanel(GameObject panel)
+    {
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(false);
+        if (panel != null)
+            panel.SetActive(true);
+    }
+
+    private void ReturnToMainMenu(GameObject subPanel)
+    {
+        if (subPanel != null)
+            subPanel.SetActive(false);
+
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(true);
+
+        SelectCurrentButton();
+    }
+
+    private void UpdateSelectionArrow()
+    {
+        if (pauseMenuButtons == null || pauseMenuButtons.Count == 0 || selectionArrow == null)
+            return;
+
+        selectionArrow.gameObject.SetActive(true);
+        selectionArrow.position = pauseMenuButtons[currentIndex].transform.position + Vector3.left * 150f;
+    }
+
+    private void SelectCurrentButton()
+    {
+        if (pauseMenuButtons == null || pauseMenuButtons.Count == 0)
+            return;
+
+        if (pauseMenuButtons[currentIndex] != null && UnityEngine.EventSystems.EventSystem.current != null)
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(pauseMenuButtons[currentIndex].gameObject);
+    }
+
+    private void InvokeCurrentButton()
+    {
+        if (pauseMenuButtons == null || pauseMenuButtons.Count == 0 || pauseMenuButtons[currentIndex] == null)
+            return;
+
+        pauseMenuButtons[currentIndex].onClick.Invoke();
     }
 }
 

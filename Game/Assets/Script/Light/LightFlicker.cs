@@ -39,7 +39,7 @@ public class LightFlicker : MonoBehaviour
         }
         SetNextFlickerTime();
 
-        totalPickups = FindObjectsByType<AchievementPickup>(FindObjectsSortMode.None).Length;
+        totalPickups = AchievementPickup.ActiveCount;
         if (totalPickups == 0) totalPickups = 1;
 
         if (postProcessVolume != null)
@@ -51,7 +51,7 @@ public class LightFlicker : MonoBehaviour
 
     void Update()
     {
-        int remaining = FindObjectsByType<AchievementPickup>(FindObjectsSortMode.None).Length;
+        int remaining = AchievementPickup.ActiveCount;
         float t = 1 - (remaining / (float)totalPickups);
 
         flickerLight.color = Color.Lerp(coldColor, warmColor, t);

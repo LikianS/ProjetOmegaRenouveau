@@ -14,7 +14,7 @@ public class ControlsPanelUI : MonoBehaviour
     private void OnEnable()
     {
         ShowImage(0);
-        menuPanel.SetActive(false);
+        SetMenuPanelActive(false);
     }
 
     private void Update()
@@ -29,8 +29,7 @@ public class ControlsPanelUI : MonoBehaviour
                 ShowImage(1);
             if (Gamepad.current.buttonEast.wasPressedThisFrame)
             {
-                gameObject.SetActive(false);
-                menuPanel.SetActive(true);
+                ReturnToMenu();
             }
         }
     }
@@ -40,5 +39,17 @@ public class ControlsPanelUI : MonoBehaviour
         currentIndex = index;
         if (image1 != null) image1.SetActive(index == 0);
         if (image2 != null) image2.SetActive(index == 1);
+    }
+
+    private void SetMenuPanelActive(bool isActive)
+    {
+        if (menuPanel != null)
+            menuPanel.SetActive(isActive);
+    }
+
+    private void ReturnToMenu()
+    {
+        gameObject.SetActive(false);
+        SetMenuPanelActive(true);
     }
 }

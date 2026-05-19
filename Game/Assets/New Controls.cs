@@ -250,7 +250,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6bf54f4a-51cd-4f2b-8756-6f33fe00d1d4"",
-                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{LeftHand}/primarytouched"",
+                    ""path"": ""<XRController>{RightHand}/{PrimaryAction}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

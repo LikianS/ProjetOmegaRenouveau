@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CharacterController))]
 public class DualAnimPlayerController : MonoBehaviour
 {
-    [Header("Références")]
+    [Header("Rï¿½fï¿½rences")]
     public Animator animator;
     public PlayerStats playerStats;
     public float moveSpeed = 3f;
@@ -23,7 +23,7 @@ public class DualAnimPlayerController : MonoBehaviour
     private AchievementPickup interactablePickup;
     private Teleporter interactableTeleporter;
 
-    [Header("Détection d'interaction")]
+    [Header("Dï¿½tection d'interaction")]
     public float interactDistance = 2f;
     public float interactSphereRadius = 0.5f;
 
@@ -39,20 +39,23 @@ public class DualAnimPlayerController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
-        if (move.magnitude > 0.1f)
+        float moveX = moveInput.x;
+        float moveZ = moveInput.y;
+        float moveSqrMagnitude = moveX * moveX + moveZ * moveZ;
+
+        if (moveSqrMagnitude > 0.01f)
         {
             isWalking = true;
-            characterController.Move(move.normalized * moveSpeed * Time.deltaTime);
-            if (move != Vector3.zero)
-                transform.forward = move.normalized;
+            Vector3 moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
+            characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+            transform.forward = moveDirection;
         }
         else
         {
             isWalking = false;
         }
 
-        int remainingCollectibles = FindObjectsByType<AchievementPickup>(FindObjectsSortMode.None).Length;
+        int remainingCollectibles = AchievementPickup.ActiveCount;
 
         bool shouldUseAlt = remainingCollectibles <= collectibleAnimSwitchThreshold;
         if (shouldUseAlt != useAltAnim)
@@ -69,7 +72,7 @@ public class DualAnimPlayerController : MonoBehaviour
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(state))
                 animator.Play(state);
         }
-        collectiblesRestants = FindObjectsByType<AchievementPickup>(FindObjectsSortMode.None).Length;
+        collectiblesRestants = remainingCollectibles;
         DetectInteractableInFront();
     }
 
@@ -113,7 +116,7 @@ public class DualAnimPlayerController : MonoBehaviour
                 }
                 else
                 {
-                    InteractionManager.Instance.ShowInteraction("Aucune scène cible définie !");
+                    InteractionManager.Instance.ShowInteraction("Aucune scï¿½ne cible dï¿½finie !");
                 }
                 interactableTeleporter = null;
                 return;
@@ -146,7 +149,7 @@ public class DualAnimPlayerController : MonoBehaviour
                 if (playerStats.baseStats.achievement >= pickup.achievementCost)
                 {
                     InteractionManager.Instance.ShowInteraction(
-                        $"Appuyez sur A pour ramasser (coût : {pickup.achievementCost} achievement)");
+                        $"Appuyez sur A pour ramasser (coï¿½t : {pickup.achievementCost} achievement)");
                 }
                 else
                 {
@@ -161,7 +164,7 @@ public class DualAnimPlayerController : MonoBehaviour
             {
                 interactableTeleporter = teleporter;
                 InteractionManager.Instance.ShowInteraction(
-                    $"Appuyez sur A pour vous téléporter vers {teleporter.sceneName}");
+                    $"Appuyez sur A pour vous tï¿½lï¿½porter vers {teleporter.sceneName}");
                 InteractionManager.Instance.PositionInteractionUI(teleporter.transform.position + Vector3.up * 1.5f);
                 return;
             }

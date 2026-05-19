@@ -12,6 +12,10 @@ public class WorldChunk : MonoBehaviour
     private float worldLimitRadius; 
     private BiomeProfile[] biomes; 
     private Dictionary<BiomeProfile.BiomeType, Vector3> dungeonPositions;
+    private readonly List<Vector2> dungeonPositions2D = new List<Vector2>();
+    private readonly Dictionary<Vector2Int, float> minDungeonDistCache = new Dictionary<Vector2Int, float>();
+    private readonly Dictionary<Vector2Int, Vector2> nearestDungeonPosCache = new Dictionary<Vector2Int, Vector2>();
+    private readonly Dictionary<Vector2Int, BiomeProfile.BiomeType> dungeonTypeByGrid = new Dictionary<Vector2Int, BiomeProfile.BiomeType>();
 
     private Color barrierColor = new Color(0.15f, 0.15f, 0.2f); 
     private float barrierWidth = 0.35f; 
@@ -29,8 +33,8 @@ public class WorldChunk : MonoBehaviour
     private bool hasLavaLakeInChunk = false;
     private bool hasWaterInChunk = false;
     private bool isDungeonChunk = false;
-    private float lavaSurfaceHeight = -2.5f;
     private const float airVoidFloorHeight = -20.0f;
+    private const float lavaSurfaceHeight = -2.5f;
 
     public void Initialize(int size, Vector2 offset, int seed, BiomeProfile[] biomes, float villageRad, Dictionary<BiomeProfile.BiomeType, Vector3> dPos)
     {
@@ -40,6 +44,17 @@ public class WorldChunk : MonoBehaviour
         this.biomes = biomes;
         this.villageRadius = villageRad;
         this.dungeonPositions = dPos;
+
+        dungeonPositions2D.Clear();
+        minDungeonDistCache.Clear();
+        nearestDungeonPosCache.Clear();
+        dungeonTypeByGrid.Clear();
+        foreach (var entry in dPos)
+        {
+            Vector2 pos2D = new Vector2(entry.Value.x, entry.Value.z);
+            dungeonPositions2D.Add(pos2D);
+            dungeonTypeByGrid[new Vector2Int(Mathf.FloorToInt(entry.Value.x), Mathf.FloorToInt(entry.Value.z))] = entry.Key;
+        }
 
         float maxDungeonDist = 0;
         foreach(var d in dPos.Values) {
@@ -105,11 +120,9 @@ public class WorldChunk : MonoBehaviour
                 float barrierVal = Mathf.Abs(Mathf.Sin(2 * angle)); 
                 bool isAnyBarrier = (barrierVal < barrierWidth || distCenter >= worldLimitRadius);
 
-                float minDistDung = 9999f;
-                foreach(var d in dungeonPositions.Values) {
-                    float dDist = Vector2.Distance(new Vector2(centerX, centerZ), new Vector2(d.x, d.z));
-                    if(dDist < minDistDung) minDistDung = dDist;
-                }
+                float minDistDung;
+                Vector2 nearestDung;
+                GetNearestDungeonData(centerX, centerZ, out minDistDung, out nearestDung);
 
                 float avgH = (h00 + h11) / 2f;
                 bool isVisualLava = (avgH < lavaSurfaceHeight - 0.5f && mainBiome.type == BiomeProfile.BiomeType.Fire);
@@ -319,15 +332,9 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
 
         float mixedHeight = (-2f * wWater) + (hFire * wFire) + (hEarth * wEarth) + (hAir * wAir);
         
-        float minDistToDungeon = 9999f;
-        Vector2 nearestDungeonPos = Vector2.zero;
-        foreach(var d in dungeonPositions.Values) {
-            float dDist = Vector2.Distance(pos, new Vector2(d.x, d.z));
-            if(dDist < minDistToDungeon) {
-                minDistToDungeon = dDist;
-                nearestDungeonPos = new Vector2(d.x, d.z);
-            }
-        }
+        float minDistToDungeon;
+        Vector2 nearestDungeonPos;
+        GetNearestDungeonData(gX, gZ, out minDistToDungeon, out nearestDungeonPos);
         
         if (wFire > 0.5f && distCenter > (villageRadius + 15f) && minDistToDungeon > 35f && lavaN < 0.35f) {
             mixedHeight = -5f; isLavaZone = true;
@@ -761,19 +768,39 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
     {
         int cX = Mathf.FloorToInt(gX);
         int cZ = Mathf.FloorToInt(gZ);
-        foreach (var entry in dungeonPositions)
+        if (dungeonTypeByGrid.TryGetValue(new Vector2Int(cX, cZ), out BiomeProfile.BiomeType biomeType))
         {
-            if (cX == Mathf.FloorToInt(entry.Value.x) && cZ == Mathf.FloorToInt(entry.Value.z))
+            BiomeProfile dBiome = GetBiomeByType(biomeType);
+            if (dBiome != null && dBiome.dungeonPrefab != null)
             {
-                BiomeProfile dBiome = GetBiomeByType(entry.Key);
-                if (dBiome != null && dBiome.dungeonPrefab != null)
-                {
-                    GameObject d = Instantiate(dBiome.dungeonPrefab, transform);
-                    d.transform.localPosition = new Vector3(localPos.x, 0.5f, localPos.z);
-                    d.transform.LookAt(Vector3.zero);
-                }
+                GameObject d = Instantiate(dBiome.dungeonPrefab, transform);
+                d.transform.localPosition = new Vector3(localPos.x, 0.5f, localPos.z);
+                d.transform.LookAt(Vector3.zero);
             }
         }
+    }
+
+    private void GetNearestDungeonData(float x, float z, out float minDist, out Vector2 nearestPos)
+    {
+        Vector2Int key = new Vector2Int(Mathf.RoundToInt(x * 2f), Mathf.RoundToInt(z * 2f));
+        if (minDungeonDistCache.TryGetValue(key, out minDist) && nearestDungeonPosCache.TryGetValue(key, out nearestPos))
+            return;
+
+        minDist = float.MaxValue;
+        nearestPos = Vector2.zero;
+
+        for (int i = 0; i < dungeonPositions2D.Count; i++)
+        {
+            float dist = Vector2.Distance(new Vector2(x, z), dungeonPositions2D[i]);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearestPos = dungeonPositions2D[i];
+            }
+        }
+
+        minDungeonDistCache[key] = minDist;
+        nearestDungeonPosCache[key] = nearestPos;
     }
 
     void EnsureRequiredComponents()

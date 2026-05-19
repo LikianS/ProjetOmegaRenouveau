@@ -8,6 +8,8 @@ public class PlayerInteractionArmor: MonoBehaviour
     public PuzzleManager currentPuzzleManager;
     void Update()
     {
+        if (Gamepad.current == null)
+            return;
 
         if (Gamepad.current.leftTrigger.wasPressedThisFrame)
         {
@@ -15,10 +17,9 @@ public class PlayerInteractionArmor: MonoBehaviour
             {
                 currentArmorSlot.NextWeapon();
             }
-               
 
-
-            currentPuzzleManager.CheckSolution();
+            if (currentPuzzleManager != null)
+                currentPuzzleManager.CheckSolution();
         }
 
         if (Gamepad.current.rightTrigger.wasPressedThisFrame)
@@ -28,7 +29,8 @@ public class PlayerInteractionArmor: MonoBehaviour
                 currentArmorSlot.NextCrest();
             }
 
-            currentPuzzleManager.CheckSolution();
+            if (currentPuzzleManager != null)
+                currentPuzzleManager.CheckSolution();
         }
 
     }

@@ -3,19 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class SceneEndChecker : MonoBehaviour
 {
-    [Tooltip("Liste des scènes à charger aléatoirement quand tout est terminé")]
+    [Tooltip("Liste des scenes a charger aleatoirement quand tout est termine")]
     public string[] nextSceneNames;
 
+    [SerializeField, Min(0.05f)]
+    private float checkInterval = 0.25f;
+
     private bool sceneLoaded = false;
+    private float checkTimer;
 
     void Update()
     {
         if (sceneLoaded) return;
 
-        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        var collectibles = GameObject.FindGameObjectsWithTag("Collectible");
+        checkTimer -= Time.deltaTime;
+        if (checkTimer > 0f) return;
+        checkTimer = checkInterval;
 
-        if (enemies.Length == 0 && collectibles.Length == 0)
+        int enemyCount = EnemyController.ActiveCount + MeleeEnemyController.ActiveCount;
+        int collectibleCount = Collectible.ActiveCount;
+
+        if (enemyCount == 0 && collectibleCount == 0)
         {
             sceneLoaded = true;
             if (nextSceneNames != null && nextSceneNames.Length > 0)

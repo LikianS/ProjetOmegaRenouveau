@@ -3,6 +3,9 @@ using TMPro;
 
 public class DamageText : MonoBehaviour
 {
+    private const float FadeStartThreshold = 0.7f;
+    private const float FadeRange = 0.3f;
+
     public float moveDuration = 1.0f;
     public float height = 2.0f;
     public float minHorizontalDistance = 0.5f;
@@ -33,29 +36,16 @@ public class DamageText : MonoBehaviour
 
     private void Update()
     {
-        // Faire face à la caméra (billboard effect)
-        if (mainCamera != null)
-        {
-            transform.rotation = mainCamera.transform.rotation;
-        }
+        ApplyBillboardRotation();
 
         timer += Time.deltaTime;
-        float t = timer / moveDuration;
+        float clampedT = Mathf.Clamp01(timer / moveDuration);
 
-        float y = Mathf.Sin(Mathf.PI * t) * height;
-        Vector3 pos = Vector3.Lerp(startPos, endPos, t) + Vector3.up * y;
-        transform.position = pos;
+        transform.position = EvaluatePosition(clampedT);
+        transform.localScale = EvaluateScale(clampedT);
+        UpdateFade(clampedT);
 
-        float scale = Mathf.Lerp(0.7f, 1.2f, Mathf.Clamp01(t * 2));
-        transform.localScale = Vector3.one * scale;
-
-        if (t > 0.7f)
-        {
-            textColor.a = Mathf.Lerp(1f, 0f, (t - 0.7f) / 0.3f);
-            textMesh.color = textColor;
-        }
-
-        if (t >= 1f)
+        if (clampedT >= 1f)
         {
             Destroy(gameObject);
         }
@@ -64,5 +54,36 @@ public class DamageText : MonoBehaviour
     public void SetDamageText(string damage)
     {
         textMesh.text = damage;
+    }
+
+    private void ApplyBillboardRotation()
+    {
+        if (mainCamera != null)
+        {
+            transform.rotation = mainCamera.transform.rotation;
+        }
+    }
+
+    private Vector3 EvaluatePosition(float t)
+    {
+        float y = Mathf.Sin(Mathf.PI * t) * height;
+        Vector3 position = Vector3.Lerp(startPos, endPos, t);
+        position.y += y;
+        return position;
+    }
+
+    private Vector3 EvaluateScale(float t)
+    {
+        float scale = Mathf.Lerp(0.7f, 1.2f, Mathf.Clamp01(t * 2f));
+        return Vector3.one * scale;
+    }
+
+    private void UpdateFade(float t)
+    {
+        if (t <= FadeStartThreshold)
+            return;
+
+        textColor.a = Mathf.Lerp(1f, 0f, (t - FadeStartThreshold) / FadeRange);
+        textMesh.color = textColor;
     }
 }

@@ -58,78 +58,51 @@ public class QuestManager : MonoBehaviour
 
     public void AddQuest(QuestDataScriptable quest)
     {
-        if (quest.isCompleted)
-        {
-            Debug.LogWarning($"La quête '{quest.questName}' a déjà été terminée.");
-            return;
-        }
+        if (!CanStartQuest(quest)) return;
 
-        if (quest.isStarted)
-        {
-            Debug.LogWarning($"La quête '{quest.questName}' est déjà en cours.");
-            return;
-        }
+        Debug.Log($"Ajout de la quï¿½te : {quest.questName}");
 
-        Debug.Log($"Ajout de la quête : {quest.questName}");
-
-        foreach (var step in quest.steps)
-        {
-            step.isStarted = false;
-            step.isCompleted = false;
-        }
-
-        if (quest.steps.Count > 0)
-        {
-            quest.steps[0].isStarted = true;
-        }
+        ResetQuestSteps(quest);
+        StartFirstQuestStep(quest);
 
         quest.isStarted = true;
         activeQuests.Add(quest);
 
-        SaveData saveData = SaveManager.LoadGame();
-        SaveQuestData(saveData);
-        SaveManager.SaveGame(saveData);
+        SaveQuestProgress();
         UpdateQuestUI();
-        ShowQuestNotification($"Nouvelle quête : {quest.questName}");
+        ShowQuestNotification($"Nouvelle quï¿½te : {quest.questName}");
     }
 
     public void UpdateQuestStep(QuestDataScriptable quest, int stepId)
     {
-        if (quest.isCompleted)
-        {
-            Debug.LogWarning($"La quête '{quest.questName}' est déjà terminée.");
-            return;
-        }
+        if (!CanUpdateQuest(quest)) return;
 
-        QuestStep step = quest.steps.Find(s => s.stepId == stepId);
-        if (step != null && !step.isCompleted)
+        int stepIndex = FindQuestStepIndex(quest, stepId);
+
+        if (stepIndex >= 0 && !quest.steps[stepIndex].isCompleted)
         {
-            Debug.Log($"Mise à jour de l'étape : {step.stepDescription} pour la quête : {quest.questName}");
+            QuestStep step = quest.steps[stepIndex];
+            Debug.Log($"Mise ï¿½ jour de l'ï¿½tape : {step.stepDescription} pour la quï¿½te : {quest.questName}");
             step.isCompleted = true;
 
-            int nextStepIndex = quest.steps.IndexOf(step) + 1;
-            if (nextStepIndex < quest.steps.Count)
-            {
-                quest.steps[nextStepIndex].isStarted = true;
-            }
-            if (quest.steps.TrueForAll(s => s.isCompleted))
+            StartNextQuestStep(quest, stepIndex);
+
+            if (AreAllQuestStepsCompleted(quest))
             {
                 CompleteQuest(quest);
             }
-            SaveData saveData = SaveManager.LoadGame();
-            SaveQuestData(saveData);
-            SaveManager.SaveGame(saveData);
+            SaveQuestProgress();
         }
         else
         {
-            Debug.LogWarning($"Étape introuvable ou déjà complétée : ID {stepId} dans la quête {quest.questName}");
+            Debug.LogWarning($"ï¿½tape introuvable ou dï¿½jï¿½ complï¿½tï¿½e : ID {stepId} dans la quï¿½te {quest.questName}");
         }
     }
 
 
     public void CompleteQuest(QuestDataScriptable quest)
     {
-        Debug.Log($"Quête terminée : {quest.questName}");
+        Debug.Log($"Quï¿½te terminï¿½e : {quest.questName}");
         activeQuests.Remove(quest);
 
         playerStats.baseStats.gold += quest.goldReward;
@@ -138,14 +111,15 @@ public class QuestManager : MonoBehaviour
             playerStats.IncreaseStat(reward.statName, reward.value);
         }
 
-        rewardText.text = $"Récompenses :\nOr : {quest.goldReward}\nPoints d'achievement : {quest.achievementPointsReward}";
+        rewardText.text = $"Rï¿½compenses :\nOr : {quest.goldReward}\nPoints d'achievement : {quest.achievementPointsReward}";
         foreach (var reward in quest.statRewards)
         {
             rewardText.text += $"\n{reward.statName} : +{reward.value}";
         }
         rewardUI.SetActive(true);
+        UpdateRewardText(quest);
 
-        ShowQuestNotification($"Quête terminée : {quest.questName}");
+        ShowQuestNotification($"Quï¿½te terminï¿½e : {quest.questName}");
 
         DialogueSystem dialogueSystem = FindAnyObjectByType<DialogueSystem>();
         if (dialogueSystem != null)
@@ -155,13 +129,10 @@ public class QuestManager : MonoBehaviour
 
         quest.isCompleted = true;
 
-        StartCoroutine(HideRewardUIAfterDelay(5f)); 
+        StartCoroutine(HideRewardUIAfterDelay(5f));
 
         UpdateQuestUI();
-
-        SaveData saveData = SaveManager.LoadGame();
-        SaveQuestData(saveData);
-        SaveManager.SaveGame(saveData);
+        SaveQuestProgress();
     }
 
     private IEnumerator HideRewardUIAfterDelay(float delay)
@@ -177,12 +148,6 @@ public class QuestManager : MonoBehaviour
 
         List<Transform> children = new List<Transform>();
         foreach (Transform child in questListContainer)
-        {
-            if (child != null)
-                children.Add(child);
-        }
-
-        foreach (Transform child in children)
         {
             if (child != null && child.gameObject != null)
                 Destroy(child.gameObject);
@@ -220,13 +185,14 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }
-        return "Terminé";
+        return "Terminï¿½";
     }
 
     private void ShowQuestNotification(string message)
     {
         notificationText.text = message;
-        SoundManager.Instance.PlayEffect(SoundManager.Instance.dialogueSound);
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayEffect(SoundManager.Instance.dialogueSound);
         notificationAnimator.SetTrigger("Show");
         questNotificationPanel.SetActive(true);
     }
@@ -334,6 +300,100 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool CanStartQuest(QuestDataScriptable quest)
+    {
+        if (quest.isCompleted)
+        {
+            Debug.LogWarning($"La quï¿½te '{quest.questName}' a dï¿½jï¿½ ï¿½tï¿½ terminï¿½e.");
+            return false;
+        }
+
+        if (quest.isStarted)
+        {
+            Debug.LogWarning($"La quï¿½te '{quest.questName}' est dï¿½jï¿½ en cours.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool CanUpdateQuest(QuestDataScriptable quest)
+    {
+        if (quest.isCompleted)
+        {
+            Debug.LogWarning($"La quï¿½te '{quest.questName}' est dï¿½jï¿½ terminï¿½e.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void ResetQuestSteps(QuestDataScriptable quest)
+    {
+        foreach (var step in quest.steps)
+        {
+            step.isStarted = false;
+            step.isCompleted = false;
+        }
+    }
+
+    private void StartFirstQuestStep(QuestDataScriptable quest)
+    {
+        if (quest.steps.Count > 0)
+        {
+            quest.steps[0].isStarted = true;
+        }
+    }
+
+    private int FindQuestStepIndex(QuestDataScriptable quest, int stepId)
+    {
+        for (int i = 0; i < quest.steps.Count; i++)
+        {
+            if (quest.steps[i].stepId == stepId)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private void StartNextQuestStep(QuestDataScriptable quest, int completedStepIndex)
+    {
+        int nextStepIndex = completedStepIndex + 1;
+        if (nextStepIndex < quest.steps.Count)
+        {
+            quest.steps[nextStepIndex].isStarted = true;
+        }
+    }
+
+    private bool AreAllQuestStepsCompleted(QuestDataScriptable quest)
+    {
+        foreach (var step in quest.steps)
+        {
+            if (!step.isCompleted)
+                return false;
+        }
+
+        return true;
+    }
+
+    private void UpdateRewardText(QuestDataScriptable quest)
+    {
+        rewardText.text = $"Rï¿½compenses :\nOr : {quest.goldReward}\nPoints d'achievement : {quest.achievementPointsReward}";
+        foreach (var reward in quest.statRewards)
+        {
+            rewardText.text += $"\n{reward.statName} : +{reward.value}";
+        }
+    }
+
+    private void SaveQuestProgress()
+    {
+        SaveData saveData = SaveManager.LoadGame();
+        SaveQuestData(saveData);
+        SaveManager.SaveGame(saveData);
     }
 
 }

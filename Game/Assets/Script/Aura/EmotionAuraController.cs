@@ -23,9 +23,13 @@ public class EmotionAuraController : MonoBehaviour
 
 
     private bool isJoyGlowActive = false;
+    private Material[] normalMaterialSet;
+    private Material[] joyMaterialSet;
 
     void Start()
     {
+        normalMaterialSet = new[] { normalMaterial };
+        joyMaterialSet = new[] { normalMaterial, glowMaterial };
         StopAllParticles();
         SetEmotion(currentEmotion);
     }
@@ -76,7 +80,7 @@ public class EmotionAuraController : MonoBehaviour
                 lightParticles.Play();
                 Debug.Log("Materials avant : " + playerRenderer.materials.Length);
                 SetPlayerJoyGlow();
-                Debug.Log("Materials après : " + playerRenderer.materials.Length);
+                Debug.Log("Materials aprï¿½s : " + playerRenderer.materials.Length);
 
                 break;
 
@@ -103,27 +107,24 @@ public class EmotionAuraController : MonoBehaviour
 
     void SetPlayerNormal()
     {
-        playerRenderer.materials = new Material[]
-        {
-        normalMaterial
-        };
+        if (playerRenderer == null || normalMaterialSet == null)
+            return;
+
+        playerRenderer.materials = normalMaterialSet;
 
         isJoyGlowActive = false;
     }
 
     void SetPlayerJoyGlow()
     {
-      
-        playerRenderer.materials = new Material[]
-        {
-        normalMaterial,
-        glowMaterial
-        };
+        if (playerRenderer == null || joyMaterialSet == null)
+            return;
 
-        
-        glowMaterial.SetColor("_EmissionColor", glowColor );
+        playerRenderer.materials = joyMaterialSet;
 
-        
+        if (glowMaterial != null && glowMaterial.HasProperty("_EmissionColor"))
+            glowMaterial.SetColor("_EmissionColor", glowColor);
+
         isJoyGlowActive = true;
     }
 
