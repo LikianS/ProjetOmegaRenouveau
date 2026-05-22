@@ -10,7 +10,7 @@ Portage en réalité virtuelle d'un jeu Unity, développé dans le cadre d'un pr
 
 Le rapport complet du projet est disponible sur notre site Quartz :
 
-👉 **[Lien vers le site Quartz]**
+https://quartzsite.pages.dev/
 
 ---
 
