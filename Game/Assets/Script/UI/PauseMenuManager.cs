@@ -19,6 +19,9 @@ public class PauseMenuManager : MonoBehaviour
     private int currentIndex = 0;
 
     private PlayerInput playerInput;
+    private InputAction navigateAction;
+    private InputAction submitAction;
+    private InputAction cancelAction;
 
     private void Start()
     {
@@ -27,7 +30,10 @@ public class PauseMenuManager : MonoBehaviour
 
         playerInput = FindAnyObjectByType<PlayerInput>();
         if (playerInput != null)
+        {
             playerInput.SwitchCurrentActionMap("UI");
+            CacheUIActions();
+        }
 
         if (pauseMenuPanel != null)
             pauseMenuPanel.SetActive(true);
@@ -82,8 +88,8 @@ public class PauseMenuManager : MonoBehaviour
         if (Time.unscaledTime - lastNavTime > navCooldown)
         {
             float nav = 0f;
-            if (Gamepad.current != null)
-                nav = Gamepad.current.leftStick.ReadValue().y;
+            if (navigateAction != null)
+                nav = navigateAction.ReadValue<Vector2>().y;
 
             if (nav > 0.5f && currentIndex > 0)
             {
@@ -105,10 +111,10 @@ public class PauseMenuManager : MonoBehaviour
 
         UpdateSelectionArrow();
 
-        if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
+        if (submitAction != null && submitAction.WasPressedThisFrame())
             InvokeCurrentButton();
 
-        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        if (cancelAction != null && cancelAction.WasPressedThisFrame())
         {
             if (controlsPanel != null && controlsPanel.activeSelf)
                 ReturnToMainMenu(controlsPanel);
@@ -206,6 +212,18 @@ public class PauseMenuManager : MonoBehaviour
             return;
 
         pauseMenuButtons[currentIndex].onClick.Invoke();
+    }
+
+    private void CacheUIActions()
+    {
+        if (playerInput == null || playerInput.actions == null) return;
+
+        var uiMap = playerInput.actions.FindActionMap("UI", false);
+        if (uiMap == null) return;
+
+        navigateAction = uiMap.FindAction("Navigate", false);
+        submitAction = uiMap.FindAction("Submit", false);
+        cancelAction = uiMap.FindAction("Cancel", false);
     }
 }
 

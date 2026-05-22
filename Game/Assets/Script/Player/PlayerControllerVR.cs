@@ -5,43 +5,69 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 
-// Lightweight VR-adapted player controller
-// - Uses CharacterController for collisions
-// - Movement with one joystick (OnMove)
-// - Rotate yaw with the other joystick (OnRotate)
-// - Dash with button (OnDash)
-// - Interact with button (OnInteract)
-// - Attack triggered by fast VR controller swing
+// VR Player Controller
+// - CharacterController pour les collisions
+// - Déplacement via joystick gauche (OnMove)
+// - Rotation du yaw du player via suivi de la tête HMD (avec seuil pour éviter la boucle)
+// - Le mesh s'aligne instantanément vers la direction de la caméra
+// - Dash via bouton (OnDash)
+// - Interaction via bouton (OnInteract)
+// - Attaque via swing rapide de la manette VR
 
 public class PlayerControllerVR : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Références")]
     public PlayerStats playerStats;
     public Animator animator;
 
-    [Tooltip("Assign the XR camera (head) so movement is relative to headset")] 
+    [Tooltip("Caméra XR (tête / HMD). Si null, Camera.main est utilisée.")]
     public Transform xrHead;
 
-    [Header("Components")]
+    [Tooltip("XR Rig parent (ex: XR Origin). Doit être ENFANT du Player GameObject.")]
+    public Transform xrRig;
+
+    [Tooltip("Transform du mesh du personnage (enfant du Player). " +
+             "Il tourne pour faire face à la direction de la caméra. " +
+             "Si null, c'est le Player entier qui tourne (non recommandé si la cam est enfant).")]
+    public Transform characterMesh;
+
+    [Header("Composants")]
     public CharacterController characterController;
 
     [Header("Input")]
-    [Tooltip("Optional: assign the InputActionAsset used by your other PlayerController (Action Map 'Player')")]
+    [Tooltip("InputActionAsset avec la map 'Player'")]
     public InputActionAsset inputActions;
 
-    [Header("Movement")]
+    [Header("Mouvement")]
     public float walkSpeed = 2f;
-    public float runSpeed = 4f;
-    public float rotateSensitivity = 60f; // degrees per second per unit input
-    public bool invertY = false;
-    public float gravity = 9.81f;
+    public float runSpeed  = 4f;
+    public float gravity   = 9.81f;
 
-    [Header("Head Alignment")]
-    [Tooltip("If true, the player body will smoothly rotate to face where the HMD is looking (yaw only)")]
+    [Header("Alignement mesh → caméra")]
+    [Tooltip("Vitesse de rotation du mesh vers la direction de la caméra (degrés/seconde). " +
+             "Mettre une grande valeur (ex: 720) pour un alignement quasi-instantané.")]
+    public float meshRotateSpeed = 720f;
+
+    [Tooltip("Vitesse minimale (m/s) en dessous de laquelle le mesh ne tourne pas " +
+             "(évite qu'il tourne sur place à l'arrêt)")]
+    public float meshRotateMinSpeed = 0.1f;
+
+    [Tooltip("Offset en degrés appliqué à la rotation du mesh quand il suit la caméra. Valeur positive = tourne légèrement vers la droite.")]
+    public float meshYawOffset = 0f;
+
+    [Header("Alignement player root → tête (yaw broad)")]
+    [Tooltip("Le player root tourne lentement pour suivre le HMD. " +
+             "Désactiver si tu veux que SEUL le mesh s'aligne.")]
     public bool autoAlignYawToHead = true;
-    [Tooltip("How fast the body aligns to head yaw (higher = faster)")]
-    public float alignYawSpeed = 5f;
-    [Tooltip("Minimum forward input required before the body starts following the camera yaw")]
+
+    [Tooltip("Vitesse de rotation du player root vers la tête (degrés/seconde)")]
+    public float alignYawSpeed = 90f;
+
+    [Tooltip("Écart angulaire minimal (degrés) avant que le player root tourne. " +
+             "Évite l'oscillation quand la cam est enfant du player.")]
+    public float alignYawDeadzone = 30f;
+
+    [Tooltip("Input forward minimal pour activer l'alignement du root")]
     public float bodyAlignForwardThreshold = 0.1f;
 
     [Header("Dash")]
@@ -52,69 +78,97 @@ public class PlayerControllerVR : MonoBehaviour
     [Header("Interaction")]
     public float interactRange = 2f;
 
-    [Header("Character Height Auto-Adjust")]
+    [Header("Hauteur automatique (CharacterController)")]
     public bool autoAdjustHeight = true;
-    public bool followHeadHorizontally = false;
     public float minHeight = 1.0f;
-    public float characterSkinWidth = 0.08f;
     public float maxHeight = 2.5f;
+    [Tooltip("Offset ajouté à la hauteur du CharacterController (ne change PAS la hauteur perçue en VR)")]
+    public float headHeightOffset = 0f;
 
-    [Header("VR Attack (Swing Detection)")]
-    [Tooltip("Vitesse minimale d'un swing de manette pour déclencher une attaque (m/s)")]
+    [Header("Offset de départ de la caméra")]
+    [Tooltip("Offset vertical LOCAL appliqué au XR Rig. Valeur positive = monte, négative = descend.")]
+    public float startingRigHeightOffset = 0f;
+
+    [Header("Attaque VR (détection de swing)")]
     public float swingVelocityThreshold = 2.5f;
-    [Tooltip("Rayon de détection autour de la manette pour toucher les ennemis")]
-    public float vrAttackRange = 1.2f;
-    [Tooltip("Layer des ennemis pour la détection d'attaque VR")]
+    public float vrAttackRange          = 1.2f;
     public LayerMask enemyLayer;
-    [Tooltip("Référence au collider d'attaque du joueur (enfant du XR Rig)")]
-    public Collider vrAttackCollider;
-
-    [Header("Attack Settings")]
     public float attackDuration = 0.5f;
     public float attackCooldown = 0.5f;
+
+    [Header("Lock ennemi")]
+    public float lockRange = 10f;
+    public Transform currentTarget;
+
+    [Header("Parry")]
+    public float parryWindow = 0.2f;
 
     [Header("Debug")]
     public bool debugLogs = false;
 
-    private Vector2 moveInput = Vector2.zero;
-    private Vector2 rotateInput = Vector2.zero;
-    private bool isRunning = false;
-    private bool isDashing = false;
-    private bool canDash = true;
-    private float dashCooldownTimer = 0f;
+    // -------------------------------------------------------------------------
+    // État privé
+    // -------------------------------------------------------------------------
 
-    private bool isAttacking = false;
-    private bool canAttack = true;
-    private float attackCooldownTimer = 0f;
+    private Vector2 moveInput;
+    private bool    isWalking;   // true dès qu'on a un input de déplacement
+    private bool    isSprinting; // true quand le bouton Sprint est maintenu
+    private bool    isDashing;
+    private bool    canDash   = true;
+    private float   dashCooldownTimer;
 
-    private float verticalVelocity = 0f;
-    private float previousHeadHeight = 1.7f;
+    private bool    isAttacking;
+    private bool    canAttack = true;
+    private float   attackCooldownTimer;
+    private bool    isLockedOn;
+    private bool    isParrying;
+    private bool    parryBlockedDamage;
+    private float   parryStartTime;
+    public bool inDialogueMode;
+    private bool    isInteracting;
 
-    private float footstepTimer = 0f;
-    private float footstepInterval = 0.4f;
-    private bool isMoving = false;
+    private float   verticalVelocity;
+    private float   previousHeadHeight = 1.7f;
+    private float   footstepTimer;
 
-    // VR swing tracking
-    private Vector3 prevLeftHandPos;
+    // Position locale initiale du rig (calculée une fois en Start)
+    private Vector3 rigInitialLocalPos;
+    private bool    rigInitialPosCached = false;
+
+    // Swing VR
     private Vector3 prevRightHandPos;
-    private bool prevHandPositionsValid = false;
+    private bool    prevHandPositionsValid;
 
-    // InputAction references
+    // Actions input
     private InputAction m_MoveAction;
-    private InputAction m_RotateAction;
-    private InputAction m_RunAction;
+    private InputAction m_SprintAction;
     private InputAction m_DashAction;
     private InputAction m_InteractAction;
+    private InputAction m_AttackAction;
+    private InputAction m_LockAction;
+    private InputAction m_ParryAction;
+    private InputAction m_PauseAction;
+    private InputAction m_RightHandPositionAction;
 
-    // stored delegates so we can unsubscribe
-    private System.Action<InputAction.CallbackContext> runPerformedDelegate;
-    private System.Action<InputAction.CallbackContext> runCanceledDelegate;
+    // Cache pour limiter les allocations/runtime lookups
+    private UnityEngine.XR.InputDevice m_RightHandDevice;
+    private bool m_RightHandDeviceInitialized;
+    private readonly Collider[] interactHitsBuffer = new Collider[64];
+    private readonly Collider[] attackHitsBuffer = new Collider[64];
+
+    private System.Action<InputAction.CallbackContext> sprintPerformedDelegate;
+    private System.Action<InputAction.CallbackContext> sprintCanceledDelegate;
     private System.Action<InputAction.CallbackContext> dashPerformedDelegate;
     private System.Action<InputAction.CallbackContext> interactPerformedDelegate;
+    private System.Action<InputAction.CallbackContext> attackPerformedDelegate;
+    private System.Action<InputAction.CallbackContext> lockPerformedDelegate;
+    private System.Action<InputAction.CallbackContext> parryPerformedDelegate;
+    private System.Action<InputAction.CallbackContext> parryCanceledDelegate;
+    private System.Action<InputAction.CallbackContext> pausePerformedDelegate;
 
-    [Header("XR Rig")]
-    [Tooltip("XR Rig parent (ex: XR Origin ou Camera Offset). Si null, la caméra xrHead sera déplacée.")]
-    public Transform xrRig;
+    // -------------------------------------------------------------------------
+    // Lifecycle
+    // -------------------------------------------------------------------------
 
     private void Awake()
     {
@@ -129,250 +183,438 @@ public class PlayerControllerVR : MonoBehaviour
 
         if (characterController == null)
         {
-            // Add one if missing
             characterController = gameObject.AddComponent<CharacterController>();
-            characterController.skinWidth = characterSkinWidth;
+            characterController.skinWidth = 0.08f;
         }
 
-        // sensible defaults
         characterController.slopeLimit = 45f;
         characterController.stepOffset = 0.3f;
     }
 
+    private void Start()
+    {
+        CacheRigInitialLocalPos();
+    }
+
+    private void CacheRigInitialLocalPos()
+    {
+        if (xrRig == null || rigInitialPosCached) return;
+
+        rigInitialLocalPos = new Vector3(
+            xrRig.localPosition.x,
+            startingRigHeightOffset,
+            xrRig.localPosition.z
+        );
+
+        xrRig.localPosition = rigInitialLocalPos;
+        rigInitialPosCached = true;
+
+        if (debugLogs) Debug.Log($"[PlayerVR] Rig local pos initialisée : {rigInitialLocalPos}");
+    }
+
     private void OnEnable()
     {
-        // If inputActions not assigned, try to get from PlayerInput component on this object
         if (inputActions == null)
         {
             var pi = GetComponent<UnityEngine.InputSystem.PlayerInput>();
-            if (pi != null)
-            {
-                inputActions = pi.actions;
-                if (debugLogs) Debug.Log("PlayerControllerVR: grabbed InputActionAsset from PlayerInput component.");
-            }
+            if (pi != null) inputActions = pi.actions;
         }
 
-        // Bind actions from InputActionAsset if provided
-        if (inputActions != null)
+        if (inputActions == null) return;
+
+        var map = inputActions.FindActionMap("Player", true);
+        if (map == null)
         {
-            var map = inputActions.FindActionMap("Player", true);
-            if (map != null)
-            {
-                m_MoveAction = map.FindAction("Move", true);
-
-                // Try common names first
-                m_RotateAction = map.FindAction("CameraRotate", false) ?? map.FindAction("Rotate", false) ?? map.FindAction("Look", false) ?? map.FindAction("LookDelta", false);
-
-                // If not found, try to auto-select a Vector2 action bound to a right-hand stick/thumb
-                if (m_RotateAction == null)
-                {
-                    foreach (var a in map.actions)
-                    {
-                        if (a == null) continue;
-                        if (a.expectedControlType != "Vector2") continue;
-
-                        foreach (var b in a.bindings)
-                        {
-                            if (b.isComposite) continue;
-                            var path = (b.path ?? string.Empty).ToLower();
-                            if (path.Contains("right") || path.Contains("thumbstick") || path.Contains("primary2d") || path.Contains("stick") || path.Contains("secondary") || path.Contains("camera"))
-                            {
-                                m_RotateAction = a;
-                                if (debugLogs) Debug.Log($"PlayerControllerVR: auto-selected rotate action '{a.name}' (binding {b.path}).");
-                                break;
-                            }
-                        }
-
-                        if (m_RotateAction != null) break;
-                    }
-                }
-
-                // Fallback: any Vector2 action
-                if (m_RotateAction == null)
-                {
-                    foreach (var a in map.actions)
-                    {
-                        if (a == null) continue;
-                        if (a.expectedControlType == "Vector2")
-                        {
-                            m_RotateAction = a;
-                            if (debugLogs) Debug.Log($"PlayerControllerVR: fallback selected rotate action '{a.name}'.");
-                            break;
-                        }
-                    }
-                }
-
-                m_RunAction = map.FindAction("Run", false);
-                m_DashAction = map.FindAction("Dash", false);
-                m_InteractAction = map.FindAction("Interact", false);
-
-                if (m_MoveAction != null)
-                {
-                    m_MoveAction.performed += OnMovePerformed;
-                    m_MoveAction.canceled += OnMoveCanceled;
-                    m_MoveAction.Enable();
-                }
-                if (m_RotateAction != null && !autoAlignYawToHead)
-                {
-                    m_RotateAction.performed += OnRotatePerformed;
-                    m_RotateAction.canceled += OnRotateCanceled;
-                    m_RotateAction.Enable();
-                }
-                else if (debugLogs && m_RotateAction == null)
-                {
-                    Debug.LogWarning("PlayerControllerVR: No rotate action found in 'Player' map. Ensure an action exists for camera rotation (Vector2).");
-                }
-                if (m_RunAction != null)
-                {
-                    runPerformedDelegate = ctx => isRunning = true;
-                    runCanceledDelegate = ctx => isRunning = false;
-                    m_RunAction.performed += runPerformedDelegate;
-                    m_RunAction.canceled += runCanceledDelegate;
-                    m_RunAction.Enable();
-                }
-                if (m_DashAction != null)
-                {
-                    dashPerformedDelegate = ctx => OnDash(ctx);
-                    m_DashAction.performed += dashPerformedDelegate;
-                    m_DashAction.Enable();
-                }
-                if (m_InteractAction != null)
-                {
-                    interactPerformedDelegate = ctx => OnInteract(ctx);
-                    m_InteractAction.performed += interactPerformedDelegate;
-                    m_InteractAction.Enable();
-                }
-            }
-            else
-            {
-                if (debugLogs) Debug.LogWarning("PlayerControllerVR: InputActionAsset has no 'Player' action map.");
-            }
+            if (debugLogs) Debug.LogWarning("PlayerControllerVR: pas de map 'Player' dans l'InputActionAsset.");
+            return;
         }
+
+        m_MoveAction = map.FindAction("Move", true);
+        if (m_MoveAction != null)
+        {
+            m_MoveAction.performed += OnMovePerformed;
+            m_MoveAction.canceled  += OnMoveCanceled;
+            m_MoveAction.Enable();
+        }
+
+        m_SprintAction = map.FindAction("Sprint", false) ?? map.FindAction("Run", false);
+        if (m_SprintAction != null)
+        {
+            sprintPerformedDelegate = _ => isSprinting = true;
+            sprintCanceledDelegate  = _ => isSprinting = false;
+            m_SprintAction.performed += sprintPerformedDelegate;
+            m_SprintAction.canceled  += sprintCanceledDelegate;
+            m_SprintAction.Enable();
+        }
+
+        m_DashAction = map.FindAction("Dash", false);
+        if (m_DashAction != null)
+        {
+            dashPerformedDelegate = ctx => OnDash(ctx);
+            m_DashAction.performed += dashPerformedDelegate;
+            m_DashAction.Enable();
+        }
+
+        m_InteractAction = map.FindAction("Interact", false);
+        if (m_InteractAction != null)
+        {
+            interactPerformedDelegate = ctx => OnInteract(ctx);
+            m_InteractAction.performed += interactPerformedDelegate;
+            m_InteractAction.Enable();
+        }
+
+        m_AttackAction = map.FindAction("Attack", false);
+        if (m_AttackAction != null)
+        {
+            attackPerformedDelegate = ctx => OnAttack(ctx);
+            m_AttackAction.performed += attackPerformedDelegate;
+            m_AttackAction.Enable();
+        }
+
+        m_LockAction = map.FindAction("Lock", false);
+        if (m_LockAction != null)
+        {
+            lockPerformedDelegate = ctx => OnLock(ctx);
+            m_LockAction.performed += lockPerformedDelegate;
+            m_LockAction.Enable();
+        }
+
+        m_ParryAction = map.FindAction("Parry", false) ?? map.FindAction("Block", false);
+        if (m_ParryAction != null)
+        {
+            parryPerformedDelegate = ctx => OnParry(ctx);
+            parryCanceledDelegate = ctx => OnParry(ctx);
+            m_ParryAction.performed += parryPerformedDelegate;
+            m_ParryAction.canceled += parryCanceledDelegate;
+            m_ParryAction.Enable();
+        }
+
+        m_PauseAction = map.FindAction("Pause", false);
+        if (m_PauseAction != null)
+        {
+            pausePerformedDelegate = ctx => OnPause(ctx);
+            m_PauseAction.performed += pausePerformedDelegate;
+            m_PauseAction.Enable();
+        }
+
+        m_RightHandPositionAction = map.FindAction("RightHandPosition", false);
+        if (m_RightHandPositionAction != null)
+            m_RightHandPositionAction.Enable();
+
+        m_RightHandDeviceInitialized = false;
     }
 
     private void OnDisable()
     {
-        if (m_MoveAction != null)
-        {
-            m_MoveAction.performed -= OnMovePerformed;
-            m_MoveAction.canceled -= OnMoveCanceled;
-            m_MoveAction.Disable();
-        }
-        if (m_RotateAction != null)
-        {
-            m_RotateAction.performed -= OnRotatePerformed;
-            m_RotateAction.canceled -= OnRotateCanceled;
-            m_RotateAction.Disable();
-        }
-        if (m_RunAction != null)
-        {
-            if (runPerformedDelegate != null) m_RunAction.performed -= runPerformedDelegate;
-            if (runCanceledDelegate != null) m_RunAction.canceled -= runCanceledDelegate;
-            m_RunAction.Disable();
-        }
-        if (m_DashAction != null)
-        {
-            if (dashPerformedDelegate != null) m_DashAction.performed -= dashPerformedDelegate;
-            m_DashAction.Disable();
-        }
-        if (m_InteractAction != null)
-        {
-            if (interactPerformedDelegate != null) m_InteractAction.performed -= interactPerformedDelegate;
-            m_InteractAction.Disable();
-        }
+        if (m_MoveAction     != null) { m_MoveAction.performed -= OnMovePerformed; m_MoveAction.canceled -= OnMoveCanceled; m_MoveAction.Disable(); }
+        if (m_SprintAction   != null) { if (sprintPerformedDelegate != null) m_SprintAction.performed -= sprintPerformedDelegate; if (sprintCanceledDelegate != null) m_SprintAction.canceled -= sprintCanceledDelegate; m_SprintAction.Disable(); }
+        if (m_DashAction     != null) { if (dashPerformedDelegate != null) m_DashAction.performed -= dashPerformedDelegate; m_DashAction.Disable(); }
+        if (m_InteractAction != null) { if (interactPerformedDelegate != null) m_InteractAction.performed -= interactPerformedDelegate; m_InteractAction.Disable(); }
+        if (m_AttackAction   != null) { if (attackPerformedDelegate != null) m_AttackAction.performed -= attackPerformedDelegate; m_AttackAction.Disable(); }
+        if (m_LockAction     != null) { if (lockPerformedDelegate != null) m_LockAction.performed -= lockPerformedDelegate; m_LockAction.Disable(); }
+        if (m_ParryAction    != null) { if (parryPerformedDelegate != null) m_ParryAction.performed -= parryPerformedDelegate; if (parryCanceledDelegate != null) m_ParryAction.canceled -= parryCanceledDelegate; m_ParryAction.Disable(); }
+        if (m_PauseAction    != null) { if (pausePerformedDelegate != null) m_PauseAction.performed -= pausePerformedDelegate; m_PauseAction.Disable(); }
+        if (m_RightHandPositionAction != null) m_RightHandPositionAction.Disable();
     }
 
-    private void OnMovePerformed(InputAction.CallbackContext ctx)
-    {
-        moveInput = ctx.ReadValue<Vector2>();
-        if (debugLogs) Debug.Log($"[PlayerVR] Move performed -> {moveInput}");
-    }
-    private void OnMoveCanceled(InputAction.CallbackContext ctx)
-    {
-        moveInput = Vector2.zero;
-        if (debugLogs) Debug.Log($"[PlayerVR] Move canceled");
-    }
-
-    private void OnRotatePerformed(InputAction.CallbackContext ctx)
-    {
-        rotateInput = ctx.ReadValue<Vector2>();
-        if (debugLogs) Debug.Log($"[PlayerVR] Rotate performed -> {rotateInput}");
-    }
-
-    private void OnRotateCanceled(InputAction.CallbackContext ctx)
-    {
-        rotateInput = Vector2.zero;
-        if (debugLogs) Debug.Log($"[PlayerVR] Rotate canceled");
-    }
+    // -------------------------------------------------------------------------
+    // Update
+    // -------------------------------------------------------------------------
 
     private void Update()
     {
+        if (playerStats != null && playerStats.CurrentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+
+        if (inDialogueMode || isInteracting)
+        {
+            moveInput = Vector2.zero;
+            animator?.SetBool("IsRunning", false);
+            animator?.SetBool("IsSprinting", false);
+            return;
+        }
+
         HandleCooldowns();
 
         if (autoAdjustHeight)
             UpdateCharacterControllerHeight();
 
         if (!isDashing)
-        {
             ApplyMovement();
+
+        // Rotation large du player root (lente, avec deadzone)
+        if (autoAlignYawToHead && xrHead != null && moveInput.y > bodyAlignForwardThreshold)
+            AlignRootYawWithHead();
+
+        UpdateAnimations();
+        DetectVRSwingAttack();
+    }
+
+    private void LateUpdate()
+    {
+        // Maintient la position locale du rig résistante au repositionnement du XR tracking
+        if (xrRig != null && rigInitialPosCached)
+            xrRig.localPosition = rigInitialLocalPos;
+
+        // Aligne le mesh vers la direction de la caméra (fait face à où on regarde)
+        AlignMeshToCamera();
+    }
+
+    // -------------------------------------------------------------------------
+    // Alignement mesh → caméra
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Fait tourner le mesh (ou le player root si characterMesh == null) pour qu'il
+    /// fasse face à la direction de la caméra, mais seulement quand on se déplace.
+    /// Utilise RotateTowards pour une rotation fluide sans boucle.
+    /// </summary>
+    private void AlignMeshToCamera()
+    {
+        if (xrHead == null) return;
+
+        // Ne tourne que si on bouge réellement
+        Vector3 horizontalVel = characterController != null ? characterController.velocity : Vector3.zero;
+        horizontalVel.y = 0f;
+        if (horizontalVel.magnitude < meshRotateMinSpeed) return;
+
+        // Direction cible = yaw de la caméra (plan XZ uniquement)
+        Vector3 camForward = xrHead.forward;
+        camForward.y = 0f;
+        if (camForward.sqrMagnitude < 0.0001f) return;
+
+        Quaternion targetRot = Quaternion.LookRotation(camForward, Vector3.up) * Quaternion.Euler(0f, meshYawOffset, 0f);
+
+        Transform target = characterMesh != null ? characterMesh : transform;
+        target.rotation = Quaternion.RotateTowards(target.rotation, targetRot, meshRotateSpeed * Time.deltaTime);
+    }
+
+    // -------------------------------------------------------------------------
+    // Alignement root yaw → tête (broad, lent)
+    // -------------------------------------------------------------------------
+
+    private void AlignRootYawWithHead()
+    {
+        Vector3 headForward = xrHead.forward;
+        headForward.y = 0f;
+        if (headForward.sqrMagnitude < 0.0001f) return;
+
+        float targetYaw  = Mathf.Atan2(headForward.x, headForward.z) * Mathf.Rad2Deg;
+        float currentYaw = transform.eulerAngles.y;
+        float delta      = Mathf.DeltaAngle(currentYaw, targetYaw);
+
+        if (Mathf.Abs(delta) < alignYawDeadzone) return;
+
+        float step   = alignYawSpeed * Time.deltaTime;
+        float newYaw = currentYaw + Mathf.Clamp(delta, -step, step);
+        transform.rotation = Quaternion.Euler(0f, newYaw, 0f);
+
+        if (debugLogs) Debug.Log($"[PlayerVR] AlignRoot: target={targetYaw:F1} current={currentYaw:F1} delta={delta:F1}");
+    }
+
+    // -------------------------------------------------------------------------
+    // Callbacks input
+    // -------------------------------------------------------------------------
+
+    private void OnMovePerformed(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
+    private void OnMoveCanceled (InputAction.CallbackContext ctx) => moveInput = Vector2.zero;
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if (inDialogueMode || isInteracting)
+        {
+            moveInput = Vector2.zero;
+            isSprinting = false;
+            animator?.SetBool("IsRunning", false);
+            animator?.SetBool("IsSprinting", false);
+            return;
         }
 
-        // Only align body yaw with head while moving forward, so small head turns do not spin the body
-        if (xrHead != null && moveInput.y > bodyAlignForwardThreshold)
-            AlignYawWithHead();
+        moveInput = context.canceled ? Vector2.zero : context.ReadValue<Vector2>();
+    }
 
-        // Handle animations based on movement speed
-        UpdateAnimations();
-
-        // Detect VR controller swing for attack
-        DetectVRSwingAttack();
-
-        // joystick rotate is ignored when body follows head
-        // if you want joystick rotate, set logic here (currently disabled)
-
-        if (debugLogs && characterController != null)
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (inDialogueMode || isInteracting || playerStats == null)
         {
-            Debug.Log($"[PlayerVR] moveInput={moveInput} rotateInput={rotateInput} grounded={characterController.isGrounded} height={characterController.height} center={characterController.center}");
+            isSprinting = false;
+            animator?.SetBool("IsSprinting", false);
+            return;
+        }
+
+        if (context.performed)     isSprinting = playerStats.CurrentStamina > 0f;
+        else if (context.canceled) isSprinting = false;
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (!context.performed || !canDash || isDashing) return;
+        if (playerStats != null && playerStats.CurrentStamina < playerStats.dashStaminaCost) return;
+        playerStats?.UseStamina(playerStats.dashStaminaCost);
+        StartCoroutine(DashCoroutine());
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (!context.performed || inDialogueMode) return;
+
+        isInteracting = true;
+
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, interactRange, interactHitsBuffer);
+        for (int i = 0; i < hitCount; i++)
+        {
+            var hit = interactHitsBuffer[i];
+            if (hit == null) continue;
+
+            Collectible col = hit.GetComponent<Collectible>();
+            if (col != null) { col.Collect(playerStats); isInteracting = false; return; }
+
+            WeaponPickup wp = hit.GetComponent<WeaponPickup>();
+            if (wp != null) { playerStats?.EquipWeapon(wp.weaponStats); Destroy(wp.gameObject); isInteracting = false; return; }
+        }
+
+        isInteracting = false;
+    }
+
+    // -------------------------------------------------------------------------
+    // Mouvement & physique
+    // -------------------------------------------------------------------------
+
+    private void ApplyMovement()
+    {
+        if (characterController == null) return;
+
+        verticalVelocity = characterController.isGrounded
+            ? -0.5f
+            : verticalVelocity - gravity * Time.deltaTime;
+
+        Vector3 forward = xrHead != null ? xrHead.forward : transform.forward;
+        Vector3 right   = xrHead != null ? xrHead.right   : transform.right;
+        forward.y = 0f; forward.Normalize();
+        right.y   = 0f; right.Normalize();
+
+        Vector3 dir = forward * moveInput.y + right * moveInput.x;
+        if (dir.sqrMagnitude > 0.0001f) dir.Normalize();
+
+        float speedMult = playerStats != null ? playerStats.SpeedMultiplier : 1f;
+        float speed     = (isSprinting ? runSpeed : walkSpeed) * speedMult;
+
+        characterController.Move((dir * speed + Vector3.up * verticalVelocity) * Time.deltaTime);
+
+        if (isSprinting && dir.magnitude > 0.1f && playerStats != null)
+        {
+            playerStats.UseStamina(playerStats.runningStaminaCost * Time.deltaTime);
+            if (playerStats.CurrentStamina <= 0f) isSprinting = false;
         }
     }
+
+    private void UpdateCharacterControllerHeight()
+    {
+        if (xrHead == null || characterController == null) return;
+
+        Vector3 headLocal = xrHead.IsChildOf(transform)
+            ? xrHead.localPosition
+            : transform.InverseTransformPoint(xrHead.position);
+
+        float headY = headLocal.y > 0f ? headLocal.y : previousHeadHeight;
+        headY = Mathf.Clamp(headY, minHeight, maxHeight);
+        previousHeadHeight = headY;
+
+        float newHeight = Mathf.Clamp(headY + headHeightOffset, minHeight, maxHeight);
+        characterController.height = newHeight;
+        characterController.center = new Vector3(0f, newHeight * 0.5f, 0f);
+    }
+
+    private IEnumerator DashCoroutine()
+    {
+        isDashing = true;
+        canDash   = false;
+        dashCooldownTimer = dashCooldown;
+
+        Vector3 forward = xrHead != null ? xrHead.forward : transform.forward;
+        forward.y = 0f; forward.Normalize();
+
+        Vector3 dashDir = moveInput.sqrMagnitude > 0.01f
+            ? (xrHead.forward * moveInput.y + xrHead.right * moveInput.x)
+            : forward;
+        dashDir.y = 0f;
+        if (dashDir.sqrMagnitude > 0.01f) dashDir.Normalize();
+        else dashDir = forward;
+
+        float speedMult = playerStats != null ? playerStats.SpeedMultiplier : 1f;
+        float dashSpeed = dashDistance / Mathf.Max(0.0001f, dashDuration) * speedMult;
+        float elapsed   = 0f;
+
+        while (elapsed < dashDuration)
+        {
+            characterController.Move(dashDir * dashSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        isDashing = false;
+    }
+
+    // -------------------------------------------------------------------------
+    // Cooldowns
+    // -------------------------------------------------------------------------
+
+    private void HandleCooldowns()
+    {
+        if (!canDash)   { dashCooldownTimer   -= Time.deltaTime; if (dashCooldownTimer   <= 0f) canDash   = true; }
+        if (!canAttack) { attackCooldownTimer -= Time.deltaTime; if (attackCooldownTimer <= 0f) canAttack = true; }
+    }
+
+    // -------------------------------------------------------------------------
+    // Animations & sons
+    // -------------------------------------------------------------------------
 
     private void UpdateAnimations()
     {
         if (animator == null || characterController == null) return;
 
-        // Calculate current speed
-        float currentSpeed = isRunning ? runSpeed : walkSpeed;
-        if (playerStats != null)
-            currentSpeed *= playerStats.SpeedMultiplier;
+        bool grounded = characterController.isGrounded;
 
-        // Determine if grounded and moving
-        bool isGrounded = characterController.isGrounded;
-        bool moving = moveInput.magnitude > 0.1f && isGrounded;
+        // Vitesse horizontale réelle du CharacterController
+        Vector3 horizontalVel = characterController.velocity;
+        horizontalVel.y = 0f;
+        float actualSpeed = horizontalVel.magnitude;
 
-        // Calculate normalized speed (0 to 1) for blend tree
-        float maxSpeed = runSpeed * (playerStats != null ? playerStats.SpeedMultiplier : 1f);
-        float normalizedSpeed = moving ? (currentSpeed / maxSpeed) : 0f;
+        // On est en train de marcher si on a un input joystick ET une vitesse réelle
+        // Le seuil moveInput est abaissé à 0.01 pour capturer les petits inputs VR
+        bool hasInput = moveInput.magnitude > 0.01f;
+        // Note : on retire grounded de la condition "moving" pour les bools Animator —
+        // isGrounded peut être instable avec la hauteur dynamique et bloquerait IsRunning/IsSprinting.
+        bool moving   = actualSpeed > 0.05f && hasInput;
+        isWalking = moving && !isSprinting;
 
-        // Set animator parameters
-        animator.SetFloat("Speed", normalizedSpeed, 0.1f, Time.deltaTime);
-        animator.SetBool("IsGrounded", isGrounded);
-        animator.SetBool("IsRunning", isRunning && moving);
+        float speedMult = playerStats != null ? playerStats.SpeedMultiplier : 1f;
+        float maxSpeed  = runSpeed * speedMult;
 
-        // Handle footsteps sound
-        if (moving && isGrounded)
-        {
+        // normalizedSpeed : 0 = immobile, ~0.5 = marche, 1 = sprint
+        float normalizedSpeed = Mathf.Clamp01(actualSpeed / maxSpeed);
+
+        animator.SetFloat("Speed", normalizedSpeed, 0.05f, Time.deltaTime);
+        animator.SetBool("IsGrounded",  grounded);
+        animator.SetBool("IsRunning",   isWalking);
+        animator.SetBool("IsSprinting", isSprinting && moving);
+
+        if (debugLogs)
+            Debug.Log($"[PlayerVR] speed={actualSpeed:F2} norm={normalizedSpeed:F2} input={moveInput.magnitude:F2} walking={isWalking} sprinting={isSprinting}");
+
+        if (moving && grounded)        {
             footstepTimer -= Time.deltaTime;
             if (footstepTimer <= 0f)
             {
-                float interval = isRunning ? 0.25f : 0.5f;
+                footstepTimer = isSprinting ? 0.25f : 0.5f;
                 if (SoundManager.Instance != null)
                 {
-                    if (isRunning)
-                        SoundManager.Instance.PlayPlayerRun();
-                    else
-                        SoundManager.Instance.PlayPlayerWalk();
+                    if (isSprinting) SoundManager.Instance.PlayPlayerRun();
+                    else             SoundManager.Instance.PlayPlayerWalk();
                 }
-                footstepTimer = interval;
             }
         }
         else
@@ -381,224 +623,51 @@ public class PlayerControllerVR : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        UpdateRigOrHeadPosition();
-    }
-
-    private void UpdateRigOrHeadPosition()
-    {
-        Vector3 playerPos = transform.position;
-
-        if (xrRig != null)
-        {
-            Vector3 rigPos = xrRig.position;
-            xrRig.position = new Vector3(playerPos.x, rigPos.y, playerPos.z);
-            return;
-        }
-
-        if (xrHead != null)
-        {
-            Vector3 headPos = xrHead.position;
-            xrHead.position = new Vector3(playerPos.x, headPos.y, playerPos.z);
-        }
-    }
-
-    private void HandleCooldowns()
-    {
-        if (!canDash)
-        {
-            dashCooldownTimer -= Time.deltaTime;
-            if (dashCooldownTimer <= 0f)
-                canDash = true;
-        }
-
-        if (!canAttack)
-        {
-            attackCooldownTimer -= Time.deltaTime;
-            if (attackCooldownTimer <= 0f)
-                canAttack = true;
-        }
-    }
-
-    private void AlignYawWithHead()
-    {
-        if (xrHead == null) return;
-
-        // Project the HMD's forward vector onto the XZ plane (world space)
-        Vector3 headForward = xrHead.forward;
-        headForward.y = 0f;
-        if (headForward.sqrMagnitude < 0.0001f)
-            return;
-        headForward.Normalize();
-
-        // Compute the world yaw angle that would make the player face the same direction as the HMD
-        float targetYaw = Mathf.Atan2(headForward.x, headForward.z) * Mathf.Rad2Deg;
-        float currentYaw = transform.eulerAngles.y;
-        float newYaw = Mathf.MoveTowardsAngle(currentYaw, targetYaw, alignYawSpeed * Time.deltaTime * 60f);
-        transform.rotation = Quaternion.Euler(0f, newYaw, 0f);
-
-        if (debugLogs)
-            Debug.Log($"[PlayerVR] AlignYawWithHead: targetYaw={targetYaw} currentYaw={currentYaw} newYaw={newYaw} headForward={headForward}");
-    }
-
-    private void UpdateCharacterControllerHeight()
-    {
-        if (xrHead == null || characterController == null) return;
-
-        // Choose method based on whether xrHead is child of this transform
-        float headLocalY;
-        Vector3 headLocal;
-        if (xrHead.IsChildOf(transform))
-        {
-            headLocal = xrHead.localPosition;
-            headLocalY = headLocal.y;
-        }
-        else
-        {
-            headLocal = transform.InverseTransformPoint(xrHead.position);
-            headLocalY = headLocal.y;
-        }
-
-        if (headLocalY <= 0f)
-        {
-            headLocalY = previousHeadHeight;
-        }
-
-        headLocalY = Mathf.Clamp(headLocalY, minHeight, maxHeight);
-        previousHeadHeight = headLocalY;
-
-        // Set controller height slightly below the head height so camera doesn't intersect the capsule
-        float newHeight = headLocalY;
-        characterController.height = newHeight;
-
-        Vector3 newCenter = Vector3.zero;
-        // Keep capsule horizontally under the player root by default to avoid camera sink when leaning
-        if (followHeadHorizontally)
-        {
-            newCenter.x = headLocal.x;
-            newCenter.z = headLocal.z;
-        }
-        else
-        {
-            newCenter.x = 0f;
-            newCenter.z = 0f;
-        }
-        // center.y should be half of the height plus a small offset, ensure positive
-        newCenter.y = characterController.height * 0.5f;
-        characterController.center = newCenter;
-    }
-
-    private void ApplyMovement()
-    {
-        if (characterController == null) return;
-
-        // Gravity
-        if (characterController.isGrounded)
-        {
-            verticalVelocity = -0.5f; // small downward force to keep grounded
-        }
-        else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
-        }
-
-        Vector3 forward = xrHead != null ? xrHead.forward : transform.forward;
-        Vector3 right = xrHead != null ? xrHead.right : transform.right;
-
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
-
-        Vector3 dir = forward * moveInput.y + right * moveInput.x;
-        if (dir.sqrMagnitude > 0.0001f)
-            dir.Normalize();
-
-        float speed = isRunning ? runSpeed * (playerStats != null ? playerStats.SpeedMultiplier : 1f) : walkSpeed * (playerStats != null ? playerStats.SpeedMultiplier : 1f);
-
-        Vector3 motion = dir * speed + Vector3.up * verticalVelocity;
-
-        // Use CharacterController to move (handles collisions)
-        characterController.Move(motion * Time.deltaTime);
-
-        // consume stamina when running
-        if (isRunning && dir.magnitude > 0.1f && playerStats != null)
-        {
-            playerStats.UseStamina(playerStats.runningStaminaCost * Time.deltaTime);
-            if (playerStats.CurrentStamina <= 0f)
-                isRunning = false;
-        }
-    }
+    // -------------------------------------------------------------------------
+    // Attaque VR (swing)
+    // -------------------------------------------------------------------------
 
     private void DetectVRSwingAttack()
     {
-        // Get VR hand positions via XRInputSubsystem or InputDevice
-        Vector3 leftHandPos = Vector3.zero;
         Vector3 rightHandPos = Vector3.zero;
-        bool leftValid = false;
         bool rightValid = false;
 
-        var leftHand = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-        var rightHand = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-
-        if (leftHand.isValid)
-            leftValid = leftHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.devicePosition, out leftHandPos);
-        if (rightHand.isValid)
-            rightValid = rightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.devicePosition, out rightHandPos);
-
-        if (!leftValid && !rightValid)
+        if (!m_RightHandDeviceInitialized || !m_RightHandDevice.isValid)
         {
-            // Fallback: try via InputActionAsset
-            var map = inputActions != null ? inputActions.FindActionMap("Player", false) : null;
-            if (map != null)
-            {
-                var leftPosAction = map.FindAction("LeftHandPosition", false);
-                var rightPosAction = map.FindAction("RightHandPosition", false);
+            m_RightHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+            m_RightHandDeviceInitialized = true;
+        }
 
-                if (leftPosAction != null) { leftHandPos = leftPosAction.ReadValue<Vector3>(); leftValid = true; }
-                if (rightPosAction != null) { rightHandPos = rightPosAction.ReadValue<Vector3>(); rightValid = true; }
-            }
+        if (m_RightHandDevice.isValid)
+            rightValid = m_RightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.devicePosition, out rightHandPos);
+
+        if (!rightValid && m_RightHandPositionAction != null)
+        {
+            rightHandPos = m_RightHandPositionAction.ReadValue<Vector3>();
+            rightValid = true;
         }
 
         if (!prevHandPositionsValid)
         {
-            if (leftValid) prevLeftHandPos = leftHandPos;
             if (rightValid) prevRightHandPos = rightHandPos;
-            prevHandPositionsValid = leftValid || rightValid;
+            prevHandPositionsValid = rightValid;
             return;
-        }
-
-        float leftSpeed = 0f;
-        float rightSpeed = 0f;
-        Vector3 swingWorldPos = transform.position;
-
-        if (leftValid)
-        {
-            leftSpeed = (leftHandPos - prevLeftHandPos).magnitude / Time.deltaTime;
-            if (leftSpeed >= swingVelocityThreshold)
-                swingWorldPos = transform.TransformPoint(leftHandPos);
-            prevLeftHandPos = leftHandPos;
         }
 
         if (rightValid)
         {
-            rightSpeed = (rightHandPos - prevRightHandPos).magnitude / Time.deltaTime;
-            if (rightSpeed >= swingVelocityThreshold)
-                swingWorldPos = transform.TransformPoint(rightHandPos);
+            float rightSpeed = (rightHandPos - prevRightHandPos).magnitude / Time.deltaTime;
+
+            if (rightSpeed >= swingVelocityThreshold && canAttack && !isAttacking
+                && playerStats != null && playerStats.CurrentStamina >= playerStats.attackStaminaCost)
+            {
+                HandleAttack(transform.TransformPoint(rightHandPos));
+            }
+
             prevRightHandPos = rightHandPos;
         }
 
-        if (!leftValid) prevLeftHandPos = Vector3.zero;
-        if (!rightValid) prevRightHandPos = Vector3.zero;
-        prevHandPositionsValid = leftValid || rightValid;
-
-        bool swingDetected = leftSpeed >= swingVelocityThreshold || rightSpeed >= swingVelocityThreshold;
-
-        if (swingDetected && canAttack && !isAttacking && playerStats != null && playerStats.CurrentStamina >= playerStats.attackStaminaCost)
-        {
-            HandleAttack(swingWorldPos);
-        }
+        prevHandPositionsValid = rightValid;
     }
 
     private void HandleAttack(Vector3 swingWorldPos)
@@ -606,45 +675,37 @@ public class PlayerControllerVR : MonoBehaviour
         if (isAttacking || !canAttack) return;
 
         isAttacking = true;
-        canAttack = false;
+        canAttack   = false;
 
-        if (playerStats != null)
-            playerStats.UseStamina(playerStats.attackStaminaCost);
-
-        int randomAttackIndex = Random.Range(1, 4);
+        playerStats?.UseStamina(playerStats.attackStaminaCost);
 
         if (animator != null)
         {
-            animator.SetInteger("AttackIndex", randomAttackIndex);
+            animator.SetInteger("AttackIndex", Random.Range(1, 4));
             animator.SetTrigger("Attack");
         }
 
-        if (SoundManager.Instance != null)
-            SoundManager.Instance.PlayPlayerAttack();
+        SoundManager.Instance?.PlayPlayerAttack();
 
-        attackCooldownTimer = attackCooldown / (playerStats != null ? playerStats.AttackSpeedMultiplier : 1f);
+        float speedMult = playerStats != null ? playerStats.AttackSpeedMultiplier : 1f;
+        attackCooldownTimer = attackCooldown / Mathf.Max(0.001f, speedMult);
 
-        // Apply damage to enemies in range of the swing
-        Collider[] hitEnemies = Physics.OverlapSphere(swingWorldPos, vrAttackRange, enemyLayer);
-        foreach (var hitCollider in hitEnemies)
+        int damage = (playerStats != null && playerStats.equippedWeapon != null)
+            ? playerStats.equippedWeapon.damage : 10;
+
+        int hitCount = Physics.OverlapSphereNonAlloc(swingWorldPos, vrAttackRange, attackHitsBuffer, enemyLayer);
+        for (int i = 0; i < hitCount; i++)
         {
-            if (!hitCollider.CompareTag("Enemy")) continue;
+            var hitCollider = attackHitsBuffer[i];
+            if (hitCollider == null || !hitCollider.CompareTag("Enemy")) continue;
 
-            int damage = playerStats != null && playerStats.equippedWeapon != null ? playerStats.equippedWeapon.damage : 10;
             Vector3 hitDir = (hitCollider.transform.position - swingWorldPos).normalized;
 
             EnemyController enemy = hitCollider.GetComponent<EnemyController>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage, hitDir, 2f);
-                continue;
-            }
+            if (enemy != null) { enemy.TakeDamage(damage, hitDir, 2f); continue; }
 
             MeleeEnemyController meleeEnemy = hitCollider.GetComponent<MeleeEnemyController>();
-            if (meleeEnemy != null)
-            {
-                meleeEnemy.TakeDamage(damage, hitDir, 2f);
-            }
+            meleeEnemy?.TakeDamage(damage, hitDir, 2f);
         }
 
         StartCoroutine(ResetAttackAfterCooldown());
@@ -656,159 +717,118 @@ public class PlayerControllerVR : MonoBehaviour
         isAttacking = false;
     }
 
-    public void ResetAttack()
+    public void ResetAttack() => isAttacking = false;
+
+    public void OnAttack(InputAction.CallbackContext context)
     {
-        isAttacking = false;
+        if (inDialogueMode || isInteracting || !context.performed || !canAttack) return;
+        if (playerStats == null || playerStats.CurrentStamina < playerStats.attackStaminaCost) return;
+
+        Vector3 attackOrigin = xrHead != null ? xrHead.position : transform.position;
+        HandleAttack(attackOrigin);
     }
 
-    private void ApplyRotate()
+    public void OnLock(InputAction.CallbackContext context)
     {
-        if (rotateInput.sqrMagnitude < 0.000001f)
-            return;
-
-        float deltaYaw = rotateInput.x * rotateSensitivity * Time.deltaTime;
-        // We don't apply pitch to the rig; headset controls pitch. Only yaw rotation of the player parent.
-        transform.Rotate(Vector3.up, deltaYaw, Space.World);
-
-        // Optionally, small pitch applied to body for visual purposes is omitted since headset handles view.
+        if (!context.performed) return;
+        ToggleLock();
     }
 
-    // These methods remain for PlayerInput Send Messages fallback
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        if (context.canceled)
-        {
-            moveInput = Vector2.zero;
-            return;
-        }
-
-        moveInput = context.ReadValue<Vector2>();
-
-        if (debugLogs)
-            Debug.Log($"[PlayerVR] OnMove -> {moveInput}");
-    }
-
-    public void OnRotate(InputAction.CallbackContext context)
-    {
-        if (context.canceled)
-            {
-            rotateInput = Vector2.zero;
-            return;
-        }
-
-        rotateInput = context.ReadValue<Vector2>();
-
-        if (debugLogs)
-            Debug.Log($"[PlayerVR] OnRotate -> {rotateInput}");
-    }
-
-    public void OnRun(InputAction.CallbackContext context)
+    public void OnParry(InputAction.CallbackContext context)
     {
         if (context.performed)
-            isRunning = true;
+        {
+            isParrying = true;
+            parryStartTime = Time.time;
+            animator?.SetBool("IsBlocking", true);
+        }
         else if (context.canceled)
-            isRunning = false;
-    }
-
-    public void OnDash(InputAction.CallbackContext context)
-    {
-        if (!context.performed)
-            return;
-
-        if (!canDash || isDashing)
-            return;
-
-        // Deduct stamina if available
-        if (playerStats != null && playerStats.CurrentStamina < playerStats.dashStaminaCost)
-            return;
-
-        if (playerStats != null)
-            playerStats.UseStamina(playerStats.dashStaminaCost);
-
-        StartCoroutine(DashCoroutine());
-    }
-
-    private IEnumerator DashCoroutine()
-    {
-        if (characterController == null) yield break;
-
-        isDashing = true;
-        canDash = false;
-        dashCooldownTimer = dashCooldown;
-
-        Vector3 forward = xrHead != null ? xrHead.forward : transform.forward;
-        forward.y = 0f;
-        forward.Normalize();
-
-        Vector3 dashDir = (moveInput.sqrMagnitude > 0.01f) ? (xrHead.forward * moveInput.y + xrHead.right * moveInput.x) : forward;
-        dashDir.y = 0f;
-        if (dashDir.sqrMagnitude > 0.01f) dashDir.Normalize();
-        else dashDir = forward;
-
-        float elapsed = 0f;
-        float dashSpeed = dashDistance / Mathf.Max(0.0001f, dashDuration) * (playerStats != null ? playerStats.SpeedMultiplier : 1f);
-
-        while (elapsed < dashDuration)
         {
-            float dt = Time.deltaTime;
-            characterController.Move(dashDir * dashSpeed * dt);
-            elapsed += dt;
-            yield return null;
-        }
-
-        isDashing = false;
-    }
-
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        if (!context.performed)
-            return;
-
-        // Simple overlap sphere to find interactables
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
-        foreach (var hit in hits)
-        {
-            Collectible col = hit.GetComponent<Collectible>();
-            if (col != null)
-            {
-                col.Collect(playerStats);
-                return;
-            }
-
-            WeaponPickup wp = hit.GetComponent<WeaponPickup>();
-            if (wp != null)
-            {
-                if (playerStats != null)
-                    playerStats.EquipWeapon(wp.weaponStats);
-                Destroy(wp.gameObject);
-                return;
-            }
+            isParrying = false;
+            animator?.SetBool("IsBlocking", false);
+            SoundManager.Instance?.PlayPlayerParry();
         }
     }
 
-    // debug draw
-    private void OnDrawGizmosSelected()
+    public void OnPause(InputAction.CallbackContext context)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, interactRange);
+        if (!context.performed) return;
+
+        if (!SceneManager.GetSceneByName("PauseMenu").isLoaded)
+            SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
     }
+
+    public void SetDialogueMode(bool isInDialogue)
+    {
+        inDialogueMode = isInDialogue;
+        if (inDialogueMode)
+        {
+            moveInput = Vector2.zero;
+            isSprinting = false;
+            animator?.SetBool("IsRunning", false);
+            animator?.SetBool("IsSprinting", false);
+        }
+    }
+
+    private void ToggleLock()
+    {
+        if (!isLockedOn)
+        {
+            int hitCount = Physics.OverlapSphereNonAlloc(transform.position, lockRange, attackHitsBuffer, enemyLayer);
+            float closestDistanceToCenter = Mathf.Infinity;
+            Transform closestEnemy = null;
+
+            Camera cam = Camera.main;
+            if (cam == null) return;
+
+            for (int i = 0; i < hitCount; i++)
+            {
+                Collider hitCollider = attackHitsBuffer[i];
+                if (hitCollider == null) continue;
+
+                Vector3 viewportPoint = cam.WorldToViewportPoint(hitCollider.transform.position);
+                float distanceToCenter = Vector2.Distance(new Vector2(0.5f, 0.5f), new Vector2(viewportPoint.x, viewportPoint.y));
+
+                if (distanceToCenter < closestDistanceToCenter && viewportPoint.z > 0f)
+                {
+                    closestDistanceToCenter = distanceToCenter;
+                    closestEnemy = hitCollider.transform;
+                }
+            }
+
+            if (closestEnemy != null)
+            {
+                currentTarget = closestEnemy;
+                isLockedOn = true;
+            }
+        }
+        else
+        {
+            isLockedOn = false;
+            currentTarget = null;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Dégâts & mort
+    // -------------------------------------------------------------------------
 
     public void TakeDamage(int damage)
     {
-        if (playerStats == null) return;
+        if (parryBlockedDamage)
+        {
+            parryBlockedDamage = false;
+            return;
+        }
 
+        if (playerStats == null) return;
         playerStats.TakeDamage(damage);
 
         if (playerStats.CurrentHealth > 0)
         {
-            if (SoundManager.Instance != null)
-                SoundManager.Instance.PlayPlayerHurt();
-
-            if (animator != null)
-                animator.SetTrigger("GetHit");
-
-            if (GetComponent<HitFeedback>() != null)
-                GetComponent<HitFeedback>().PlayHitFeedback();
+            SoundManager.Instance?.PlayPlayerHurt();
+            animator?.SetTrigger("GetHit");
+            GetComponent<HitFeedback>()?.PlayHitFeedback();
         }
         else
         {
@@ -818,41 +838,55 @@ public class PlayerControllerVR : MonoBehaviour
 
     private void Die()
     {
-        if (animator != null)
-        {
-            animator.SetTrigger("IsDead");
-        }
+        animator?.SetTrigger("IsDead");
+        SoundManager.Instance?.PlayPlayerDeath();
 
-        if (SoundManager.Instance != null)
-            SoundManager.Instance.PlayPlayerDeath();
-
-        // Save game state before dying
         SaveData saveData = SaveManager.LoadGame();
-        if (playerStats != null)
-            playerStats.SavePlayerStats(saveData);
+        playerStats?.SavePlayerStats(saveData);
         SaveManager.SaveGame(saveData);
-
-        // Fade and load scene (optional - commented out for VR as SceneManager can be tricky in VR)
-        // ScreenFader.FadeAndLoadScene("House Interior", 1f);
 
         this.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Handle damage from enemies
-        if (other.CompareTag("EnemyWeapon"))
+        if (isParrying && other.CompareTag("EnemyWeapon"))
         {
-            EnemyController enemy = other.GetComponentInParent<EnemyController>();
-            MeleeEnemyController meleeEnemy = other.GetComponentInParent<MeleeEnemyController>();
+            float parryTiming = Time.time - parryStartTime;
+            if (parryTiming <= parryWindow)
+            {
+                animator?.SetTrigger("Parry");
+                StunEnemy(other.GetComponentInParent<EnemyController>());
+                StunEnemy(other.GetComponentInParent<MeleeEnemyController>());
+            }
 
-            int damage = 10; // Default damage
-            if (enemy != null)
-                damage = enemy.damage;
-            else if (meleeEnemy != null)
-                damage = meleeEnemy.damage;
-
-            TakeDamage(damage);
+            parryBlockedDamage = true;
         }
+
+        if (!other.CompareTag("EnemyWeapon")) return;
+
+        int damage = 10;
+        EnemyController enemy    = other.GetComponentInParent<EnemyController>();
+        MeleeEnemyController mel = other.GetComponentInParent<MeleeEnemyController>();
+        if (enemy != null) damage = enemy.damage;
+        else if (mel != null) damage = mel.damage;
+
+        TakeDamage(damage);
+    }
+
+    private void StunEnemy(EnemyController enemy)
+    {
+        if (enemy != null) enemy.Stun(2f);
+    }
+
+    private void StunEnemy(MeleeEnemyController enemy)
+    {
+        if (enemy != null) enemy.Stun(2f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactRange);
     }
 }

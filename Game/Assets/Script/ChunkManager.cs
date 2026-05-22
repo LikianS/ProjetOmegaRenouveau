@@ -77,15 +77,30 @@ public class ChunkManager : MonoBehaviour
         }
         
         // Validation des types de biomes
+        if (biomeWater == null || biomeFire == null || biomeEarth == null || biomeAir == null)
+        {
+            Debug.LogError("ChunkManager: un ou plusieurs BiomeProfile ne sont pas assignés.");
+            return;
+        }
+
         if (biomeWater.type != BiomeProfile.BiomeType.Water ||
             biomeFire.type != BiomeProfile.BiomeType.Fire ||
             biomeEarth.type != BiomeProfile.BiomeType.Earth ||
             biomeAir.type != BiomeProfile.BiomeType.Air)
+        {
+            Debug.LogWarning("ChunkManager: l'ordre ou le type des biomes assignés est incorrect.");
+        }
+
+        if (player == null)
+        {
+            Debug.LogError("ChunkManager: le Transform player n'est pas assigné.");
+            return;
+        }
 
         // Chargement initial
         lastPlayerChunk = GetChunkCoord(player.position);
         UpdateChunks();
-        }
+    }
     
     void Update()
     {

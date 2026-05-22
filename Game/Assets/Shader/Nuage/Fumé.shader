@@ -63,7 +63,7 @@ Shader "Custom/VolumetricSmokeInside"
             float _FireThreshold;
             float _FireIntensity;
 
-            sampler2D_float _CameraDepthTexture;
+            UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
 
             // --- Intersection Boite Améliorée ---
             // Gère le cas où la caméra est DANS la boite

@@ -26,6 +26,7 @@ public class DialogueSystem : MonoBehaviour
 
     private Camera mainCamera;
     private PlayerController playerController;
+    private PlayerControllerVR playerControllerVR;
     private DualAnimPlayerController dualAnimPlayerController;
     private NPC currentNPC;
     private DialogueData currentDialogue;
@@ -60,6 +61,7 @@ public class DialogueSystem : MonoBehaviour
     {
         mainCamera = Camera.main;
         playerController = FindAnyObjectByType<PlayerController>();
+        playerControllerVR = FindAnyObjectByType<PlayerControllerVR>();
         dualAnimPlayerController = FindAnyObjectByType<DualAnimPlayerController>();
         playerInput = FindAnyObjectByType<PlayerInput>();
         shopManager = FindAnyObjectByType<ShopManager>();
@@ -79,38 +81,45 @@ public class DialogueSystem : MonoBehaviour
             if (shopManager != null && shopManager.shopPanel.activeSelf)
                 return;
 
-            if (currentNPC != null && !isInDialogue)
+            if (!isInDialogue)
             {
-                StartDialogue();
-            }
-            else if (isInDialogue)
-            {
-                if (isTyping)
-                {
-                    StopTypingCoroutine();
-                    dialogueText.text = currentLine.dialogueText;
-                    isTyping = false;
+                CheckForNearbyNPC();
 
-                    if (currentLine.choices.Count > 0)
-                    {
-                        ShowChoices();
-                    }
-                }
-                else if (choicesPanel.activeSelf)
+                if (currentNPC == null)
                 {
-                    if (justDisplayedChoices)
-                    {
-                        justDisplayedChoices = false;
-                        return;
-                    }
-                    if (Time.unscaledTime - choiceAppearTime < minChoiceDisplayTime)
-                        return;
-                    SelectChoice(currentChoiceIndex);
+                    Debug.LogWarning("[DialogueSystem] Interact pressé mais aucun NPC détecté à portée.");
+                    return;
                 }
-                else if (currentLine.choices.Count == 0)
+
+                StartDialogue();
+                return;
+            }
+
+            if (isTyping)
+            {
+                StopTypingCoroutine();
+                dialogueText.text = currentLine.dialogueText;
+                isTyping = false;
+
+                if (currentLine.choices.Count > 0)
                 {
-                    ProgressDialogue();
+                    ShowChoices();
                 }
+            }
+            else if (choicesPanel.activeSelf)
+            {
+                if (justDisplayedChoices)
+                {
+                    justDisplayedChoices = false;
+                    return;
+                }
+                if (Time.unscaledTime - choiceAppearTime < minChoiceDisplayTime)
+                    return;
+                SelectChoice(currentChoiceIndex);
+            }
+            else if (currentLine.choices.Count == 0)
+            {
+                ProgressDialogue();
             }
         }
     }
@@ -173,17 +182,46 @@ public class DialogueSystem : MonoBehaviour
 
     private void CheckForNearbyNPC()
     {
-        Collider[] colliders = Physics.OverlapSphere(playerTransform.position, minDistance);
+        if (playerTransform == null)
+        {
+            PlayerController player = FindAnyObjectByType<PlayerController>();
+            if (player != null) playerTransform = player.transform;
+            if (playerTransform == null)
+            {
+                PlayerControllerVR playerVr = FindAnyObjectByType<PlayerControllerVR>();
+                if (playerVr != null) playerTransform = playerVr.transform;
+            }
+            if (playerTransform == null) return;
+        }
+
+        Collider[] colliders = Physics.OverlapSphere(playerTransform.position, minDistance, ~0, QueryTriggerInteraction.Collide);
         NPC nearestNPC = null;
         float nearestDistance = float.MaxValue;
 
         foreach (var collider in colliders)
         {
-            NPC npc = collider.GetComponent<NPC>();
+            NPC npc = collider.GetComponentInParent<NPC>();
             if (npc != null)
             {
-                float distance = Vector3.Distance(transform.position, npc.transform.position);
+                float distance = Vector3.Distance(playerTransform.position, npc.transform.position);
                 if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestNPC = npc;
+                }
+            }
+        }
+
+        if (nearestNPC == null)
+        {
+            NPC[] allNpcs = FindObjectsByType<NPC>(FindObjectsSortMode.None);
+            for (int i = 0; i < allNpcs.Length; i++)
+            {
+                NPC npc = allNpcs[i];
+                if (npc == null) continue;
+
+                float distance = Vector3.Distance(playerTransform.position, npc.transform.position);
+                if (distance <= minDistance && distance < nearestDistance)
                 {
                     nearestDistance = distance;
                     nearestNPC = npc;
@@ -235,6 +273,8 @@ public class DialogueSystem : MonoBehaviour
 
         if (playerController != null)
             playerController.SetDialogueMode(isInDialogue);
+        if (playerControllerVR != null)
+            playerControllerVR.SetDialogueMode(isInDialogue);
         if (dualAnimPlayerController != null)
             dualAnimPlayerController.SetDialogueMode(isInDialogue);
 
@@ -455,6 +495,8 @@ public class DialogueSystem : MonoBehaviour
         currentLine = null;
         if (playerController != null)
             playerController.SetDialogueMode(false);
+        if (playerControllerVR != null)
+            playerControllerVR.SetDialogueMode(false);
         if (dualAnimPlayerController != null)
             dualAnimPlayerController.SetDialogueMode(false);
 
@@ -667,6 +709,8 @@ public class DialogueSystem : MonoBehaviour
             playerStats = FindAnyObjectByType<PlayerStats>();
         if (playerController == null)
             playerController = FindAnyObjectByType<PlayerController>();
+        if (playerControllerVR == null)
+            playerControllerVR = FindAnyObjectByType<PlayerControllerVR>();
         if (dualAnimPlayerController == null)
             dualAnimPlayerController = FindAnyObjectByType<DualAnimPlayerController>();
         if (playerInput == null)

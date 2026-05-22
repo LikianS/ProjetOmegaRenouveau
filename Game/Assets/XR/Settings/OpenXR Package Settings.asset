@@ -420,8 +420,8 @@ MonoBehaviour:
   - {fileID: 5193882636787515109}
   m_renderMode: 1
   m_depthSubmissionMode: 0
-  m_optimizeBufferDiscards: 0
-  m_symmetricProjection: 0
+  m_optimizeBufferDiscards: 1
+  m_symmetricProjection: 1
 --- !u!114 &2681974450934008401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,18 +675,18 @@ MonoBehaviour:
   targetDevices:
   - visibleName: Quest
     manifestName: quest
-    enabled: 1
+    enabled: 0
   - visibleName: Quest 2
     manifestName: quest2
-    enabled: 1
+    enabled: 0
   - visibleName: Quest Pro
     manifestName: cambria
     enabled: 1
   forceRemoveInternetPermission: 0
-  symmetricProjection: 0
+  symmetricProjection: 1
   systemSplashScreen: {fileID: 0}
   optimizeBufferDiscards: 1
-  lateLatchingMode: 0
+  lateLatchingMode: 1
   lateLatchingDebug: 0
 --- !u!114 &6584569776916241738
 MonoBehaviour:

@@ -46,8 +46,8 @@ Shader "Custom/ToonWaterComplete" {
                 float3 worldPos : TEXCOORD1;
             };
 
-            sampler2D _CameraDepthTexture; // Texture de profondeur automatique d'Unity
-            
+            UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture); // Texture de profondeur automatique d'Unity
+
             float4 _ShallowColor, _DeepColor, _FoamColor;
             float _DepthFactor, _FoamSize, _SurfaceNoiseCutoff;
             float _Speed, _NoiseScale;

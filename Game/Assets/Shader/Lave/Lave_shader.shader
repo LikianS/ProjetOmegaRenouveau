@@ -51,7 +51,7 @@ Shader "Custom/ToonLavaComplete" {
                 float explosionVal : TEXCOORD3; // Pour passer l'info explosion au pixel shader
             };
 
-            sampler2D _CameraDepthTexture;
+            UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
             // Variables fusionnées
             float4 _DeepColor, _SurfaceColor, _FoamColor, _OutlineColor, _ExplosionColor;
             float2 _FlowDirection;

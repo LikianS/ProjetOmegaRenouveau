@@ -10,15 +10,19 @@ public class SoundPanelUI : MonoBehaviour
     public Slider voiceSlider;
     [HideInInspector] public GameObject menuPanel;
 
+    private PlayerInput playerInput;
+    private InputAction cancelAction;
+
     private void OnEnable()
     {
         SelectMusicSlider();
         SetMenuPanelActive(false);
+        CacheCancelAction();
     }
 
     private void Update()
     {
-        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        if (cancelAction != null && cancelAction.WasPressedThisFrame())
         {
             ReturnToMenu();
             return;
@@ -54,5 +58,16 @@ public class SoundPanelUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         SetMenuPanelActive(true);
+    }
+
+    private void CacheCancelAction()
+    {
+        playerInput = FindAnyObjectByType<PlayerInput>();
+        if (playerInput == null || playerInput.actions == null) return;
+
+        var uiMap = playerInput.actions.FindActionMap("UI", false);
+        if (uiMap == null) return;
+
+        cancelAction = uiMap.FindAction("Cancel", false);
     }
 }

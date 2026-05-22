@@ -10,28 +10,32 @@ public class ControlsPanelUI : MonoBehaviour
     [HideInInspector] public GameObject menuPanel;
 
     private int currentIndex = 0;
+    private PlayerInput playerInput;
+    private InputAction navigateAction;
+    private InputAction cancelAction;
 
     private void OnEnable()
     {
         ShowImage(0);
         SetMenuPanelActive(false);
+        CacheUIActions();
     }
 
     private void Update()
     {
         if (!gameObject.activeSelf) return;
 
-        if (Gamepad.current != null)
+        if (navigateAction != null)
         {
-            if (Gamepad.current.leftTrigger.wasPressedThisFrame)
+            float navX = navigateAction.ReadValue<Vector2>().x;
+            if (navX < -0.5f)
                 ShowImage(0);
-            if (Gamepad.current.rightTrigger.wasPressedThisFrame)
+            else if (navX > 0.5f)
                 ShowImage(1);
-            if (Gamepad.current.buttonEast.wasPressedThisFrame)
-            {
-                ReturnToMenu();
-            }
         }
+
+        if (cancelAction != null && cancelAction.WasPressedThisFrame())
+            ReturnToMenu();
     }
 
     private void ShowImage(int index)
@@ -51,5 +55,17 @@ public class ControlsPanelUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         SetMenuPanelActive(true);
+    }
+
+    private void CacheUIActions()
+    {
+        playerInput = FindAnyObjectByType<PlayerInput>();
+        if (playerInput == null || playerInput.actions == null) return;
+
+        var uiMap = playerInput.actions.FindActionMap("UI", false);
+        if (uiMap == null) return;
+
+        navigateAction = uiMap.FindAction("Navigate", false);
+        cancelAction = uiMap.FindAction("Cancel", false);
     }
 }

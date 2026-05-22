@@ -49,24 +49,35 @@ public class WorldChunk : MonoBehaviour
         minDungeonDistCache.Clear();
         nearestDungeonPosCache.Clear();
         dungeonTypeByGrid.Clear();
-        foreach (var entry in dPos)
+
+        if (dPos != null)
         {
-            Vector2 pos2D = new Vector2(entry.Value.x, entry.Value.z);
-            dungeonPositions2D.Add(pos2D);
-            dungeonTypeByGrid[new Vector2Int(Mathf.FloorToInt(entry.Value.x), Mathf.FloorToInt(entry.Value.z))] = entry.Key;
+            foreach (var entry in dPos)
+            {
+                Vector2 pos2D = new Vector2(entry.Value.x, entry.Value.z);
+                dungeonPositions2D.Add(pos2D);
+                dungeonTypeByGrid[new Vector2Int(Mathf.FloorToInt(entry.Value.x), Mathf.FloorToInt(entry.Value.z))] = entry.Key;
+            }
         }
 
         float maxDungeonDist = 0;
-        foreach(var d in dPos.Values) {
-            float dist = Vector3.Distance(Vector3.zero, d);
-            if(dist > maxDungeonDist) maxDungeonDist = dist;
+        if (dPos != null)
+        {
+            foreach (var d in dPos.Values)
+            {
+                float dist = Vector3.Distance(Vector3.zero, d);
+                if (dist > maxDungeonDist) maxDungeonDist = dist;
+            }
         }
         this.worldLimitRadius = maxDungeonDist + 15.0f;
 
         Vector2 chunkCenter = offset + new Vector2(size/2f, size/2f);
-        foreach(var d in dPos.Values)
+        if (dPos != null)
         {
-            if (Vector2.Distance(chunkCenter, new Vector2(d.x, d.z)) < (size * 0.8f)) isDungeonChunk = true; 
+            foreach (var d in dPos.Values)
+            {
+                if (Vector2.Distance(chunkCenter, new Vector2(d.x, d.z)) < (size * 0.8f)) isDungeonChunk = true;
+            }
         }
 
         EnsureRequiredComponents();
@@ -249,7 +260,7 @@ public class WorldChunk : MonoBehaviour
             source.area = 0;
             sources.Add(source);
         }
-        WorldChunk[] allChunks = FindObjectsOfType<WorldChunk>();
+        WorldChunk[] allChunks = FindObjectsByType<WorldChunk>(FindObjectsSortMode.None);
         foreach (WorldChunk neighborChunk in allChunks)
         {
             if (neighborChunk == this) continue;
@@ -433,8 +444,7 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         {
             float seaFloorDepth = -9.0f;
             float islandLevel = 1.5f;
-            float waterLevel = -0.4f;
-            
+
             float rampLength = 50.0f;
             float rampStart = villageRadius;
             bool isOnRamp = (distCenter < rampStart + rampLength);
@@ -582,7 +592,6 @@ float GetPreciseHeight(float gX, float gZ, out bool isLavaZone, out bool isWater
         int failedBiome = 0;
         int failedDistance = 0;
         int failedWalkable = 0;
-        int failedRandom = 0;
         int failedNavMesh = 0;
         
         for (int x = 0; x < size; x += 3)

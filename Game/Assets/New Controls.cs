@@ -250,7 +250,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6bf54f4a-51cd-4f2b-8756-6f33fe00d1d4"",
-                    ""path"": ""<XRController>{RightHand}/{PrimaryAction}"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{LeftHand}/thumbstickclicked"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -304,8 +304,8 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""762249b7-e28b-4bb2-a6f7-223d2214a3d6"",
-                    ""path"": ""<OculusTouchController>/secondaryButton"",
+                    ""id"": ""0fffc5a5-4a23-4710-8d8f-436818a7f4d3"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/primarybutton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -337,6 +337,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""dcb5ad23-c3b1-4e93-b4af-983c3c4af83e"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/secondarybutton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleStats"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""054e80a6-71bc-49bd-b831-8fb88ff0467a"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -349,7 +360,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ebbfe7e7-8d01-49da-ad96-cd7dade7e889"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/menu"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -365,17 +376,6 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""processors"": ""StickDeadzone"",
                     ""groups"": """",
                     ""action"": ""CameraRotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6f4e3883-152c-4b81-b1a0-63df2e80092d"",
-                    ""path"": ""<OculusTouchController>/primaryButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -428,7 +428,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9a7f2ba9-902b-4c83-bd13-a054d81b3b77"",
-                    ""path"": """",
+                    ""path"": ""<OculusTouchController>{LeftHand}/thumbstick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -439,7 +439,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""70ec6dff-2d7a-48a6-ac10-85d4879de7fe"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/primarybutton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -450,7 +450,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f7261eec-f71b-4049-a832-e5621bfde1fe"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/secondarybutton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -506,6 +506,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0d7ed044-b7ba-426a-84fb-0b697d11489c"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/primarybutton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""88bbbb18-a87c-4a55-b12a-269793c197de"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
@@ -517,8 +528,30 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7224a1fb-da45-4d78-919b-824fc1e16293"",
+                    ""path"": ""<OculusTouchController>{RightHand}/thumbstick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueChoice"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""aaad7383-8bd7-44dd-900a-bd42040cc7d5"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6c366f2-3960-40a9-81fa-43d0c66fe41c"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/primarybutton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -574,8 +607,19 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""96960a3e-9fa1-4a54-9c89-20efc7a74f72"",
+                    ""path"": ""<OculusTouchController>{RightHand}/thumbstick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShopNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d1e24292-9c3a-4824-a051-5975a2648e16"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/primarybutton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -587,6 +631,17 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c433903b-7c98-4add-bc29-c764ff63216c"",
                     ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShopCancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfccaa0e-f016-4d14-a7a9-2a0bc3eae42a"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerOpenXR>{RightHand}/secondarybutton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
